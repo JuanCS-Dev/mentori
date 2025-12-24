@@ -2,7 +2,49 @@ import { useState, useEffect, useCallback } from 'react';
 import { calculateNewRating, getKFactor } from '../features/AdaptiveDifficulty/EloEngine';
 import { recordHealth } from '../services/chaosOrchestrator';
 
-const STORAGE_PREFIX = 'mentori_'; // Renamed from concursoai_
+const STORAGE_PREFIX = 'mentori_';
+const OLD_STORAGE_PREFIX = 'concursoai_';
+
+/**
+ * Migrate data from old storage prefix to new one
+ * Runs once on app load to preserve user data after rebrand
+ */
+function migrateOldData(): void {
+  try {
+    let migrated = 0;
+    const keysToMigrate: string[] = [];
+
+    // First pass: collect keys to migrate
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(OLD_STORAGE_PREFIX)) {
+        keysToMigrate.push(key);
+      }
+    }
+
+    // Second pass: migrate data
+    for (const oldKey of keysToMigrate) {
+      const newKey = oldKey.replace(OLD_STORAGE_PREFIX, STORAGE_PREFIX);
+      const value = localStorage.getItem(oldKey);
+
+      // Only migrate if new key doesn't exist (don't overwrite)
+      if (value && !localStorage.getItem(newKey)) {
+        localStorage.setItem(newKey, value);
+        localStorage.removeItem(oldKey);
+        migrated++;
+      }
+    }
+
+    if (migrated > 0) {
+      console.info(`[Mentori] Migrated ${migrated} data items from old storage`);
+    }
+  } catch (error) {
+    console.warn('[Mentori] Data migration failed:', error);
+  }
+}
+
+// Run migration on module load
+migrateOldData();
 
 /**
  * Custom hook for persisting state to localStorage with auto-save
@@ -67,10 +109,10 @@ export function usePersistence<T>(
  */
 export const PersistenceUtils = {
   /**
-   * Get all ConcursoAI data from localStorage
+   * Get all Mentori data from localStorage
    */
-  getAllData(): Record<string, any> {
-    const data: Record<string, any> = {};
+  getAllData(): Record<string, unknown> {
+    const data: Record<string, unknown> = {};
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key?.startsWith(STORAGE_PREFIX)) {

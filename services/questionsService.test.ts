@@ -321,7 +321,7 @@ describe('QuestionsCache', () => {
       QuestionsCache.set(questions);
 
       expect(localStorage.setItem).toHaveBeenCalledWith(
-        'concursoai_questions_cache',
+        'mentori_questions_cache',
         expect.stringContaining('"questions"')
       );
     });
@@ -339,7 +339,7 @@ describe('QuestionsCache', () => {
     it('should remove cache from localStorage', () => {
       QuestionsCache.clear();
 
-      expect(localStorage.removeItem).toHaveBeenCalledWith('concursoai_questions_cache');
+      expect(localStorage.removeItem).toHaveBeenCalledWith('mentori_questions_cache');
     });
   });
 });

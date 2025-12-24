@@ -51,9 +51,10 @@ export const MarkItDownService = {
         default:
           return await this.readTextFile(file); // Try text anyway
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
       console.error('Erro ao processar arquivo:', error);
-      return { text: "", error: `Falha ao processar arquivo: ${error.message}` };
+      return { text: "", error: `Falha ao processar arquivo: ${message}` };
     }
   },
 
@@ -73,8 +74,10 @@ export const MarkItDownService = {
         const page = await pdf.getPage(pageNum);
         const textContent = await page.getTextContent();
 
-        const pageText = textContent.items
-          .map((item: any) => item.str)
+        // PDF.js types are complex union types - using assertion for text items
+        const pageText = (textContent.items as Array<{ str?: string }>)
+          .filter((item) => typeof item.str === 'string')
+          .map((item) => item.str!)
           .join(' ')
           .replace(/\s+/g, ' ')
           .trim();
@@ -97,11 +100,12 @@ export const MarkItDownService = {
         text: `[EDITAL EXTRAÍDO: ${file.name}]\n[${numPages} páginas]\n\n${fullText}`,
         metadata: { type: 'pdf', size: file.size, pages: numPages }
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
       console.error('Erro ao extrair PDF:', error);
       return {
         text: "",
-        error: `Falha ao extrair PDF: ${error.message}. Tente colar o texto diretamente.`
+        error: `Falha ao extrair PDF: ${message}. Tente colar o texto diretamente.`
       };
     }
   },
@@ -123,7 +127,7 @@ export const MarkItDownService = {
         text: `[DOCUMENTO EXTRAÍDO: ${file.name}]\n\n${text}`,
         metadata: { type: 'docx', size: file.size }
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Erro ao extrair DOCX:', error);
       // Fallback message
       return {

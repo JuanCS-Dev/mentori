@@ -28,6 +28,16 @@ export interface QuestionFilter {
   offset?: number;
 }
 
+// Interface for ENEM API response
+interface ENEMApiQuestion {
+  context?: string;
+  question: string;
+  alternatives?: Array<{ text?: string } | string>;
+  correct_alternative?: string;
+  image_url?: string;
+  explanation?: string;
+}
+
 // Mapeamento de disciplinas do ENEM para nomes amigáveis
 const ENEM_DISCIPLINES: Record<string, string> = {
   'linguagens': 'Linguagens e Códigos',
@@ -70,13 +80,15 @@ export const QuestionsService = {
       const data = await response.json();
 
       // Mapear para nosso formato
-      const questions: RealQuestion[] = data.questions?.map((q: any, index: number) => ({
+      const questions: RealQuestion[] = data.questions?.map((q: ENEMApiQuestion, index: number) => ({
         id: `enem_${year}_${discipline}_${index}`,
         year,
         source: 'ENEM' as const,
         discipline: ENEM_DISCIPLINES[discipline] || discipline,
         statement: q.context ? `${q.context}\n\n${q.question}` : q.question,
-        options: q.alternatives?.map((alt: any) => alt.text || alt) || [],
+        options: q.alternatives?.map((alt) =>
+          typeof alt === 'string' ? alt : (alt.text || '')
+        ) || [],
         correctAnswer: q.correct_alternative ?
           ['A', 'B', 'C', 'D', 'E'].indexOf(q.correct_alternative.toUpperCase()) : 0,
         imageUrl: q.image_url,
@@ -213,7 +225,7 @@ Nesses versos, o poeta português expressa:`,
   /**
    * Inferir dificuldade baseado em características da questão
    */
-  inferDifficulty(question: any): 'Fácil' | 'Médio' | 'Difícil' {
+  inferDifficulty(question: ENEMApiQuestion): 'Fácil' | 'Médio' | 'Difícil' {
     // Heurística simples baseada no tamanho do texto
     const textLength = (question.context?.length || 0) + (question.question?.length || 0);
 
@@ -332,7 +344,7 @@ Nesses versos, o poeta português expressa:`,
 };
 
 // Cache local de questões para performance
-const CACHE_KEY = 'concursoai_questions_cache';
+const CACHE_KEY = 'mentori_questions_cache'; // Updated from concursoai_
 const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 horas
 
 export const QuestionsCache = {
