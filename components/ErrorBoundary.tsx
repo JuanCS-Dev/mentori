@@ -1,10 +1,12 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { AlertTriangle, RefreshCw, Home, Bug } from 'lucide-react';
+import { recordHealth, chaosCrash } from '../services/chaosOrchestrator';
 
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  componentName?: string; // For chaos targeting
 }
 
 interface State {
@@ -15,6 +17,7 @@ interface State {
 
 /**
  * ErrorBoundary - Global error handler for React components
+ * Enhanced with Chaos Engineering integration
  * Catches JavaScript errors anywhere in the child component tree,
  * logs those errors, and displays a fallback UI.
  */
@@ -26,6 +29,11 @@ export class ErrorBoundary extends Component<Props, State> {
       error: null,
       errorInfo: null
     };
+
+    // Chaos: potential crash injection on mount
+    if (props.componentName) {
+      chaosCrash(props.componentName);
+    }
   }
 
   static getDerivedStateFromError(error: Error): Partial<State> {
@@ -38,10 +46,15 @@ export class ErrorBoundary extends Component<Props, State> {
     // Log error for debugging
     console.error('ErrorBoundary caught an error:', error, errorInfo);
 
+    // Record to health signals
+    recordHealth({
+      service: `component:${this.props.componentName || 'unknown'}`,
+      status: 'failed',
+      lastError: error.message
+    });
+
     // Call optional error handler
     this.props.onError?.(error, errorInfo);
-
-    // Could send to error tracking service here (e.g., Sentry)
   }
 
   handleRetry = (): void => {

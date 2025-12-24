@@ -277,6 +277,11 @@ export async function withCircuitBreaker<T>(
             lastError: error instanceof Error ? error.message : 'Unknown error'
         });
 
+        // If no fallback provided, re-throw the error
+        if (fallback === undefined) {
+            throw error;
+        }
+
         console.warn(`🔌 [CIRCUIT] ${circuitName}: Failure (${circuit.failures}/${FAILURE_THRESHOLD}) - using fallback`);
         return fallback;
     }
@@ -291,6 +296,20 @@ export function getCircuitStatus(): Record<string, CircuitState> {
         status[name] = { ...state };
     });
     return status;
+}
+
+/**
+ * Reset all circuits to closed state (for testing)
+ */
+export function resetCircuits(): void {
+    circuits.clear();
+}
+
+/**
+ * Reset health registry (for testing)
+ */
+export function resetHealthRegistry(): void {
+    healthRegistry.clear();
 }
 
 //=============================================================================

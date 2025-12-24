@@ -1,11 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { calculateNewRating, getKFactor } from '../features/AdaptiveDifficulty/EloEngine';
+import { recordHealth } from '../services/chaosOrchestrator';
 
-const STORAGE_PREFIX = 'concursoai_';
+const STORAGE_PREFIX = 'mentori_'; // Renamed from concursoai_
 
 /**
  * Custom hook for persisting state to localStorage with auto-save
  * Provides type-safe persistence with JSON serialization
+ * Enhanced with health signals for resilience monitoring
  */
 export function usePersistence<T>(
   key: string,
@@ -18,10 +20,16 @@ export function usePersistence<T>(
     try {
       const stored = localStorage.getItem(storageKey);
       if (stored) {
+        recordHealth({ service: `storage:${key}`, status: 'healthy' });
         return JSON.parse(stored) as T;
       }
     } catch (error) {
       console.warn(`Failed to load ${key} from localStorage:`, error);
+      recordHealth({
+        service: `storage:${key}`,
+        status: 'failed',
+        lastError: error instanceof Error ? error.message : 'Parse error'
+      });
     }
     return initialValue;
   });
@@ -33,11 +41,17 @@ export function usePersistence<T>(
         localStorage.removeItem(storageKey);
       } else {
         localStorage.setItem(storageKey, JSON.stringify(value));
+        recordHealth({ service: `storage:${key}`, status: 'healthy' });
       }
     } catch (error) {
       console.warn(`Failed to save ${key} to localStorage:`, error);
+      recordHealth({
+        service: `storage:${key}`,
+        status: 'failed',
+        lastError: error instanceof Error ? error.message : 'Write error'
+      });
     }
-  }, [value, storageKey]);
+  }, [value, storageKey, key]);
 
   // Clear function to remove from storage
   const clear = useCallback(() => {

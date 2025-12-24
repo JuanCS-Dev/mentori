@@ -52,7 +52,7 @@ describe('usePersistence', () => {
     });
 
     expect(localStorage.setItem).toHaveBeenCalledWith(
-      'concursoai_testKey',
+      'mentori_testKey',
       JSON.stringify('updated')
     );
   });
@@ -66,7 +66,7 @@ describe('usePersistence', () => {
       result.current[1](null);
     });
 
-    expect(localStorage.removeItem).toHaveBeenCalledWith('concursoai_testKey');
+    expect(localStorage.removeItem).toHaveBeenCalledWith('mentori_testKey');
   });
 
   it('should clear value and reset to initial', () => {
@@ -99,8 +99,8 @@ describe('PersistenceUtils', () => {
 
   beforeEach(() => {
     const mockStorage: Record<string, string> = {
-      'concursoai_key1': JSON.stringify({ data: 'value1' }),
-      'concursoai_key2': JSON.stringify({ data: 'value2' }),
+      'mentori_key1': JSON.stringify({ data: 'value1' }),
+      'mentori_key2': JSON.stringify({ data: 'value2' }),
       'other_key': 'should be ignored'
     };
 
@@ -137,8 +137,8 @@ describe('PersistenceUtils', () => {
     it('should remove all ConcursoAI keys', () => {
       PersistenceUtils.clearAll();
 
-      expect(localStorage.removeItem).toHaveBeenCalledWith('concursoai_key1');
-      expect(localStorage.removeItem).toHaveBeenCalledWith('concursoai_key2');
+      expect(localStorage.removeItem).toHaveBeenCalledWith('mentori_key1');
+      expect(localStorage.removeItem).toHaveBeenCalledWith('mentori_key2');
     });
   });
 
@@ -160,7 +160,7 @@ describe('PersistenceUtils', () => {
 
       expect(result).toBe(true);
       expect(localStorage.setItem).toHaveBeenCalledWith(
-        'concursoai_newKey',
+        'mentori_newKey',
         expect.any(String)
       );
     });

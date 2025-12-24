@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { GeminiService } from './geminiService';
+import { resetCircuits, resetHealthRegistry, initChaos } from './chaosOrchestrator';
 
 // =============================================================================
 // MOCK SETUP
@@ -36,6 +37,11 @@ describe('GeminiService', () => {
     // Ensure project is empty so it doesn't default to Vertex
     vi.stubEnv('GOOGLE_CLOUD_PROJECT', '');
     vi.stubEnv('VITE_GOOGLE_CLOUD_PROJECT', '');
+
+    // Reset chaos/resilience state
+    initChaos({ enabled: false, experiments: {} });
+    resetCircuits();
+    resetHealthRegistry();
   });
 
   afterEach(() => {
@@ -45,7 +51,7 @@ describe('GeminiService', () => {
   // ===========================================================================
   // 1. INITIALIZATION & CONFIGURATION
   // ===========================================================================
-  
+
   describe('Initialization', () => {
     it('should initialize with API Key from environment', () => {
       const info = GeminiService.getProviderInfo();
@@ -62,7 +68,7 @@ describe('GeminiService', () => {
   // ===========================================================================
 
   describe('Functionalities', () => {
-    
+
     // --- Helper to mock successful JSON response ---
     const mockSuccess = (data: any) => {
       mocks.generateContent.mockResolvedValueOnce({
@@ -86,7 +92,7 @@ describe('GeminiService', () => {
       mockSuccess(mockResponse);
 
       const result = await GeminiService.analyzeEdital('Texto do edital...');
-      
+
       expect(mocks.generateContent).toHaveBeenCalled();
       expect(result).toEqual(mockResponse);
     });
@@ -97,10 +103,10 @@ describe('GeminiService', () => {
         perfil: { nome: 'Cebraspe', estilo: 'Certo/Errado' },
         dna_pegadinhas: []
       };
-      mockSuccessWithMarkdown(mockResponse); 
+      mockSuccessWithMarkdown(mockResponse);
 
       const result = await GeminiService.analyzeBankProfile('Dados da banca');
-      
+
       expect(result.perfil.nome).toBe('Cebraspe');
     });
 
@@ -193,10 +199,10 @@ describe('GeminiService', () => {
   // ===========================================================================
 
   describe('Error Handling & Retry', () => {
-    
+
     it('should retry on failure and eventually succeed', async () => {
       const mockData = { success: true };
-      
+
       // Mock failure twice, then success
       mocks.generateContent
         .mockRejectedValueOnce(new Error('Network error'))
@@ -204,7 +210,7 @@ describe('GeminiService', () => {
         .mockResolvedValueOnce({ text: JSON.stringify(mockData) });
 
       const result = await GeminiService.analyzeEdital('test');
-      
+
       expect(mocks.generateContent).toHaveBeenCalledTimes(3);
       expect(result).toEqual(mockData);
     });
@@ -231,7 +237,7 @@ describe('GeminiService', () => {
     it('should clean JSON with surrounding text (garbage collection)', async () => {
       const data = { key: "value" };
       const dirtyText = "Here is the json: \n\n { \"key\": \"value\" } \n\n Hope this helps!";
-      
+
       mocks.generateContent.mockResolvedValueOnce({ text: dirtyText });
 
       const result = await GeminiService.analyzeEdital('test');

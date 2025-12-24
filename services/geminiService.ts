@@ -10,6 +10,7 @@ import {
   DiscursiveEvaluation,
   StudyPlanParams
 } from "../types";
+import { withCircuitBreaker, recordHealth, chaosLatency, chaosPartition } from './chaosOrchestrator';
 
 // =============================================================================
 // AI PROVIDER CONFIGURATION
@@ -32,11 +33,11 @@ const isCloudFunction = typeof process !== 'undefined' && !!process.env.FUNCTION
 // Determine provider based on environment
 function getAIConfig(): AIConfig {
   const VERTEX_PROJECT = (typeof process !== 'undefined' && process.env.GOOGLE_CLOUD_PROJECT) ||
-                         (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GOOGLE_CLOUD_PROJECT) ||
-                         '';
+    (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GOOGLE_CLOUD_PROJECT) ||
+    '';
   const VERTEX_LOCATION = (typeof process !== 'undefined' && process.env.GOOGLE_CLOUD_LOCATION) ||
-                          (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GOOGLE_CLOUD_LOCATION) ||
-                          'us-central1';
+    (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GOOGLE_CLOUD_LOCATION) ||
+    'us-central1';
   const API_KEY = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) || '';
 
   // Cloud Functions always use Vertex AI with ADC
@@ -71,9 +72,9 @@ function getAIClient(): GoogleGenAI {
 
   // Return cached client if config hasn't changed
   if (aiClient && currentConfig &&
-      currentConfig.provider === config.provider &&
-      currentConfig.apiKey === config.apiKey &&
-      currentConfig.project === config.project) {
+    currentConfig.provider === config.provider &&
+    currentConfig.apiKey === config.apiKey &&
+    currentConfig.project === config.project) {
     return aiClient;
   }
 
@@ -142,42 +143,83 @@ const TIMEOUT_MS = 60000; // 60 seconds
 
 /**
  * Exponential backoff retry wrapper for API calls
+ * Enhanced with Circuit Breaker and Health Signals
  */
 async function withRetry<T>(
   operation: () => Promise<T>,
   operationName: string
 ): Promise<T> {
-  let lastError: Error | null = null;
+  const circuitName = `gemini:${operationName}`;
+  const startTime = Date.now();
 
-  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-    try {
-      // Create timeout promise
-      const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error(`Timeout após ${TIMEOUT_MS / 1000}s`)), TIMEOUT_MS);
+  // Wrap with Circuit Breaker
+  return withCircuitBreaker(
+    circuitName,
+    async () => {
+      let lastError: Error | null = null;
+
+      for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+        try {
+          // Chaos: Latency injection
+          const result = await chaosLatency(
+            async () => {
+              // Chaos: Network partition
+              return chaosPartition(
+                async () => {
+                  // Create timeout promise
+                  const timeoutPromise = new Promise<never>((_, reject) => {
+                    setTimeout(() => reject(new Error(`Timeout após ${TIMEOUT_MS / 1000}s`)), TIMEOUT_MS);
+                  });
+
+                  // Race between operation and timeout
+                  return Promise.race([operation(), timeoutPromise]);
+                },
+                operationName,
+                undefined
+              );
+            },
+            operationName
+          );
+
+          // Success: record healthy
+          const latency = Date.now() - startTime;
+          recordHealth({
+            service: circuitName,
+            status: latency > 10000 ? 'degraded' : 'healthy',
+            latency
+          });
+
+          return result;
+        } catch (error: unknown) {
+          lastError = error instanceof Error ? error : new Error(String(error));
+          const delay = INITIAL_DELAY_MS * Math.pow(2, attempt);
+
+          console.warn(
+            `[${operationName}] Tentativa ${attempt + 1}/${MAX_RETRIES} falhou: ${lastError.message}. ` +
+            (attempt < MAX_RETRIES - 1 ? `Retentando em ${delay / 1000}s...` : 'Sem mais tentativas.')
+          );
+
+          // Don't wait after the last attempt
+          if (attempt < MAX_RETRIES - 1) {
+            await new Promise(resolve => setTimeout(resolve, delay));
+          }
+        }
+      }
+
+      // Record failure
+      recordHealth({
+        service: circuitName,
+        status: 'failed',
+        lastError: lastError?.message
       });
 
-      // Race between operation and timeout
-      const result = await Promise.race([operation(), timeoutPromise]);
-      return result;
-    } catch (error: unknown) {
-      lastError = error instanceof Error ? error : new Error(String(error));
-      const delay = INITIAL_DELAY_MS * Math.pow(2, attempt);
-
-      console.warn(
-        `[${operationName}] Tentativa ${attempt + 1}/${MAX_RETRIES} falhou: ${lastError.message}. ` +
-        (attempt < MAX_RETRIES - 1 ? `Retentando em ${delay / 1000}s...` : 'Sem mais tentativas.')
+      throw new Error(
+        `Falha após ${MAX_RETRIES} tentativas: ${lastError?.message || 'Erro desconhecido'}. ` +
+        'Verifique sua conexão e tente novamente.'
       );
-
-      // Don't wait after the last attempt
-      if (attempt < MAX_RETRIES - 1) {
-        await new Promise(resolve => setTimeout(resolve, delay));
-      }
-    }
-  }
-
-  throw new Error(
-    `Falha após ${MAX_RETRIES} tentativas: ${lastError?.message || 'Erro desconhecido'}. ` +
-    'Verifique sua conexão e tente novamente.'
+    },
+    // No fallback: let errors propagate
+    undefined as unknown as T
   );
 }
 
