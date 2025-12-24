@@ -18,8 +18,8 @@ const mocks = vi.hoisted(() => {
 vi.mock('@google/genai', () => {
   return {
     GoogleGenAI: class MockGoogleGenAI {
-      public models: any;
-      constructor(params: any) {
+      public models: { generateContent: typeof mocks.generateContent };
+      constructor(params: { apiKey?: string }) {
         mocks.GoogleGenAIConstructor(params);
         this.models = {
           generateContent: mocks.generateContent
@@ -70,14 +70,14 @@ describe('GeminiService', () => {
   describe('Functionalities', () => {
 
     // --- Helper to mock successful JSON response ---
-    const mockSuccess = (data: any) => {
+    const mockSuccess = (data: Record<string, unknown>) => {
       mocks.generateContent.mockResolvedValueOnce({
         text: JSON.stringify(data)
       });
     };
 
     // --- Helper to mock successful JSON response with Markdown block ---
-    const mockSuccessWithMarkdown = (data: any) => {
+    const mockSuccessWithMarkdown = (data: Record<string, unknown>) => {
       mocks.generateContent.mockResolvedValueOnce({
         text: "```json\n" + JSON.stringify(data) + "\n```"
       });
