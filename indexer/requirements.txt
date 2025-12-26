@@ -1,0 +1,4 @@
+google-cloud-aiplatform>=1.38.0
+vertexai>=1.38.0
+requests>=2.31.0
+beautifulsoup4>=4.12.0

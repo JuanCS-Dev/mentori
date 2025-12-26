@@ -1,4 +1,5 @@
 import * as pdfjsLib from 'pdfjs-dist';
+import { chaosCrash, chaosLatency, chaosCorruption } from './chaosOrchestrator';
 
 // Configure PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -34,23 +35,38 @@ export const MarkItDownService = {
   async convertFile(file: File): Promise<ConversionResult> {
     const extension = file.name.split('.').pop()?.toLowerCase();
 
+    // CRM: Chaos Crash Simulation
     try {
-      switch (extension) {
-        case 'txt':
-        case 'md':
-        case 'csv':
-        case 'json':
-          return await this.readTextFile(file);
+      chaosCrash('MarkItDownService');
+    } catch (e) {
+      return { text: "", error: (e as Error).message };
+    }
 
-        case 'pdf':
-          return await this.extractPdfText(file);
+    try {
+      // CRM: Chaos Latency Simulation
+      return await chaosLatency(async () => {
+        let result: ConversionResult;
+        switch (extension) {
+          case 'txt':
+          case 'md':
+          case 'csv':
+          case 'json':
+            result = await this.readTextFile(file);
+            break;
+          case 'pdf':
+            result = await this.extractPdfText(file);
+            break;
+          case 'docx':
+            result = await this.extractDocxText(file);
+            break;
+          default:
+            result = await this.readTextFile(file); // Try text anyway
+        }
 
-        case 'docx':
-          return await this.extractDocxText(file);
+        // CRM: Chaos Corruption Simulation
+        return chaosCorruption(result, 'MarkItDownService');
+      }, 'convertFile');
 
-        default:
-          return await this.readTextFile(file); // Try text anyway
-      }
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Unknown error';
       console.error('Erro ao processar arquivo:', error);
@@ -119,8 +135,8 @@ export const MarkItDownService = {
       // DOCX is a ZIP file containing XML
       const arrayBuffer = await file.arrayBuffer();
 
-      // Try to use native browser decompression if available
       // Fallback: read as text and try to parse
+      // chaosLatency is implicitly handled by the parent caller, but we could add granular chaos here if needed.
       const text = await this.readDocxAsText(arrayBuffer, file.name);
 
       return {

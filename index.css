@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --kitchen-bg: #f8f9fa;
+  --kitchen-text: #202124;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--kitchen-bg);
+  color: var(--kitchen-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar for Kitchen Style */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #dadce0;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #bdc1c6;
+}
+
+/* Utility classes for specific Kitchen UI elements */
+.kitchen-header {
+  font-family: 'Space Mono', monospace;
+  letter-spacing: -0.02em;
+}
+
+.kitchen-card {
+  @apply bg-kitchen-card border border-kitchen-border rounded-kitchen shadow-sm transition-all duration-200;
+}
+
+.kitchen-card:hover {
+  @apply shadow-kitchen-hover transform -translate-y-0.5;
+}
+
+.kitchen-badge {
+  @apply px-2 py-0.5 text-xs font-medium rounded-md uppercase tracking-wide;
+}
+
+.kitchen-input {
+  @apply w-full bg-transparent border border-gray-600 rounded-md px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 placeholder-gray-500;
+}

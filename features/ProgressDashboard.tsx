@@ -11,7 +11,8 @@ import {
   ArrowUp,
   ArrowDown,
   Minus,
-  BrainCircuit
+  BrainCircuit,
+  Share2
 } from 'lucide-react';
 import { useProgress } from '../hooks/usePersistence';
 
@@ -27,7 +28,15 @@ import { MasteryGrid } from '../components/MasteryGrid';
  * Mostra progresso real, celebra conquistas, identifica pontos fracos.
  * Feito com amor para quem está lutando por um sonho.
  */
-export const ProgressDashboard: React.FC = () => {
+import { NeuroShareCard } from '../components/NeuroShareCard';
+import { NeuroStudyPlanJSON } from '../types';
+
+interface ProgressDashboardProps {
+  userMood?: 'focused' | 'tired' | 'anxious';
+  studyPlan?: NeuroStudyPlanJSON | null;
+}
+
+export const ProgressDashboard: React.FC<ProgressDashboardProps> = ({ userMood = 'focused', studyPlan }) => {
   const { progress, getAccuracy } = useProgress();
 
   // Calcular tendência baseado na taxa de acerto atual
@@ -86,26 +95,23 @@ export const ProgressDashboard: React.FC = () => {
   const trend = getTrend(accuracy);
 
   return (
-    <div className="max-w-6xl mx-auto animate-in fade-in duration-500 space-y-8">
+    <div className="animate-in fade-in duration-500 space-y-8">
       {/* HEADER MOTIVACIONAL */}
-      <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-3xl p-8 text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
-
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="text-4xl">{motivation.emoji}</div>
+      <div className="bg-white border border-kitchen-border rounded-xl p-8 shadow-sm">
+        <div className="flex items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="text-5xl">{motivation.emoji}</div>
             <div>
-              <h1 className="text-3xl font-bold">{motivation.title}</h1>
-              <p className="text-white/80 text-lg">{motivation.message}</p>
+              <h1 className="text-2xl font-mono font-bold text-slate-800">{motivation.title}</h1>
+              <p className="text-slate-500 font-mono text-sm mt-1">{motivation.message}</p>
             </div>
           </div>
 
-          {/* XP BAR & LEVEL - Replaced with Quantum Leap Component */}
-          <div className="mt-6 bg-white/20 rounded-2xl p-4 backdrop-blur-sm">
+          {/* XP BAR & LEVEL */}
+          <div className="flex-1 max-w-md bg-gray-50 rounded-xl p-4 border border-gray-100">
             <div className="flex items-center gap-4">
-              <div className="p-2 bg-white/20 rounded-full">
-                <Trophy className="text-yellow-300" size={24} />
+              <div className="p-2 bg-white border border-gray-200 rounded-full shadow-sm">
+                <Trophy className="text-yellow-500" size={20} />
               </div>
               <div className="flex-1">
                 <XPDisplay />
@@ -154,7 +160,7 @@ export const ProgressDashboard: React.FC = () => {
       </div>
 
       {/* PERFORMANCE POR DISCIPLINA - Replaced with Mastery Heatmap */}
-      <div className="glass-card rounded-3xl p-6">
+      <div className="bg-white border border-kitchen-border shadow-sm rounded-3xl p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-indigo-100 rounded-xl">
@@ -171,7 +177,7 @@ export const ProgressDashboard: React.FC = () => {
       </div>
 
       {/* CONQUISTAS */}
-      <div className="glass-card rounded-3xl p-6">
+      <div className="bg-white border border-kitchen-border shadow-sm rounded-3xl p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="p-2 bg-amber-100 rounded-xl">
             <Award className="text-amber-600" size={24} />
@@ -214,13 +220,36 @@ export const ProgressDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* RECOMENDAÇÃO INTELIGENTE - Replaced with Recommendation Engine */}
-      <div className="mt-8">
-        <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2 px-2">
-          <Target size={18} className="text-indigo-600" />
-          Próximos Passos (IA)
-        </h3>
-        <RecommendationWidget />
+      {/* VIRAL SHARE SECTION - 2025 Growth Loop */}
+      <div className="mt-8 flex flex-col md:flex-row gap-8 items-start">
+        <div className="flex-1">
+          <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2 px-2">
+            <Target size={18} className="text-indigo-600" />
+            Próximos Passos (IA)
+          </h3>
+          <RecommendationWidget />
+        </div>
+
+        <div className="md:w-[350px] flex flex-col gap-4">
+          <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2 px-2">
+            <Share2 size={18} className="text-pink-600" />
+            Viralize sua Conquista
+          </h3>
+          <div className="flex justify-center">
+            <NeuroShareCard
+              userMood={userMood}
+              plan={studyPlan}
+              stats={{
+                focusMinutes: progress.totalStudyMinutes,
+                streakDays: progress.streakDays,
+                questionsSolved: progress.questionsAnswered
+              }}
+            />
+          </div>
+          <p className="text-xs text-center text-slate-400 max-w-[280px] mx-auto">
+            Compartilhe seu progresso diário para desbloquear boosts de dopamina no algoritmo.
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -245,7 +274,7 @@ const StatCard: React.FC<StatCardProps> = ({ icon: Icon, label, value, subtext, 
   };
 
   return (
-    <div className={`glass-card rounded-2xl p-4 ${highlight ? 'ring-2 ring-orange-400 ring-offset-2' : ''}`}>
+    <div className={`bg-white border border-kitchen-border shadow-sm rounded-2xl p-4 ${highlight ? 'ring-2 ring-orange-400 ring-offset-2' : ''}`}>
       <div className={`w-10 h-10 rounded-xl ${colors[color]} flex items-center justify-center mb-3`}>
         <Icon size={20} />
       </div>
@@ -276,8 +305,8 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
 }) => {
   return (
     <div className={`p-4 rounded-2xl border-2 transition-all ${unlocked
-        ? 'bg-gradient-to-br from-amber-50 to-yellow-50 border-amber-200'
-        : 'bg-slate-50 border-slate-200 opacity-60'
+      ? 'bg-gradient-to-br from-amber-50 to-yellow-50 border-amber-200'
+      : 'bg-slate-50 border-slate-200 opacity-60'
       }`}>
       <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-3 ${unlocked ? 'bg-amber-400 text-white' : 'bg-slate-200 text-slate-400'
         }`}>

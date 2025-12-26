@@ -1,0 +1,1237 @@
+[
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 1,
+    "disciplina": "Enfrentamento à Criminalidade",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que se refere ao Número de Identificação do Veículo (NIV), julgue os itens subsequentes.",
+    "enunciado": "A NBR 6.066:1980 padronizou o NIV com 17 caracteres, mas proibiu a utilização das letras “L”, “I” e “О”.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_001"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 2,
+    "disciplina": "Enfrentamento à Criminalidade",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que se refere ao Número de Identificação do Veículo (NIV), julgue os itens subsequentes.",
+    "enunciado": "A estrutura do NIV é composta por três seções: WMI (identificador internacional do fabricante), VDS (identificador das características gerais do veículo) e VIS (identificador do ano, da planta de fabricação e da individualização do veículo).",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_002"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 3,
+    "disciplina": "Enfrentamento à Criminalidade",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que se refere ao Número de Identificação do Veículo (NIV), julgue os itens subsequentes.",
+    "enunciado": "O Número de Identificação do Equipamento Veicular (NIEV) poderá substituir o NIV dos veículos com carroçaria.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_003"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 4,
+    "disciplina": "Enfrentamento à Criminalidade",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que se refere ao Número de Identificação do Veículo (NIV), julgue os itens subsequentes.",
+    "enunciado": "O NIV composto pela sequência 9BM9580248B598714 pode identificar um caminhão da montadora Mercedes Benz, fabricado em 2008.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_004"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 5,
+    "disciplina": "Enfrentamento à Criminalidade",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Acerca de adulterações em veículos, julgue os itens a seguir.",
+    "enunciado": "O tipo de fraude conhecido como transplante consiste na inserção de peça com gravação original de NIV sobre superfície que se queira adulterar.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_005"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 6,
+    "disciplina": "Enfrentamento à Criminalidade",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Acerca de adulterações em veículos, julgue os itens a seguir.",
+    "enunciado": "Parte das quadrilhas especializadas opta por não regravar o número dos motores, devido à dificuldade envolvida na realização desse procedimento.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_006"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 7,
+    "disciplina": "Enfrentamento à Criminalidade",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Acerca de adulterações em veículos, julgue os itens a seguir.",
+    "enunciado": "Um dos métodos de identificação que pode ser utilizado para avaliar fraude veicular é a comparação entre o ano de fabricação do veículo e o ano de fabricação de suas peças.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_007"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 8,
+    "disciplina": "Enfrentamento à Criminalidade",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Acerca de adulterações em veículos, julgue os itens a seguir.",
+    "enunciado": "Considera-se veículo salvado aquele que, tendo procedência ilícita ou irregular, utiliza-se de dados de um veículo legal de mesma marca, modelo e cor.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_008"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 9,
+    "disciplina": "Enfrentamento ao Tráfico de Drogas, Armas e Munições",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Considerando os dispositivos legais relativos a organizações criminosas e narcotraficantes existentes atualmente no Brasil, julgue os itens que se seguem.",
+    "enunciado": "O conceito legal de organização criminosa está estipulado em tratado internacional e diferencia-se da associação criminosa basicamente pelo número de seus integrantes.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_009"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 10,
+    "disciplina": "Enfrentamento ao Tráfico de Drogas, Armas e Munições",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Considerando os dispositivos legais relativos a organizações criminosas e narcotraficantes existentes atualmente no Brasil, julgue os itens que se seguem.",
+    "enunciado": "A facção criminosa denominada Primeiro Comando da Capital (PCC) tem como característica estrutural a descentralização de sua cadeia de comando, distribuída em várias células com lideranças autônomas.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_010"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 11,
+    "disciplina": "Direito Penal/Criminalidade",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "O Comando Vermelho, aliado à organização criminosa denominada Família do Norte, atualmente concentra, de forma regionalizada, o domínio das rotas de escoamento de cocaína que interligam o Brasil, o Peru e a Colômbia, na região Norte.",
+    "enunciado": "O Comando Vermelho, aliado à organização criminosa denominada Família do Norte, atualmente concentra, de forma regionalizada, o domínio das rotas de escoamento de cocaína que interligam o Brasil, o Peru e a Colômbia, na região Norte.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_011"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 12,
+    "disciplina": "Direito Penal/Tráfico de Drogas",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Em cada um dos itens a seguir é apresentada uma situação hipotética seguida de uma assertiva a ser julgada a respeito de tráfico de drogas e técnicas de entrevista.",
+    "enunciado": "Várias equipes da Polícia Rodoviária Federal (PRF) participaram de operação abrangendo alguns pontos de uma rodovia federal localizada no estado de Pernambuco. A ação policial visava à prevenção de crimes ligados, entre outros, ao tráfico de entorpecentes. Nessa situação, é correto afirmar que eventuais prisões e apreensões no contexto da operação envolverão prováveis situações de transporte de maconha e de insumos para o plantio da droga.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_012"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 13,
+    "disciplina": "Direito Penal/Tráfico de Drogas",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Em cada um dos itens a seguir é apresentada uma situação hipotética seguida de uma assertiva a ser julgada a respeito de tráfico de drogas e técnicas de entrevista.",
+    "enunciado": "Um policial rodoviário federal foi lotado em unidade situada em rodovia federal próximo a Anápolis/GO. Nesse caso, o policial deverá levar em consideração em suas abordagens, entre outras informações, que a região possui o segundo polo farmoquímico do Brasil cuja produção é de interesse das organizações criminosas responsáveis pelo processamento e refino de substâncias entorpecentes.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_013"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 14,
+    "disciplina": "Direito Penal/Técnicas de Entrevista",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Em cada um dos itens a seguir é apresentada uma situação hipotética seguida de uma assertiva a ser julgada a respeito de tráfico de drogas e técnicas de entrevista.",
+    "enunciado": "Um caminhão que transportava, ilegalmente, grande quantidade de éter e acetona foi apreendido em uma operação da PRF nas proximidades do Município de Bauru/SP. O motorista do veículo foi apresentado ao chefe da fiscalização para entrevista, visando obter informações que indicassem a real finalidade, a origem e o destino das substâncias apreendidas. Nesse caso, antes de iniciada a entrevista, deverá o policial, obrigatoriamente, cientificar o entrevistado sobre as garantias constitucionais que envolvem o procedimento, entre as quais, o direito de permanecer calado.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_014"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 15,
+    "disciplina": "Direito Penal/Técnicas de Entrevista",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Em cada um dos itens a seguir é apresentada uma situação hipotética seguida de uma assertiva a ser julgada a respeito de tráfico de drogas e técnicas de entrevista.",
+    "enunciado": "Suspeito de determinado crime foi abordado em operação da PRF, tendo sido entrevistado pelo policial responsável pela abordagem. Nessa situação, em uma das etapas da entrevista, deverá o policial permitir que 0 entrevistado narre livremente OS fatos, intercalando a narrativa com questionamentos que possam influenciar e direcionar as resposta dentro do contexto investigado.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_015"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 16,
+    "disciplina": "Direito Penal/Tráfico de Drogas",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Em cada um dos itens a seguir é apresentada uma situação hipotética seguida de uma assertiva a ser julgada a respeito de tráfico de drogas e técnicas de entrevista.",
+    "enunciado": "Um policial rodoviário foi lotado em uma unidade operacional de Dourados/MS. Nessa situação, considerando as peculiaridades da região, o policial deverá estar atento à existência de rota de contrabando de armas e tráfico internacional de drogas oriundos do Paraguai, via Ponta Porã/Dourados, tendo como principais destinos os estados de São Paulo e Paraná.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_016"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 17,
+    "disciplina": "Legislação de Trânsito/Fiscalização de Pesos e Dimensões",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que diz respeito à fiscalização de peso e dimensões, julgue os itens a seguir.",
+    "enunciado": "O peso bruto total combinado de um veículo refere-se ao peso máximo que ele pode transmitir ao pavimento, sendo constituído do somatório da tara mais a lotação.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_017"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 18,
+    "disciplina": "Legislação de Trânsito/Fiscalização de Pesos e Dimensões",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que diz respeito à fiscalização de peso e dimensões, julgue os itens a seguir.",
+    "enunciado": "A parte inferior do assento de um veículo automotor de tração e carga é um dos locais em que é possível estar inscrita ou afixada, voltada para porta, a indicação dos dados sobre seu peso e sua capacidade.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_018"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 19,
+    "disciplina": "Legislação de Trânsito/Fiscalização de Pesos e Dimensões",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que diz respeito à fiscalização de peso e dimensões, julgue os itens a seguir.",
+    "enunciado": "O comprimento total máximo regulamentar para veículos, com ou sem carga, que transitem por vias terrestres será medido do ponto mais avançado de sua extremidade dianteira ao ponto mais avançado de sua extremidade traseira, com exceção dos batentes, degraus e estribos de acesso, entre outros dispositivos.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_019"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 20,
+    "disciplina": "Legislação de Trânsito/Fiscalização de Pesos e Dimensões",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que diz respeito à fiscalização de peso e dimensões, julgue os itens a seguir.",
+    "enunciado": "Caminhões e caminhões-tratores são considerados não articulados e possuem o mesmo limite máximo que os semirreboques no que se refere ao peso bruto transmitido ao pavimento das vias públicas.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_020"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 21,
+    "disciplina": "Técnicas Policiais de Fiscalização",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que diz respeito à fiscalização de peso e dimensões, julgue os itens a seguir.",
+    "enunciado": "Veículo automotor 6x2 possui dois eixos, sendo um de rodagem simples e outro que pode ser de rodagem simples ou dupla, tendo ambos capacidade de tração.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_021"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 22,
+    "disciplina": "Técnicas Policiais de Fiscalização",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Ainda no que diz respeito à fiscalização de peso e dimensões, julgue os itens subsequentes.",
+    "enunciado": "O limite legal de peso se refere à capacidade do veículo, isto é, o limite máximo de peso para o veículo, que deve informado por seu fabricante.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_022"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 23,
+    "disciplina": "Técnicas Policiais de Fiscalização",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Ainda no que diz respeito à fiscalização de peso e dimensões, julgue os itens subsequentes.",
+    "enunciado": "A distância entre o plano vertical, passando pelos centros das suas rodas traseiras extremas e o seu ponto mais recuado, com todos os elementos rigidamente fixados a ele, é chamada de balanço traseiro de um veículo. Em sua medição, não se considera a carga, mas somente o veículo.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_023"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 24,
+    "disciplina": "Técnicas Policiais de Fiscalização",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Cada um dos itens a seguir apresenta uma situação hipotética seguida de uma assertiva a ser julgada a respeito de cronotacógrafo e sua utilização.",
+    "enunciado": "Um micro-ônibus se envolveu em grave acidente em rodovia federal, ocasionando diversas vítimas, entre as quais três passageiros do veículo. Ao verificar a documentação do veículo, o policial rodoviário constatou tratar-se de bem registrado na categoria particular em nome do próprio motorista, que conduzia a família em viagem de férias. Nessa situação, para melhor determinar as circunstâncias do acidente, deverá ser periciado o cronotacógrafo do veículo, de uso obrigatório devido a seu modelo e sua espécie.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_024"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 25,
+    "disciplina": "Técnicas Policiais de Fiscalização",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Cada um dos itens a seguir apresenta uma situação hipotética seguida de uma assertiva a ser julgada a respeito de cronotacógrafo e sua utilização.",
+    "enunciado": "Após acidente com ônibus de viagens interestaduais, foi verificado que o cronotacógrafo apresentava formato oval com lingueta de pressão e continha apenas uma folha. Nessa situação, de acordo com as características do aparelho, o policial rodoviário, de imediato, constatou que se tratava de um cronotacógrafo diário.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_025"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 26,
+    "disciplina": "Técnicas Policiais de Fiscalização",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Cada um dos itens a seguir apresenta uma situação hipotética seguida de uma assertiva a ser julgada a respeito de cronotacógrafo e sua utilização.",
+    "enunciado": "Na ocasião de um acidente de trânsito com ônibus que ocasionou dezenas de vítimas fatais, o cronotacógrafo digital do veículo foi analisado e o material, incluindo a fita diagrama, foi apreendido nos autos do competente inquérito policial. No curso da ação penal, passados quatro anos do fato, o juiz da causa determinou nova perícia na fita diagrama. Nesse caso, em condições normais de preservação, os registros deverão ser encontrados ainda legíveis e precisos.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_026"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 27,
+    "disciplina": "Técnicas Policiais de Fiscalização",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Cada um dos itens a seguir apresenta uma situação hipotética seguida de uma assertiva a ser julgada. Julgue-os no que se refere aos equipamentos utilizados para aferir velocidade.",
+    "enunciado": "Uma equipe da Polícia Rodoviária Federal, visando coibir excesso de velocidade em determinado trecho de sua circunscrição, posicionou, ostensivamente, radar portátil em ponto específico, o que resultou em várias autuações, devidamente registradas em imagens. O trecho fiscalizado tinha como velocidade máxima 40 km/h, devidamente sinalizada. Nesse caso, é incabível o uso do referido equipamento para fins de autuação.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_027"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 28,
+    "disciplina": "Técnicas Policiais de Fiscalização",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Cada um dos itens a seguir apresenta uma situação hipotética seguida de uma assertiva a ser julgada. Julgue-os no que se refere aos equipamentos utilizados para aferir velocidade.",
+    "enunciado": "Um policial rodoviário posicionou radar portátil em via de sua circunscrição, não atentando, porém, à inexistência de placa com sinal R-19. Nessa situação, as autuações procedidas em relação ao limite de velocidade da via serão nulas por inobservância ao princípio da transparência.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_028"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 29,
+    "disciplina": "Técnicas Policiais de Fiscalização",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Cada um dos itens a seguir apresenta uma situação hipotética seguida de uma assertiva a ser julgada. Julgue-os no que se refere aos equipamentos utilizados para aferir velocidade.",
+    "enunciado": "Um radar portátil foi devidamente posicionado em via com placa indicativa de velocidade máxima, mas sem qualquer sinalização indicando a localização do aparelho medidor. Nessa situação, é perfeitamente legal a conduta de fiscalização por não haver obrigatoriedade, nesse caso, de placa indicativa de localização do dispositivo.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_029"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 30,
+    "disciplina": "Técnicas Policiais de Fiscalização",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Cada um dos itens a seguir apresenta uma situação hipotética seguida de uma assertiva a ser julgada. Julgue-os no que se refere aos equipamentos utilizados para aferir velocidade.",
+    "enunciado": "Um radar portátil foi posicionado em via urbana, em local próximo a trecho fiscalizado por radar fixo. Nesse caso, serão válidas as autuações registradas pelo equipamento móvel, desde que posicionado a pelo menos 1.000 m do radar fixo.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_030"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 31,
+    "disciplina": "Fiscalização de Trânsito",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "A instalação de dispositivo de iluminação intermitente ou rotativa em veículos prestadores de utilidade pública dispensa autorização prévia de órgão executivo de trânsito competente.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_031"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 32,
+    "disciplina": "Fiscalização de Trânsito",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "São considerados comuns os veículos especiais destinados ao transporte de valores, quando devidamente equipados em atendimento na via.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_032"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 33,
+    "disciplina": "Fiscalização de Trânsito",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "Quando registrados em órgão competente para tal finalidade e estando devidamente equipados, veículos destinados ao serviço de escolta são considerados prestadores de serviços de utilidade pública.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_033"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 34,
+    "disciplina": "Fiscalização de Trânsito",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "Deixar de dar passagem a veículos de emergência, sem que estejam em serviço de urgência, mesmo que devidamente equipados, constitui infringência às normas de trânsito.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_034"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 35,
+    "disciplina": "Fiscalização de Trânsito",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "Restará não caracterizada a infração de dirigir sob influência de álcool, quando o condutor, com sinais de consumo, recusar-se a realizar o teste com etilômetro.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_035"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 36,
+    "disciplina": "Fiscalização de Trânsito",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "Caso o etilômetro não esteja disponível no momento da fiscalização, esta deverá ser efetuada considerando-se a presença de um conjunto de sinais de alteração da capacidade psicomotora.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_036"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 37,
+    "disciplina": "Fiscalização de Trânsito",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "No auto de infração relacionado à alcoolemia, o campo \"medição realizada (MR)\" deve ser preenchido de acordo com a tabela de valores referenciais para etilômetro.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_037"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 38,
+    "disciplina": "Fiscalização de Trânsito",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "Condutores com registro de habilitação nas categorias \"C\", \"D\" e \"E\", com idade inferior a 75 anos, dirigindo veículos das respectivas categorias, devem ser fiscalizados quanto à validade do exame toxicológico.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_038"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 39,
+    "disciplina": "Fiscalização de Produtos Perigosos",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "Carga perigosa é aquela que representa risco para a saúde das pessoas, para a segurança pública ou para o meio ambiente.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_039"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 40,
+    "disciplina": "Fiscalização de Produtos Perigosos",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "Veículo carregado de explosivos configura carga perigosa com produto perigoso.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_040"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 41,
+    "disciplina": "Fiscalização de Produtos Perigosos",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Em relação a produtos perigosos, julgue os itens subsequentes.",
+    "enunciado": "Um caminhão com gás-cloro é considerado de carga perigosa, mas não transporte perigoso.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_041"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 42,
+    "disciplina": "Fiscalização de Produtos Perigosos",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "A respeito dos procedimentos para atendimento de emergência, julgue os seguintes itens.",
+    "enunciado": "Em caso de emergência envolvendo produto perigoso, o perímetro de segurança é um procedimento de primeira resposta.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_042"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 43,
+    "disciplina": "Fiscalização de Produtos Perigosos",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "A respeito dos procedimentos para atendimento de emergência, julgue os seguintes itens.",
+    "enunciado": "Em uma emergência com produtos perigosos, a avaliação do cenário é a última etapa do procedimento padrão de atendimento policial.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_043"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 44,
+    "disciplina": "Fiscalização de Produtos Perigosos",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "A respeito dos procedimentos para atendimento de emergência, julgue os seguintes itens.",
+    "enunciado": "Observar a direção do vento em relação ao acidente é um dos cuidados na etapa de aproximação.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_044"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 45,
+    "disciplina": "Fiscalização de Produtos Perigosos",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "A respeito dos procedimentos para atendimento de emergência, julgue os seguintes itens.",
+    "enunciado": "A absorção cutânea é a principal forma de contaminação por produto químico.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_045"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 46,
+    "disciplina": "Fiscalização de Produtos Perigosos",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "A respeito dos procedimentos para atendimento de emergência, julgue os seguintes itens.",
+    "enunciado": "O número ONU caracteriza o transporte do produto perigoso.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_046"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 47,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que concerne aos tipos de acidentes e sua dinâmica, julgue os itens que se seguem.",
+    "enunciado": "A classificação é indicada para agrupar eventos e planejar ações de prevenção de acidentes em determinados locais.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_047"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 48,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que concerne aos tipos de acidentes e sua dinâmica, julgue os itens que se seguem.",
+    "enunciado": "Em uma sequência de eventos, o mais grave dará nome ao tipo de acidente.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_048"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 49,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que concerne aos tipos de acidentes e sua dinâmica, julgue os itens que se seguem.",
+    "enunciado": "Quanto a atropelamentos, estes podem ser de animais, pessoas ou veículos.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_049"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 50,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "No que concerne aos tipos de acidentes e sua dinâmica, julgue os itens que se seguem.",
+    "enunciado": "Caracteriza-se como capotamento o evento em que o veículo gira sobre si, em ângulo superior a 360°, imobilizando-se em qualquer posição.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_050"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 51,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "Colisão lateral, tanto no mesmo sentido como no sentido oposto, não resulta em alteração substancial e imediata da velocidade de nenhum dos veículos.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_051"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 52,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "Denomina-se incêndio o evento em que o veículo se incendeia, devido a defeito mecânico ou elétrico, como consequência da dinâmica do acidente ou outro fato não premeditado.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_052"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 53,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "Por se basear, entre outros fatores, na experiência do policial rodoviário federal, a causa presumível não terá seu campo impresso no boletim de acidente de trânsito emitido.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_053"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 54,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Julgue os próximos itens, relativos ao recebimento de comunicação de acidentes de trânsito (CAT).",
+    "enunciado": "Em caso de acidentes simultâneos, o atendimento deverá ocorrer na mesma ordem dos acionamentos.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_054"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 55,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Julgue os próximos itens, relativos ao recebimento de comunicação de acidentes de trânsito (CAT).",
+    "enunciado": "Aquele que receber a CAT, ou outro indicado, deverá buscar mais dados sobre a ocorrência, como a localização, e verificar se algum servidor da Polícia Rodoviária Federal está envolvido no evento.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_055"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 56,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Julgue os próximos itens, relativos ao recebimento de comunicação de acidentes de trânsito (CAT).",
+    "enunciado": "Em caso de acidente que envolva vítimas com lesões leves, o usuário deverá ser orientado, normalmente ainda por telefone, a retirar o(s) veículo(s) da pista.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_056"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 57,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Julgue os próximos itens, relativos ao recebimento de comunicação de acidentes de trânsito (CAT).",
+    "enunciado": "Caso ocorram interdições do leito carroçável que ocasionem graves prejuízos à fluidez do tráfego, o despacho de viatura deverá ser obrigatório.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_057"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 58,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Julgue os próximos itens, relativos ao recebimento de comunicação de acidentes de trânsito (CAT).",
+    "enunciado": "Acidente com dois ou mais óbitos deverá ser imediatamente informado à chefia de circunscrição.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_058"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 59,
+    "disciplina": "Segurança Viária e Perícia",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Julgue os próximos itens, relativos ao recebimento de comunicação de acidentes de trânsito (CAT).",
+    "enunciado": "Ao chegar ao local do acidente, a prioridade da equipe, deverá ser verificar as condições de segurança do local para, em seguida, analisar o estado físico dos envolvidos.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_059"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 60,
+    "disciplina": "Técnicas de Intervenção Policial",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "Com relação ao uso diferenciado da força, julgue os itens subsequentes.",
+    "enunciado": "Os princípios básicos sobre o uso da força e das armas de fogo destacam, entre outros pontos, que os governos devem, respeitada a legislação, assegurar a punição de policial que fizer uso arbitrário da força e das armas de fogo, sendo esse ato configurado como delito criminal.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_060"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 61,
+    "disciplina": "Técnicas de Intervenção Policial",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "Para garantir sua própria segurança, o policial rodoviário federal que, no exercício de suas funções, necessitar fazer uso de algema, deverá, preferencialmente, manter ajoelhada a pessoa infratora, ainda que esta pareça cooperativa.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_061"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 62,
+    "disciplina": "Técnicas de Intervenção Policial",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "No exercício de suas funções, o policial rodoviário federal deve, sempre que possível, fazer uso moderado e proporcional da força, visando reduzi-la, o que caracteriza a aplicação do princípio da necessidade.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_062"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 63,
+    "disciplina": "Técnicas de Intervenção Policial",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "O modelo Phoenix de uso progressivo da força prevê o emprego de agentes químicos no caso de resistência defensiva, enquanto o modelo de uso diferenciado da força pela Polícia Rodoviária Federal (PRF) prevê o controle físico em caso de resistência ativa.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 1,
+    "id": "cebraspe_policial_rodoviário__2021_063"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 64,
+    "disciplina": "Técnicas de Intervenção Policial",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "O emprego de instrumentos de menor potencial ofensivo em operações policiais permite ao policial exercer mais controle sobre uma situação de força, além de proporcionar mais flexibilidade e liberdade de ação.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_064"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Curso de Formação da Polícia Rodoviária Federal",
+    "ano": 2021,
+    "cargo": "Policial Rodoviário Federal",
+    "numero": 65,
+    "disciplina": "Técnicas de Intervenção Policial",
+    "texto_id": "",
+    "texto_base": "",
+    "comando": "",
+    "enunciado": "No âmbito da PRF, o uso de gás de pimenta foi suspenso diante da existência de estudos que indicam seu prejuízo à saúde.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "gabarito": 0,
+    "id": "cebraspe_policial_rodoviário__2021_065"
+  }
+]

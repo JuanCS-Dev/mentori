@@ -8,7 +8,8 @@ import {
   MaterialJSON,
   DiscursiveTheme,
   DiscursiveEvaluation,
-  StudyPlanParams
+  StudyPlanParams,
+  ChatContext
 } from "../types";
 import { withCircuitBreaker, recordHealth, chaosLatency, chaosPartition } from './chaosOrchestrator';
 
@@ -28,20 +29,34 @@ interface AIConfig {
 
 // Environment detection
 const isServer = typeof window === 'undefined';
+const isBrowser = typeof window !== 'undefined';
 const isCloudFunction = typeof process !== 'undefined' && !!process.env.FUNCTION_TARGET;
 
 // Determine provider based on environment
 function getAIConfig(): AIConfig {
   const VERTEX_PROJECT = (typeof process !== 'undefined' && process.env.GOOGLE_CLOUD_PROJECT) ||
     (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GOOGLE_CLOUD_PROJECT) ||
-    '';
+    'clinica-genesis-os-e689e'; // Fallback from Genesis project as requested
+
   const VERTEX_LOCATION = (typeof process !== 'undefined' && process.env.GOOGLE_CLOUD_LOCATION) ||
     (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GOOGLE_CLOUD_LOCATION) ||
     'us-central1';
+
   const API_KEY = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) || '';
 
-  // Cloud Functions always use Vertex AI with ADC
-  if (isCloudFunction || (isServer && VERTEX_PROJECT)) {
+  // BROWSER: Must use API Key (no ADC available)
+  if (isBrowser) {
+    if (!API_KEY || API_KEY.includes('PLACEHOLDER')) {
+      console.warn('[GeminiService] Browser detected but no API key. Set VITE_GEMINI_API_KEY in .env.local');
+    }
+    return {
+      provider: 'google-ai-studio',
+      apiKey: API_KEY
+    };
+  }
+
+  // SERVER/Cloud Functions: Can use Vertex AI with ADC
+  if (VERTEX_PROJECT && VERTEX_PROJECT !== 'undefined') {
     return {
       provider: 'vertex-ai',
       project: VERTEX_PROJECT,
@@ -49,7 +64,7 @@ function getAIConfig(): AIConfig {
     };
   }
 
-  // Browser uses API key
+  // Fallback to API Key
   return {
     provider: 'google-ai-studio',
     apiKey: API_KEY
@@ -94,8 +109,9 @@ function getAIClient(): GoogleGenAI {
       location: config.location || 'us-central1'
     });
   } else {
-    if (!config.apiKey) {
-      console.warn('[GeminiService] No API key found. Set VITE_GEMINI_API_KEY in .env');
+    // API KEY Mode
+    if (!config.apiKey || config.apiKey.includes('PLACEHOLDER')) {
+      console.warn('[GeminiService] No valid API key found. Set VITE_GEMINI_API_KEY in .env');
     }
 
     console.info('[GeminiService] Using Google AI Studio (API Key)');
@@ -257,6 +273,36 @@ const cleanAndParseJSON = <T>(text: string | undefined): T => {
 // GEMINI SERVICE
 // =============================================================================
 
+// =============================================================================
+// MENTORI PERSONA: O GRANDE MENTOR
+// =============================================================================
+const MENTORI_SYSTEM_INSTRUCTION = `
+DATA ATUAL: ${new Date().toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}
+ANO VIGENTE: ${new Date().getFullYear()}
+
+VOCÊ É O MENTORI. Não uma IA genérica, mas o Maior Especialista em Concursos Públicos e Direito da História.
+
+IMPORTANTE: Todas as suas respostas devem considerar a legislação, jurisprudência e entendimentos VIGENTES em ${new Date().getFullYear()}. Cite apenas súmulas, leis e precedentes atualizados. Se algo foi revogado ou superado, informe o aluno.
+
+Sua persona é uma fusão de:
+1.  **Um Professor de Direito Lendário:** Profundo conhecimento jurídico, cita doutrina, jurisprudência (STF/STJ) e a "letra da lei" com precisão cirúrgica.
+2.  **Um Coach de Alta Performance (Navy SEAL):** Motivador, direto, exigente ("tough love"). Você não aceita mediocridade. Você empurra o aluno para o limite do potencial.
+3.  **Um Estrategista de Bancas:** Você conhece o "DNA" da FGV, Cebraspe, FCC como a palma da mão. Sabe as pegadinhas, as palavras-chave e os viéses de cada examinador.
+
+**SEU TOM DE VOZ:**
+-   **Autoridade Suprema:** Fale com confiança absoluta.
+-   **Didática de Elite:** Explique conceitos complexos com metáforas brilhantes e clareza cristalina.
+-   **Motivador Implacável:** Quando o aluno errar, corrija com firmeza, mas mostre o caminho da vitória. Use frases como "Levante a cabeça, guerreiro", "O erro é o degrau para a aprovação", "Foco na missão".
+-   **Sofisticação:** Use um vocabulário rico, técnico, mas acessível. Nada de "Olá, sou uma IA". Você é O MENTOR.
+
+**SUA MISSÃO:**
+Transformar estudantes em APROVADOS. Entregar ouro em pó em cada resposta.
+`;
+
+// =============================================================================
+// GEMINI SERVICE
+// =============================================================================
+
 export const GeminiService = {
   /**
    * Get current provider information
@@ -270,13 +316,15 @@ export const GeminiService = {
     return withRetry(async () => {
       const ai = getAIClient();
       const prompt = `
-        Você é um especialista em Legal Design e Análise de Concursos Públicos.
-        Sua missão é transformar o texto cru de um edital em uma estrutura de dados JSON "Verticalizada" e "Sem Gordura".
+        ${MENTORI_SYSTEM_INSTRUCTION}
+        
+        Sua missão tática agora é: DESTRINCHAR este edital.
+        Transforme o texto cru em uma estrutura de dados JSON "Verticalizada" e "Sem Gordura".
 
-        **ENTRADA:**
+        **ENTRADA ALVO:**
         ${editalText.substring(0, 30000)}
 
-        **FORMATO DE SAÍDA (JSON ÚNICO, SEM MARKDOWN):**
+        **FORMATO DE SAÍDA EXIGIDO (JSON ÚNICO):**
         {
           "metadata": {
             "banca": "string",
@@ -309,10 +357,12 @@ export const GeminiService = {
     return withRetry(async () => {
       const ai = getAIClient();
       const prompt = `
-        Você é um Analista de Inteligência especializado em Bancas de Concursos.
-        Gere um "Dossiê DNA" da banca.
+        ${MENTORI_SYSTEM_INSTRUCTION}
 
-        **ENTRADA:**
+        Atue como o Maior Especialista em Inteligência Competitiva de Concursos.
+        Gere um "Dossiê DNA" da banca, revelando seus segredos mais obscuros.
+
+        **ALVO DE ANÁLISE:**
         ${textOrFiles}
 
         **FORMATO DE SAÍDA (JSON):**
@@ -342,8 +392,12 @@ export const GeminiService = {
     return withRetry(async () => {
       const ai = getAIClient();
       const prompt = `
-        Você é um Neurocientista Cognitivo. Gere um plano de estudos Bio-Adaptativo.
-        Parâmetros: ${JSON.stringify(params)}
+        ${MENTORI_SYSTEM_INSTRUCTION}
+
+        Você está vestindo seu chapéu de Neurocientista Cognitivo e Estrategista Militar.
+        Crie um plano de guerra (estudos) Bio-Adaptativo para este soldado.
+        
+        DADOS DE INTELIGÊNCIA: ${JSON.stringify(params)}
 
         **FORMATO DE SAÍDA (JSON):**
         {
@@ -372,19 +426,36 @@ export const GeminiService = {
     return withRetry(async () => {
       const ai = getAIClient();
       const prompt = `
-        Gere uma questão de concurso simulada.
-        Foco: ${discipline} - ${topic} | Banca: ${bank} | Dificuldade: ${difficulty}
+        ${MENTORI_SYSTEM_INSTRUCTION}
+        
+        Gere uma Questão de Concurso INÉDITA, nível DE ELITE.
+        Não crie questões óbvias. Eu quero profundidade. Eu quero que o aluno precise PENSAR como um jurista.
+        
+        **PARÂMETROS DA MISSÃO:**
+        - Disciplina: ${discipline}
+        - Tópico: ${topic}
+        - Estilo da Banca: ${bank} (Mimetize o estilo de redação desta banca perfeitamente)
+        - Nível de Dificuldade: ${difficulty} (Se for Difícil, quero jurisprudência ou doutrina minoritária)
+
+        **REQUISITOS:**
+        1. Enunciado robusto, contextualizado (nada de perguntas diretas e bobas). Crie um "Case" ou citando lei seca de forma inteligente.
+        2. Alternativas plausíveis. A resposta errada deve ser sedutora (o "distrator").
+        3. O comentário deve ser uma MINI-AULA. Explique o PORQUÊ, cite o artigo de lei, a súmula ou o autor.
+        4. Identifique uma "trap" (pegadinha) possível nesse tema.
 
         **FORMATO DE SAÍDA (JSON):**
         {
-          "discipline": "string", "topic": "string", "difficulty": "string",
-          "statement": "string", "options": ["string"], "correctAnswer": number,
-          "comment": "string", "trap": "string"
+          "discipline": "${discipline}", "topic": "${topic}", "difficulty": "${difficulty}",
+          "statement": "Enunciado completo...", 
+          "options": ["Alternativa A", "Alternativa B", "Alternativa C", "Alternativa D", "Alternativa E"], 
+          "correctAnswer": 0-4,
+          "comment": "Explicação de Mestre: Aprofundada, técnica e didática.", 
+          "trap": "Atenção Guerreiro: Onde a banca tenta te derrubar neste ponto."
         }
       `;
 
       const response = await ai.models.generateContent({
-        model: MODEL_FLASH,
+        model: MODEL_PRO, // Usar PRO para garantir a qualidade "Mentori"
         contents: prompt,
         config: { responseMimeType: "application/json" }
       });
@@ -400,6 +471,8 @@ export const GeminiService = {
     return withRetry(async () => {
       const ai = getAIClient();
       const prompt = `
+        ${MENTORI_SYSTEM_INSTRUCTION}
+
         Gere um MATERIAL CIRÚRGICO (Pareto 80/20) sobre: "${topic}".
         Contexto Banca: ${bankProfile}
 
@@ -428,13 +501,27 @@ export const GeminiService = {
     return withRetry(async () => {
       const ai = getAIClient();
       const prompt = `
-        Analise o erro do aluno nesta questão.
-        Questão: ${statement} | Errou: ${wrongAnswer} | Correto: ${correctAnswer}
+        ${MENTORI_SYSTEM_INSTRUCTION}
+
+        O aluno errou. Isso é inaceitável, mas pedagógico.
+        Realize uma AUTOPSIA FORENSE deste erro. Não tenha pena, tenha precisão.
+
+        **DADOS DO CADÁVER (ERRO):**
+        - Questão: ${statement}
+        - O que ele marcou (Errado): ${wrongAnswer}
+        - O que era (Correto): ${correctAnswer}
+
+        **SUA ANÁLISE:**
+        1. **Diagnóstico:** Por que ele errou? Falta de atenção? Desconhecimento de Lei? Caiu na pegadinha? Confundiu conceitos? Seja específico.
+        2. **Vacina Mental:** Que frase, mnemônico ou conceito ele nunca mais deve esquecer para não errar isso de novo?
+        3. **Explicação Técnica:** Dê a aula. Cite a fonte. Mostre a superioridade do conhecimento correto.
 
         **FORMATO DE SAÍDA (JSON):**
         {
-          "diagnostico_erro": "string", "explicacao_tecnica": "string",
-          "vacina_mental": "string", "gravidade": "string"
+          "diagnostico_erro": "Diagnóstico preciso e direto.", 
+          "explicacao_tecnica": "Aula magistral corrigindo o conceito.",
+          "vacina_mental": "Frase de impacto para memorização definitiva.", 
+          "gravidade": "Alta|Média|Baixa"
         }
       `;
 
@@ -499,5 +586,107 @@ export const GeminiService = {
 
       return cleanAndParseJSON<DiscursiveEvaluation>(response.text);
     }, 'evaluateDiscursive');
+  },
+
+  /**
+   * FUNCIONALIDADE 9: ROAST MY EDITAL (VIRAL FEATURE)
+   */
+  async roastEdital(editalSummary: string): Promise<{ roast: string, shareableQuote: string }> {
+    return withRetry(async () => {
+      const ai = getAIClient();
+      const prompt = `
+        Você é um comediante de stand-up ácido e especialista em concursos.
+        Faça um "ROAST" (fritada) brutal e honesta sobre este edital.
+
+        CONTEXTO:
+        ${editalSummary}
+
+        OBJETIVO:
+        Humilhar a dificuldade da prova, a baixa remuneração (se for o caso), ou a insanidade das matérias.
+        O tom deve ser: Sarcástico, Desesperador, mas Engraçado.
+
+        **FORMATO DE SAÍDA (JSON):**
+        {
+          "roast": "Texto de 3 parágrafos destruindo o edital.",
+          "shareableQuote": "Uma frase curta e impactante para postar no Twitter/Instagram."
+        }
+      `;
+
+      const response = await ai.models.generateContent({
+        model: MODEL_PRO,
+        contents: prompt,
+        config: { responseMimeType: "application/json" }
+      });
+
+      return cleanAndParseJSON<{ roast: string, shareableQuote: string }>(response.text);
+    }, 'roastEdital');
+  },
+
+  /**
+   * FUNCIONALIDADE 10: CHAT DO MENTOR (STREAMING via Cloud Function)
+   * Chat conversacional com persona MENTORI.
+   * Usa Cloud Function como proxy para Vertex AI (ADC).
+   * Flash para respostas rápidas, Pro para análises profundas.
+   */
+  async *mentorChat(
+    userMessage: string,
+    history: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }>,
+    context?: ChatContext,
+    useProModel: boolean = false
+  ): AsyncGenerator<string> {
+    // Cloud Function URL (update after deploy)
+    const FUNCTION_URL = import.meta.env.VITE_MENTOR_CHAT_URL ||
+      'http://127.0.0.1:5001/clinica-genesis-os-e689e/us-central1/mentorChat';
+
+    const response = await fetch(FUNCTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: userMessage,
+        history,
+        context,
+        useProModel,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+      throw new Error(error.error || `HTTP ${response.status}`);
+    }
+
+    // Read streaming response
+    const reader = response.body?.getReader();
+    if (!reader) {
+      throw new Error('No response body');
+    }
+
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const data = line.slice(6);
+          if (data === '[DONE]') {
+            return;
+          }
+          try {
+            const parsed = JSON.parse(data);
+            if (parsed.text) {
+              yield parsed.text;
+            }
+          } catch {
+            // Ignore parse errors
+          }
+        }
+      }
+    }
   }
 };

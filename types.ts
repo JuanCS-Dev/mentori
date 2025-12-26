@@ -7,7 +7,8 @@ export enum AppView {
   QUESTIONS = 'QUESTIONS',
   MATERIAL = 'MATERIAL',
   DISCURSIVE = 'DISCURSIVE',
-  STUDY_CYCLE = 'STUDY_CYCLE'
+  STUDY_CYCLE = 'STUDY_CYCLE',
+  LANDING = 'LANDING'
 }
 
 // --- EDITAL ---
@@ -119,4 +120,17 @@ export interface StudyPlanParams {
   horas_diarias: number;
   editalSummary: string;
   bankProfile: string;
+}
+
+// --- MENTOR CHAT ---
+export interface MentorMessage {
+  role: 'user' | 'mentor';
+  content: string;
+  timestamp: number;
+}
+
+export interface ChatContext {
+  currentView: string;
+  editalLoaded?: string;
+  sessionActive?: boolean;
 }

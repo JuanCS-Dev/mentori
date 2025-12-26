@@ -5,11 +5,7 @@ import { EditalJSON } from '../types';
 import { ActiveStudyArea, SubjectList } from '../components/StudyCycleComponents';
 
 /**
- * Ciclo de Estudos - Metodo Alexandre Meirelles
- *
- * O ciclo de estudos e o metodo mais usado por concurseiros aprovados.
- * Permite estudar multiplas materias de forma rotativa e flexivel,
- * adaptando-se a imprevistos sem perder o ritmo.
+ * Ciclo de Estudos - Kitchen Theme Refactor
  */
 
 interface CycleSubject {
@@ -187,40 +183,38 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
   return (
     <div className="max-w-6xl mx-auto animate-in fade-in duration-500 space-y-8">
       {/* HEADER */}
-      <div className="bg-gradient-to-br from-teal-600 to-emerald-600 rounded-3xl p-8 text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div className="bg-white border border-kitchen-border rounded-xl p-8 shadow-sm">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <RefreshCw size={28} />
-              <h1 className="text-3xl font-bold">Ciclo de Estudos</h1>
+              <RefreshCw size={24} className="text-kitchen-text-secondary" />
+              <h1 className="text-2xl font-mono font-bold text-kitchen-text-primary">Ciclo_de_Estudos.exe</h1>
             </div>
-            <p className="text-teal-100 text-lg">
-              Metodo Alexandre Meirelles - Estude todas as materias de forma rotativa
+            <p className="text-kitchen-text-secondary font-mono text-sm">
+              Método: Alexandre Meirelles // Modo: Rotativo
             </p>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="bg-white/20 rounded-2xl px-6 py-3 backdrop-blur-sm">
-              <div className="text-sm text-teal-100">Ciclo Atual</div>
-              <div className="text-3xl font-bold">#{cycleData.cycleNumber}</div>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2">
+              <div className="text-xs font-mono text-gray-500 uppercase tracking-widest">Ciclo_Atual</div>
+              <div className="text-xl font-mono font-bold text-gray-800">#{cycleData.cycleNumber}</div>
             </div>
-            <div className="bg-white/20 rounded-2xl px-6 py-3 backdrop-blur-sm">
-              <div className="text-sm text-teal-100">Ciclos Completos</div>
-              <div className="text-3xl font-bold">{cycleData.totalCyclesCompleted}</div>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2">
+              <div className="text-xs font-mono text-gray-500 uppercase tracking-widest">Concluídos</div>
+              <div className="text-xl font-mono font-bold text-gray-800">{cycleData.totalCyclesCompleted}</div>
             </div>
           </div>
         </div>
 
         <div className="mt-6">
-          <div className="flex justify-between text-sm mb-2">
+          <div className="flex justify-between text-xs font-mono text-gray-500 mb-2 uppercase tracking-wide">
             <span>Progresso do Ciclo</span>
             <span>{cycleProgress.toFixed(0)}%</span>
           </div>
-          <div className="h-3 bg-white/20 rounded-full overflow-hidden">
+          <div className="h-2 bg-gray-100 rounded-full overflow-hidden border border-gray-200">
             <div
-              className="h-full bg-white rounded-full transition-all duration-500"
+              className="h-full bg-kitchen-accent-greenText/80 rounded-full transition-all duration-500"
               style={{ width: `${cycleProgress}%` }}
             />
           </div>
@@ -252,27 +246,23 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
       />
 
       {/* TIPS */}
-      <div className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-3xl p-6 border border-slate-200">
-        <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
-          <Target size={18} className="text-teal-600" />
-          Como usar o Ciclo de Estudos
+      <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
+        <h3 className="font-bold font-mono text-gray-700 mb-3 flex items-center gap-2 text-sm uppercase tracking-wide">
+          <Target size={16} />
+          Instruções de Uso
         </h3>
-        <ul className="text-slate-600 space-y-2 text-sm">
+        <ul className="text-gray-600 space-y-2 text-sm font-mono">
           <li className="flex items-start gap-2">
-            <span className="text-teal-500 font-bold">1.</span>
-            <span>Adicione todas as materias do edital com o tempo ideal para cada uma</span>
+            <span className="text-blue-500 font-bold">01.</span>
+            <span>Adicione disciplinas do Edital com metas de horas.</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-teal-500 font-bold">2.</span>
-            <span>Estude seguindo a ordem do ciclo - ele se adapta ao seu ritmo</span>
+            <span className="text-blue-500 font-bold">02.</span>
+            <span>Siga a sequência. O sistema se adapta ao seu ritmo.</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-teal-500 font-bold">3.</span>
-            <span>Se precisar parar, nao tem problema - continue de onde parou</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-teal-500 font-bold">4.</span>
-            <span>Ao completar um ciclo, ele reinicia automaticamente para nova rodada</span>
+            <span className="text-blue-500 font-bold">03.</span>
+            <span>Pause/Retome livremente. O estado é persistido.</span>
           </li>
         </ul>
       </div>

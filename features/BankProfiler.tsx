@@ -32,33 +32,31 @@ export const BankProfiler: React.FC<Props> = ({ onDataUpdate, savedData }) => {
       {!savedData && (
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
             {/* Info Card */}
-            <div className="md:col-span-4 bg-slate-900 text-white p-8 rounded-3xl shadow-2xl relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500 rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity duration-700"></div>
-            
-            <div className="relative z-10">
-                <div className="h-12 w-12 bg-white/10 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-sm border border-white/10">
-                        <Microscope className="h-6 w-6 text-indigo-300" />
-                </div>
-                <h3 className="text-2xl font-bold mb-3 tracking-tight">Decodificador de Banca</h3>
-                <p className="text-slate-300 text-sm mb-6 leading-relaxed">
-                    Nossa IA analisa padrões semânticos em milhares de questões para revelar o que os examinadores tentam esconder.
-                </p>
-                
-                <div className="space-y-4">
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
-                        <Target size={18} className="text-emerald-400" />
-                        <span className="text-xs font-semibold text-slate-200">Detecção de Pegadinhas</span>
+            <div className="md:col-span-4 bg-white border border-kitchen-border rounded-xl p-8 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div className="h-12 w-12 bg-blue-50 border border-blue-100 rounded-lg flex items-center justify-center mb-6 text-blue-600">
+                            <Microscope size={24} />
                     </div>
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
-                        <PieChart size={18} className="text-purple-400" />
-                        <span className="text-xs font-semibold text-slate-200">Mapa de Calor de Tópicos</span>
+                    <h3 className="text-xl font-mono font-bold text-gray-800 mb-3 tracking-tight">Decodificador de Banca</h3>
+                    <p className="text-gray-500 font-mono text-xs mb-6 leading-relaxed">
+                        Nossa IA analisa padrões semânticos em milhares de questões para revelar o que os examinadores tentam esconder.
+                    </p>
+                    
+                    <div className="space-y-3">
+                        <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
+                            <Target size={16} className="text-green-600" />
+                            <span className="text-xs font-bold font-mono text-gray-700">Detecção de Pegadinhas</span>
+                        </div>
+                        <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100">
+                            <PieChart size={16} className="text-purple-600" />
+                            <span className="text-xs font-bold font-mono text-gray-700">Mapa de Calor de Tópicos</span>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
 
             {/* Input Card */}
-            <div className="md:col-span-8 glass-panel rounded-3xl p-8 flex flex-col justify-between">
+            <div className="md:col-span-8 bg-white border border-kitchen-border rounded-xl p-8 flex flex-col justify-between shadow-sm">
                 <div>
                     <label className="flex items-center justify-between text-sm font-bold text-slate-700 mb-4">
                         <span>Dados de Entrada</span>
@@ -91,22 +89,22 @@ export const BankProfiler: React.FC<Props> = ({ onDataUpdate, savedData }) => {
       {savedData && (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
            {/* Top Profile Header */}
-           <div className="bg-white rounded-[2.5rem] p-10 shadow-xl border border-slate-100 flex flex-col md:flex-row gap-10">
+           <div className="bg-white rounded-xl p-8 shadow-sm border border-kitchen-border flex flex-col md:flex-row gap-8">
               <div className="flex-shrink-0">
-                 <div className="w-32 h-32 bg-indigo-600 rounded-[2rem] flex items-center justify-center text-white shadow-2xl shadow-indigo-200">
-                    <Target size={48} />
+                 <div className="w-24 h-24 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center text-indigo-600">
+                    <Target size={40} />
                  </div>
               </div>
               <div className="flex-1">
                  <div className="flex items-center gap-3 mb-2">
-                    <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight">{savedData.perfil.nome}</h2>
-                    <span className="px-4 py-1 bg-red-100 text-red-700 rounded-full text-xs font-black uppercase tracking-widest border border-red-200">Dificuldade: {savedData.perfil.dificuldade}/10</span>
+                    <h2 className="text-2xl font-mono font-bold text-gray-800 tracking-tight">{savedData.perfil.nome}</h2>
+                    <span className="px-3 py-1 bg-red-50 text-red-700 rounded-lg text-xs font-mono font-bold uppercase border border-red-100">Dificuldade: {savedData.perfil.dificuldade}/10</span>
                  </div>
-                 <div className="flex items-center gap-2 text-indigo-600 font-bold mb-4">
-                    <Activity size={18} />
+                 <div className="flex items-center gap-2 text-indigo-600 font-mono text-sm font-bold mb-4">
+                    <Activity size={16} />
                     <span>DNA Predominante: {savedData.perfil.estilo}</span>
                  </div>
-                 <p className="text-slate-500 text-lg leading-relaxed max-w-3xl">
+                 <p className="text-gray-600 text-sm font-mono leading-relaxed max-w-3xl">
                     {savedData.perfil.descricao_estilo}
                  </p>
               </div>
@@ -135,21 +133,21 @@ export const BankProfiler: React.FC<Props> = ({ onDataUpdate, savedData }) => {
 
               {/* Mapa de Calor */}
               <div className="lg:col-span-5 space-y-6">
-                 <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2 px-2">
-                    <Zap className="text-amber-500 fill-amber-500" /> Mapa de Calor (Prioridade)
+                 <h3 className="text-lg font-mono font-bold text-gray-800 flex items-center gap-2 px-2">
+                    <Zap className="text-amber-500" size={18} /> Mapa de Calor (Prioridade)
                  </h3>
-                 <div className="bg-slate-900 rounded-3xl p-6 shadow-2xl">
+                 <div className="bg-white border border-kitchen-border rounded-xl p-6 shadow-sm">
                     <div className="space-y-6">
                        {savedData.mapa_calor.map((item, i) => (
                           <div key={i} className="space-y-2">
-                             <div className="flex justify-between text-xs font-bold text-slate-400 uppercase tracking-widest">
+                             <div className="flex justify-between text-xs font-mono font-bold text-gray-500 uppercase tracking-widest">
                                 <span>{item.materia}</span>
-                                <span className="text-amber-400">{item.frequencia}</span>
+                                <span className="text-amber-600">{item.frequencia}</span>
                              </div>
-                             <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-                                <div className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full" style={{ width: item.frequencia }}></div>
+                             <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden border border-gray-200">
+                                <div className="h-full bg-amber-500 rounded-full" style={{ width: item.frequencia }}></div>
                              </div>
-                             <p className="text-[10px] text-slate-500 font-medium">FOCO: {item.foco}</p>
+                             <p className="text-[10px] text-gray-400 font-mono font-bold">FOCO: {item.foco}</p>
                           </div>
                        ))}
                     </div>
@@ -158,15 +156,12 @@ export const BankProfiler: React.FC<Props> = ({ onDataUpdate, savedData }) => {
            </div>
 
            {/* Strategic Verdict Card */}
-           <div className="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl">
-              <div className="absolute top-0 right-0 p-10 opacity-10">
-                 <Bookmark size={150} />
-              </div>
+           <div className="bg-white border border-kitchen-border rounded-xl p-8 shadow-sm relative overflow-hidden">
               <div className="relative z-10">
-                 <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                    <Zap size={24} className="text-yellow-300 fill-yellow-300" /> Veredito Estratégico do Especialista
+                 <h3 className="text-xl font-mono font-bold text-gray-800 mb-4 flex items-center gap-3">
+                    <Bookmark size={20} className="text-indigo-600" /> Veredito Estratégico do Especialista
                  </h3>
-                 <p className="text-xl font-medium leading-relaxed italic opacity-90">
+                 <p className="text-lg font-mono text-gray-600 leading-relaxed italic border-l-4 border-indigo-500 pl-4 py-2 bg-gray-50 rounded-r-lg">
                     "{savedData.vereditto_estrategico}"
                  </p>
               </div>

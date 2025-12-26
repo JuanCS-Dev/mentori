@@ -51,7 +51,7 @@ export const MaterialGenerator: React.FC<Props> = ({ bankProfile }) => {
         <div className="max-w-6xl mx-auto h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-700">
 
             {/* Input Area */}
-            <div className="glass-panel p-2 rounded-2xl mb-8 flex gap-2 print:hidden">
+            <div className="bg-white border border-kitchen-border p-2 rounded-xl mb-8 flex gap-2 print:hidden shadow-sm">
                 <input
                     type="text"
                     className="flex-1 p-4 bg-transparent border-none focus:ring-0 text-lg font-medium placeholder-slate-400 text-slate-800"

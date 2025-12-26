@@ -1,0 +1,602 @@
+[
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 1,
+    "disciplina": "Interpretação de Texto",
+    "enunciado": "Quanto à tipologia, o texto se classifica como dissertativo e tem como objetivo principal a defesa da sustentabilidade socioambiental.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_001"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 2,
+    "disciplina": "Interpretação de Texto",
+    "enunciado": "Entende-se do texto que a produção de petróleo de baixo carbono reverte os efeitos da mudança climática.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_002"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 3,
+    "disciplina": "Interpretação de Texto",
+    "enunciado": "De acordo com as informações do texto, o investimento de recursos e tecnologias para possibilitar uma transição energética responsável inclui-se entre as ações desenvolvidas pela PETROBRAS.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_003"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 4,
+    "disciplina": "Gramática",
+    "enunciado": "Estariam mantidas a correção gramatical e a coerência das ideias do texto caso o segmento “A PETROBRAS demonstra compromisso com a sustentabilidade por meio do desenvolvimento de estratégias\" (primeiro período do primeiro parágrafo) fosse assim reescrito: O compromisso da PETROBRAS com a sustentabilidade é demonstrado por meio do desenvolvimento de estratégias.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_004"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 5,
+    "disciplina": "Gramática",
+    "enunciado": "Estaria mantida a correção gramatical do último período do primeiro parágrafo caso a vírgula empregada após a palavra \"ambientais\" fosse substituída por ponto final e fosse feita a devida alteração de letra inicial minúscula para maiúscula no primeiro termo do novo período subsequente.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_005"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 6,
+    "disciplina": "Gramática",
+    "enunciado": "Nos trechos \"para viabilizar a elevada participação de energias renováveis\" (primeiro período do segundo parágrafo) e \"negócios de menor intensidade de carbono\" (segundo período do segundo parágrafo), os vocábulos \"elevada\" e \"menor\" classificam-se gramaticalmente como adjetivos.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_006"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 7,
+    "disciplina": "Gramática",
+    "enunciado": "Estaria mantida a correção gramatical do último período do segundo parágrafo caso fosse inserida uma vírgula após a expressão \"baixo carbono\".",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_007"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 8,
+    "disciplina": "Gramática",
+    "enunciado": "No último período do segundo parágrafo, as formas verbais \"investe\" e \"promove”, flexionadas na terceira pessoa do singular, concordam com o termo “matriz elétrica brasileira\", que encerra o período imediatamente anterior.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_008"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 9,
+    "disciplina": "Interpretação de Texto",
+    "enunciado": "Levando-se em consideração a articulação das ideias do primeiro parágrafo, é correto afirmar que a expressão 'lá fora' (segundo período) está empregada com o mesmo sentido de internacionalmente.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_009"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 10,
+    "disciplina": "Interpretação de Texto",
+    "enunciado": "Depreende-se do texto que a atual política de preços da PETROBRAS visa à possibilidade de redução do preço do combustível para o consumidor brasileiro.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_010"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 11,
+    "disciplina": "Interpretação de Texto",
+    "enunciado": "Entende-se do segundo parágrafo do texto que, segundo o presidente da PETROBRAS, o PPI não deve ser visto como uma doutrina indiscutível.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_011"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 12,
+    "disciplina": "Interpretação de Texto",
+    "enunciado": "Infere-se do segundo parágrafo do texto, sobretudo pelo emprego da forma verbal \"haverá”, flexionada no tempo futuro, que Jean Paul Prates ainda não foi efetivado na presidência da PETROBRAS.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_012"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 13,
+    "disciplina": "Interpretação de Texto",
+    "enunciado": "No início do quarto parágrafo, o trecho \"Questionado se haverá redução no preço da gasolina\" expressa uma condição imposta pela imprensa ao presidente da PETROBRAS.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_013"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 14,
+    "disciplina": "Interpretação de Texto",
+    "enunciado": "Entende-se do texto que, quanto à venda de ativos, o presidente da PETROBRAS pretende rever todos os compromissos assumidos pela companhia antes de sua gestão.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_014"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 15,
+    "disciplina": "Gramática",
+    "enunciado": "A expressão \"sob uma nova ótica\" (último parágrafo) poderia ser substituída por em outra perspectiva, respeitando-se a ortografia oficial em vigor e a coerência das ideias do texto.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_015"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 16,
+    "disciplina": "Gramática",
+    "enunciado": "Estariam mantidos os sentidos e a correção gramatical do texto se o termo 'pelo', em 'O mercado nacional é composto pelo que é produzido aqui' (penúltimo parágrafo), fosse substituído por daquilo.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_016"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 17,
+    "disciplina": "Gramática",
+    "enunciado": "No segmento \"abrindo espaço para a negociação de preços que levem em consideração o cenário econômico nacional\" (segundo parágrafo), a substituição da forma verbal \"levem\" por leve manteria a correção gramatical e a coerência das ideias do texto.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_017"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 18,
+    "disciplina": "Gramática",
+    "enunciado": "No terceiro parágrafo, as formas verbais “prevê”, “alinhe\" e \"cobra\" estão flexionadas no presente do indicativo, expressando uma sequência de ações que ocorrem frequentemente.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_018"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 19,
+    "disciplina": "Gramática",
+    "enunciado": "Estariam mantidos os sentidos do segundo período do primeiro parágrafo caso o trecho 'logo isso tem de refletir no preço para o consumidor final' fosse assim reescrito: e isso tem de refletir logo no preço para o consumidor final.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_019"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 20,
+    "disciplina": "Interpretação de Texto",
+    "enunciado": "Pelas relações de sentido estabelecidas entre os dois primeiros períodos do primeiro parágrafo, conclui-se que o vocábulo 'isso' (segundo período) faz referência a “preço de paridade internacional” (primeiro período).",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_020"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 21,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "O atendimento de um estagiário eficiente durará, no máximo, 1/2 hora.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_021"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 22,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "Se todos os tempos de atendimentos de um estagiário forem sempre inferiores a (0,5)³ hora, então esse estagiário será considerado eficiente.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_022"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 23,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "Suponha-se que, em 2022, a quantidade de atendimentos no setor tenha crescido mensalmente em progressão aritmética com razão igual a 75. Nesse caso, se, em julho de 2022, tiverem sido registrados 2.500 atendimentos, então, em janeiro de 2022, o número de atendimentos terá sido superior a 2.100.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_023"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 24,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "Considere-se que, em determinada manhã, um estagiário tenha realizado 15 atendimentos cujos tempos tenham decrescido, ao longo da manhã, em progressão geométrica com razão q = √2/3. Nessa situação, se o primeiro atendimento tiver demorado 18 minutos, então o último terá demorado mais de 10 minutos.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_024"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 25,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "Considere-se que, após pintar determinado local da plataforma, os pintores precisem aplicar sobre a pintura quatro tipos diferentes de produtos. Nesse caso, se a ordem de aplicação dos produtos não importar, então existem mais de 20 ordens diferentes de os produtos serem aplicados.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_025"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 26,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "A quantidade de maneiras de se escolher um grupo com 2 pintores e 2 soldadores é inferior a 1.200.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_026"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 27,
+    "disciplina": "Matemática",
+    "enunciado": "Para três conjuntos, A, B e C, não vazios, se A está contido em B e se C não contém B, então C também não contém A.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_027"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 28,
+    "disciplina": "Matemática",
+    "enunciado": "Se Q1(t) = 120.000 – 500t e Q2(t) = 100.000 – 400t são as cargas, em toneladas, de dois navios petroleiros que estão sendo descarregados t horas após um instante inicial t = 0, então a quantidade de petróleo restante nos dois navios será igual para um tempo superior a 100 horas, após o instante inicial.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_028"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 29,
+    "disciplina": "Matemática",
+    "enunciado": "Suponha-se que A(t) = 3 - 2 cos(πτ/12) registre, em metros, a altura do nível do mar, em uma plataforma de petróleo, medida a partir da hora t do dia, com 0 ≤ t ≤ 24. Nesse caso, o mar atinge uma altura máxima igual a 5 metros.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_029"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 30,
+    "disciplina": "Matemática",
+    "enunciado": "Suponha-se que C(t) = 5×e^0,05t corresponda à quantidade de litros de combustíveis anuais, em milhões de litros, demandadas em uma pequena cidade, em t anos após um instante inicial t=0. Nesse caso, considerando-se ln(5/e^0,5) = 0,5, para t = 10, é correto afirmar que a quantidade de litros de combustíveis demandados na cidade será igual ao dobro da quantidade no instante inicial.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_030"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 31,
+    "disciplina": "Matemática",
+    "enunciado": "Considere-se que um equipamento de monitoramento deva ser posicionado, a cada hora x do dia, a uma profundidade p, em metros, igual a p(x) = 0,2x² – 4x + 25. Nessa situação, o equipamento deve ser posicionado a 5 metros de profundidade duas vezes a cada dia.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_031"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 32,
+    "disciplina": "Matemática",
+    "enunciado": "Considerando uma matriz A2x3, uma matriz B3x3 e uma matriz C3x2, julgue os itens a seguir.\nÉ possível calcular os determinantes das matrizes A e C, porém não o da matriz B.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_032"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 33,
+    "disciplina": "Matemática",
+    "enunciado": "É possível calcular o produto A × B, mas não o produto C × A.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_033"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 34,
+    "disciplina": "Matemática",
+    "enunciado": "Tendo como referência um cilindro reto cuja base tem raio de 4 cm e cuja altura mede 8 cm, julgue os itens a seguir.\nO volume do cilindro é igual a 128 cm³.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_034"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 35,
+    "disciplina": "Matemática",
+    "enunciado": "A área da base do cilindro é duas vezes maior que sua área lateral.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_035"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 36,
+    "disciplina": "Matemática",
+    "enunciado": "[IMAGEM: Triângulo retângulo com ângulos alfa e x]\nA respeito do triângulo precedente, julgue os próximos itens.\nO seno do ângulo α é igual ao cosseno do ângulo χ.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_036"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 37,
+    "disciplina": "Matemática",
+    "enunciado": "A soma dos ângulos internos do triângulo é igual a 180°.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_037"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 38,
+    "disciplina": "Matemática",
+    "enunciado": "[IMAGEM: Circunferência em sistema de coordenadas ortogonais]\nConsiderando a figura precedente, que ilustra uma circunferência no sistema de coordenadas ortogonais xOy, julgue os itens subsecutivos.\nA equação reduzida da reta que passa pelo ponto A e pelo ponto de interseção da circunferência com o eixo y é y = x – 5.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_038"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 39,
+    "disciplina": "Matemática",
+    "enunciado": "A equação reduzida da circunferência é (x – 5)² + (y + 5)² = 25.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_039"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Não identificado no documento",
+    "ano": 2021,
+    "cargo": "Não identificado no documento",
+    "numero": 40,
+    "disciplina": "Matemática Financeira",
+    "enunciado": "Um investidor aplicou R$ 1.000 em um fundo de investimento que rende 10% ao mês e tem um período de carência de um ano. Se o recurso for sacado antes do término da carência, os juros serão calculados conforme juros simples; após o período de carência, serão pagos juros compostos. Em hipótese alguma, há incidência de impostos ou taxas. Após 15 dias da data da aplicação, o investidor precisou sacar o dinheiro.\nCom relação a essa situação hipotética, julgue o item seguinte.\nPelos critérios do fundo de investimento, exatamente após os 15 dias, o investidor recebeu um montante de R$ 1.150, considerando-se o mês comercial.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_não_identificado_no__2021_040"
+  }
+]

@@ -35,3 +35,8 @@ coverage/
 # Temporary
 tmp/
 temp/
+
+# Indexer
+indexer/test_pdfs/
+indexer/__pycache__/
+indexer/output/debug_*.txt

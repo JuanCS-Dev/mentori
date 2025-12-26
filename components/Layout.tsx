@@ -1,6 +1,11 @@
-import React from 'react';
-import { FileText, BarChart2, Calendar, Brain, Settings, FileOutput, Sparkles, PenTool, TrendingUp, RefreshCw } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  BarChart2, Calendar, Brain, Settings,
+  Sparkles, PenTool, TrendingUp, RefreshCw, MessageSquare,
+  Terminal, Command, Loader2, Send
+} from 'lucide-react';
 import { AppView } from '../types';
+import { useMentor } from '../contexts/MentorContext';
 
 interface LayoutProps {
   currentView: AppView;
@@ -9,104 +14,214 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ currentView, onNavigate, children }) => {
+  const { messages, isStreaming, isOpen, setIsOpen, sendMessage } = useMentor();
+  const [input, setInput] = useState('');
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to latest message
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  // Detect if should use Pro model (commands or long text)
+  const shouldUsePro = (text: string): boolean => {
+    const proCommands = ['/analisar', '/explicar', '/autopsia', '/plano', '/material'];
+    return proCommands.some(cmd => text.toLowerCase().startsWith(cmd)) || text.length > 200;
+  };
+
+  // Send message handler
+  const handleSendMessage = async () => {
+    if (!input.trim() || isStreaming) return;
+    const currentInput = input.trim();
+    setInput('');
+    await sendMessage(currentInput);
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   const navItems = [
-    { view: AppView.DASHBOARD, label: 'Dashboard', icon: <BarChart2 size={20} /> },
-    { view: AppView.PROGRESS, label: 'Meu Progresso', icon: <TrendingUp size={20} /> },
-    { view: AppView.EDITAL, label: 'Análise de Edital', icon: <FileText size={20} /> },
-    { view: AppView.PROFILE, label: 'Perfil da Banca', icon: <Settings size={20} /> },
-    { view: AppView.PLAN, label: 'Plano de Estudos', icon: <Calendar size={20} /> },
-    { view: AppView.STUDY_CYCLE, label: 'Ciclo de Estudos', icon: <RefreshCw size={20} /> },
-    { view: AppView.QUESTIONS, label: 'Banco de Questões', icon: <Brain size={20} /> },
-    { view: AppView.DISCURSIVE, label: 'Batalha Discursiva', icon: <PenTool size={20} /> },
-    { view: AppView.MATERIAL, label: 'Material Estratégico', icon: <FileOutput size={20} /> },
+    { view: AppView.DASHBOARD, label: 'Painel', icon: <BarChart2 size={20} /> },
+    { view: AppView.STUDY_CYCLE, label: 'Ciclos', icon: <RefreshCw size={20} /> },
+    { view: AppView.PLAN, label: 'Plano', icon: <Calendar size={20} /> },
+    { view: AppView.QUESTIONS, label: 'Questões', icon: <Brain size={20} /> },
+    { view: AppView.PROGRESS, label: 'Estatísticas', icon: <TrendingUp size={20} /> },
+    { view: AppView.DISCURSIVE, label: 'Mentor', icon: <PenTool size={20} /> },
   ];
 
   return (
-    // Outer Container handling the "Margins before the menu"
-    <div className="min-h-screen w-full flex items-center justify-center p-4 md:p-6 lg:p-8 overflow-hidden">
+    <div className="flex h-screen w-full bg-kitchen-bg font-sans text-kitchen-text-primary overflow-hidden">
+      
+      {/* 1. LEFT RAIL (Navigation) */}
+      <nav className="w-16 flex-shrink-0 bg-white border-r border-kitchen-border flex flex-col items-center py-6 z-20">
+        <div className="mb-8 p-2 bg-blue-50 rounded-xl text-blue-600">
+          <Brain size={24} />
+        </div>
+        
+        <div className="flex-1 w-full flex flex-col items-center gap-4">
+          {navItems.map((item) => (
+            <button
+              key={item.view}
+              onClick={() => onNavigate(item.view)}
+              className={`p-3 rounded-xl transition-all duration-200 group relative ${
+                currentView === item.view 
+                  ? 'bg-blue-100 text-blue-700' 
+                  : 'text-gray-400 hover:bg-gray-100 hover:text-gray-600'
+              }`}
+              title={item.label}
+            >
+              {item.icon}
+              {/* Tooltip */}
+              <div className="absolute left-14 top-1/2 -translate-y-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity">
+                {item.label}
+              </div>
+            </button>
+          ))}
+        </div>
 
-      {/* The Floating App Window */}
-      <div className="flex w-full max-w-[1600px] h-[calc(100vh-2rem)] md:h-[calc(100vh-4rem)] bg-white/80 backdrop-blur-2xl rounded-[2rem] shadow-2xl border border-white/50 ring-1 ring-black/5 overflow-hidden relative">
+        <div className="mt-auto pb-4">
+          <button className="p-3 text-gray-400 hover:text-gray-600 rounded-xl hover:bg-gray-100">
+            <Settings size={20} />
+          </button>
+        </div>
+      </nav>
 
-        {/* Sidebar */}
-        <aside className="w-[280px] bg-slate-900/95 backdrop-blur-xl text-slate-300 flex flex-col border-r border-white/10 z-20 flex-shrink-0 h-full">
-          <div className="p-8 flex items-center gap-3 text-white">
-            <div className="p-2 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-xl shadow-lg shadow-indigo-500/30 text-2xl">
-              🎓
-            </div>
-            <div>
-              <h1 className="font-bold text-xl tracking-tight leading-none">Mentori</h1>
-              <span className="text-[10px] uppercase tracking-widest text-indigo-300 font-semibold">Seu Mentor IA</span>
-            </div>
+      {/* 2. CENTER STAGE (Main Content) */}
+      <main className="flex-1 flex flex-col h-full overflow-hidden relative">
+        {/* Header */}
+        <header className="h-16 flex items-center justify-between px-8 border-b border-kitchen-border bg-white flex-shrink-0">
+          <div>
+            <h1 className="text-xl font-mono font-bold tracking-tight flex items-center gap-2">
+              Painel Mentori
+              <span className="text-xs font-normal text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">v2.1</span>
+            </h1>
+            <p className="text-xs text-gray-500 font-mono">Otimize seu desempenho cognitivo</p>
           </div>
-
-          <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto scrollbar-hide">
-            <div className="px-4 pb-2 text-xs font-bold text-slate-500 uppercase tracking-wider">Menu Principal</div>
-            {navItems.map((item) => (
-              <button
-                key={item.view}
-                onClick={() => onNavigate(item.view)}
-                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${currentView === item.view
-                  ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white shadow-lg shadow-indigo-900/40 border border-white/10'
-                  : 'hover:bg-white/5 hover:text-white text-slate-400'
-                  }`}
-              >
-                <span className={`transition-transform duration-300 ${currentView === item.view ? 'scale-110' : 'group-hover:scale-110'}`}>
-                  {item.icon}
-                </span>
-                <span className="font-medium tracking-wide text-sm">{item.label}</span>
-                {currentView === item.view && (
-                  <span className="ml-auto w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
-                )}
-              </button>
-            ))}
-          </nav>
-
-          <div className="p-6 mt-auto">
-            <div className="glass bg-indigo-900/30 border border-indigo-500/20 rounded-2xl p-4 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 -mr-4 -mt-4 w-20 h-20 bg-indigo-500 rounded-full blur-2xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
-              <div className="flex items-center gap-2 text-indigo-200 mb-1">
-                <Sparkles size={14} className="text-yellow-300" />
-                <span className="text-xs font-bold uppercase tracking-wide">Gemini 3.0 Pro</span>
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Motor neural ativo.
-              </p>
-            </div>
+          
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition-colors border border-transparent hover:border-gray-200"
+            >
+              <MessageSquare size={16} />
+              {isOpen ? 'Esconder Console' : 'Mostrar Console'}
+            </button>
           </div>
-        </aside>
+        </header>
 
-        {/* Main Content Area */}
-        <main className="flex-1 flex flex-col h-full overflow-hidden relative bg-white/40">
-          <header className="px-10 py-6 flex items-center justify-between z-10 bg-white/30 backdrop-blur-sm border-b border-white/40">
-            <div>
-              <h2 className="text-2xl font-bold text-slate-800 tracking-tight">
-                {navItems.find(i => i.view === currentView)?.label}
-              </h2>
-              <p className="text-slate-500 text-sm font-medium">
-                Bem-vindo à sua central de aprovação.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <div className="glass px-4 py-2 rounded-full flex items-center gap-2 shadow-sm border border-white/60">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                </span>
-                <span className="text-xs font-semibold text-slate-600 tracking-wide uppercase">Online</span>
-              </div>
-              <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-slate-200 to-slate-100 border border-white shadow-md flex items-center justify-center text-slate-600 font-bold text-sm">
-                US
-              </div>
-            </div>
-          </header>
-
-          <div className="flex-1 overflow-auto px-10 pb-10 pt-8 scrollbar-hide relative">
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden p-8">
+          <div className="max-w-5xl mx-auto space-y-8">
             {children}
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
+
+      {/* 3. RIGHT SIDEBAR (Mentor Console) */}
+      <aside
+        className={`bg-[#1e1e1e] text-gray-300 border-l border-gray-700 transition-all duration-300 ease-in-out flex flex-col ${
+          isOpen ? 'w-[400px]' : 'w-0 opacity-0 overflow-hidden'
+        }`}
+      >
+        <div className="h-16 flex items-center justify-between px-6 border-b border-gray-700 flex-shrink-0 bg-[#1e1e1e]">
+          <div className="flex items-center gap-2">
+            <Sparkles size={16} className="text-yellow-400" />
+            <span className="font-mono font-bold text-white tracking-tight">Console do Mentor</span>
+          </div>
+          <div className="flex gap-2">
+            <button className="p-1.5 hover:bg-gray-700 rounded text-gray-400 hover:text-white transition-colors">
+              <Terminal size={14} />
+            </button>
+          </div>
+        </div>
+
+        {/* Console / Chat Area */}
+        <div className="flex-1 overflow-y-auto p-5 space-y-4 font-mono text-sm bg-[#1e1e1e]">
+
+          {/* System Log - Always visible */}
+          <div className="bg-[#2d2d2d] p-4 rounded-lg border border-gray-600 shadow-sm">
+            <div className="flex items-center gap-2 text-[10px] text-gray-400 mb-3 uppercase tracking-widest font-bold">
+              <Terminal size={12} />
+              <span>Log do Sistema</span>
+            </div>
+            <div className="space-y-1">
+              <p className="text-green-400 font-bold flex gap-2">
+                <span className="opacity-50">$</span> Motor Cognitivo inicializado.
+              </p>
+              <p className="text-gray-400 flex gap-2">
+                <span className="opacity-50">#</span> {messages.length === 0 ? 'Digite uma mensagem para começar...' : `${messages.length} mensagens na sessão`}
+              </p>
+            </div>
+          </div>
+
+          {/* Dynamic Messages */}
+          <div className="space-y-4">
+            {messages.map((msg, idx) => (
+              <div key={msg.timestamp + idx} className="flex flex-col gap-2">
+                <span className={`text-[10px] font-bold uppercase tracking-widest pl-1 ${
+                  msg.role === 'user' ? 'text-green-400' : 'text-yellow-400'
+                }`}>
+                  {msg.role === 'user' ? 'Estudante' : 'Mentor IA'}
+                </span>
+                <div className={`leading-relaxed ${
+                  msg.role === 'user'
+                    ? 'bg-[#2d2d2d] p-3 rounded-lg text-white border border-gray-600 shadow-sm'
+                    : 'text-gray-300 pl-1'
+                }`}>
+                  {msg.content || (isStreaming && idx === messages.length - 1 && (
+                    <span className="inline-flex items-center gap-2 text-gray-500">
+                      <Loader2 size={14} className="animate-spin" />
+                      Pensando...
+                    </span>
+                  ))}
+                  {/* Streaming cursor */}
+                  {isStreaming && idx === messages.length - 1 && msg.content && (
+                    <span className="inline-block w-2 h-4 bg-yellow-400 ml-1 animate-pulse" />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Auto-scroll anchor */}
+          <div ref={chatEndRef} />
+        </div>
+
+        {/* Input Area */}
+        <div className="p-4 border-t border-gray-700 bg-[#1e1e1e] flex-shrink-0">
+          <div className="flex items-center gap-2 px-3 py-3 bg-[#2d2d2d] rounded-lg border border-gray-600 focus-within:border-gray-500 focus-within:ring-1 focus-within:ring-gray-500 transition-all shadow-inner">
+            <Command size={14} className="text-gray-400" />
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyPress}
+              placeholder="Pergunte ao seu mentor..."
+              disabled={isStreaming}
+              className="bg-transparent border-none outline-none text-sm text-white w-full placeholder-gray-500 font-mono disabled:opacity-50"
+            />
+            <button
+              onClick={handleSendMessage}
+              disabled={!input.trim() || isStreaming}
+              className="p-1.5 text-gray-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            >
+              {isStreaming ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+            </button>
+          </div>
+          <div className="flex justify-between items-center mt-3 text-[10px] text-gray-500 font-mono px-1">
+            <span className="flex items-center gap-1.5">
+              <div className={`w-1.5 h-1.5 rounded-full ${isStreaming ? 'bg-yellow-500' : 'bg-green-500'} animate-pulse`} />
+              {isStreaming ? 'Processando...' : 'Pronto'}
+            </span>
+            <span>{shouldUsePro(input) ? 'Gemini Pro 2.5' : 'Gemini Flash 2.5'}</span>
+          </div>
+        </div>
+      </aside>
+
     </div>
   );
 };

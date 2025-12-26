@@ -1,0 +1,752 @@
+[
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 1,
+    "disciplina": "Português",
+    "enunciado": "Quanto à tipologia textual, o texto é predominantemente expositivo.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_001"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 2,
+    "disciplina": "Português",
+    "enunciado": "O texto envolve um único personagem, que subverte a sua lógica de hábitos cotidianos.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_002"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 3,
+    "disciplina": "Português",
+    "enunciado": "O texto apresenta uma espécie de roteiro cujo conhecimento é necessário para que o interlocutor da voz da narrativa aja com inteira liberdade e por conta própria.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_003"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 4,
+    "disciplina": "Português",
+    "enunciado": "A sequência de ações do texto se organiza a partir de uma lógica imperativa de que os atos e as palavras referidos devem necessariamente parecer extravagantes, desarrazoados.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_004"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 5,
+    "disciplina": "Português",
+    "enunciado": "A expressão \"homem moderno\" (primeiro período) faz referência ao ser humano como tipo representativo de determinada época.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_005"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 6,
+    "disciplina": "Português",
+    "enunciado": "No primeiro período do texto, o termo \"onde\" tem como antecedente o termo \"sala\".",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_006"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 7,
+    "disciplina": "Português",
+    "enunciado": "No trecho \"pondo-se enfim em vestes mínimas\", o elemento \"se\" veicula a noção de reflexividade.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_007"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 8,
+    "disciplina": "Português",
+    "enunciado": "No trecho \"Feito um banhista incerto, assoma depois com sua nudez no trampolim do patamar\", o termo “assoma” foi empregado no sentido de surgir.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_008"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 9,
+    "disciplina": "Português",
+    "enunciado": "No trecho \"largue tudo de repente sob os olhares à sua volta\", o uso do acento indicativo de crase é facultativo.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_009"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 10,
+    "disciplina": "Português",
+    "enunciado": "No texto, o autor utiliza parénteses, em diferentes trechos, para fazer digressões.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_010"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 11,
+    "disciplina": "Atualidades",
+    "enunciado": "A \"revolução da ignorância\" mencionada no texto explicita um déficit cognitivo da sociedade no início da Revolução Científica que a impedia de encontrar respostas a seus questionamentos mais essenciais.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_011"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 12,
+    "disciplina": "Atualidades",
+    "enunciado": "Tanto as antigas tradições quanto a ciência atual reconheceram a sua falta de conhecimento acerca dos grandes questionamentos da humanidade.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_012"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 13,
+    "disciplina": "Atualidades",
+    "enunciado": "Conclui-se do texto que a crença na ciência em detrimento da crença em verdades absolutas permitiu à sociedade moderna ser mais justa.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_013"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 14,
+    "disciplina": "Atualidades",
+    "enunciado": "Dada a sequência lógica do texto, infere-se que Darwin é um dos cientistas que representam a ciência moderna.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_014"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 15,
+    "disciplina": "Português",
+    "enunciado": "No trecho \"os biólogos admitem que ainda não têm uma boa explicação para como o cérebro gera consciência” (terceiro parágrafo), a correção gramatical seria mantida, embora as relações sintáticas dos termos fossem alteradas, se a forma verbal \"têm\" fosse substituída por há.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_015"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 16,
+    "disciplina": "Português",
+    "enunciado": "No trecho \"A ciência de nossos dias é uma tradição de conhecimento peculiar, visto que admite abertamente a ignorância coletiva\" (terceiro parágrafo), o vocábulo \"que” classifica-se como pronome e retoma \"A ciência de nossos dias\".",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_016"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 17,
+    "disciplina": "Português",
+    "enunciado": "As orações que compõem o primeiro período do quarto parágrafo estabelecem entre si uma relação de causa e consequência.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_017"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 18,
+    "disciplina": "Português",
+    "enunciado": "A coerência do texto seria mantida caso o início de seu último parágrafo fosse assim reescrito: Uma das coisas que tornou possível às ordens sociais modernas manterem-se coesas foi a disseminação de uma crença quase religiosa na tecnologia e nos métodos da pesquisa científica.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_018"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 19,
+    "disciplina": "Português",
+    "enunciado": "Feitos os devidos ajustes de maiúsculas e minúsculas, o ponto final que encerra o segundo período do quarto parágrafo, após \"enfrentar\", poderia ser substituído corretamente pelo sinal de dois-pontos, visto que o período subsequente explica o que é o “problema sério\" mencionado.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_019"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 20,
+    "disciplina": "Português",
+    "enunciado": "O agente da forma verbal \"obter\" (sétimo período do segundo parágrafo) é interpretado como \"um indivíduo\", mencionado no período anterior.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_020"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 21,
+    "disciplina": "Inglês",
+    "enunciado": "The options mentioned in the first sentence of the second paragraph are connected to \"Law enforcement leaders\" in the last sentence of the previous paragraph, a relation indicated by the use of \"their”.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_021"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 22,
+    "disciplina": "Inglês",
+    "enunciado": "Identifying fingerprints, facial features and DNA characteristics has only recently become part of the investigation methods employed by law enforcement.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_022"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 23,
+    "disciplina": "Inglês",
+    "enunciado": "The use of the expression \"an ever-expanding array\" (in the second sentence of the second paragraph) indicates that the number of biometric traits law enforcement and the intelligence community can use in their investigations never ceases to grow.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_023"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 24,
+    "disciplina": "Inglês",
+    "enunciado": "In the last paragraph, the words \"comprehensive” and \"report\" can be correctly replaced with understanding and journalist without this changing the meaning of the text.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_024"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 25,
+    "disciplina": "Inglês",
+    "enunciado": "The phrase \"In a nutshell\", in the beginning of the text, can be appropriately replaced by Briefly.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_025"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 26,
+    "disciplina": "Inglês",
+    "enunciado": "The text affirms that the police career offers a variety of activities.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_026"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 27,
+    "disciplina": "Inglês",
+    "enunciado": "In the first sentence of the third paragraph, \"heinous crimes\" could be appropriately replaced by petty crimes.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_027"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 28,
+    "disciplina": "Inglês",
+    "enunciado": "In the last sentence of the text, the phrase \"keep up to date with\" means to meet the deadline.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_028"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 29,
+    "disciplina": "Inglês",
+    "enunciado": "The adverb \"Alternatively\" (in the second sentence of the third paragraph) means a different option than the one expressed in the previous sentence.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_029"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 30,
+    "disciplina": "Legislação Ambiental",
+    "enunciado": "A Estação Ecológica de Águas Emendadas constitui uma unidade de conservação cuja visitação pública está sujeita às normas e restrições estabelecidas no Plano de Manejo.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_030"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 31,
+    "disciplina": "Direito Ambiental",
+    "enunciado": "O Parque Nacional de Brasília é uma unidade de conservação que abriga o lago artificial de Santa Maria, o qual abastece parte do Distrito Federal, juntamente com outros sistemas de abastecimento, tais como o reservatório do Descoberto.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_031"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 32,
+    "disciplina": "Direito Administrativo/Legislação",
+    "enunciado": "No município de Águas Lindas de Goiás, a prestação de serviços públicos de água potável é feita por meio do consórcio de empresas públicas do Distrito Federal e do Goiás, em razão de a referida lei complementar prever como sendo de interesse comum da RIDE serviços relacionados à área de infraestrutura.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_032"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 33,
+    "disciplina": "Direito Administrativo/Legislação",
+    "enunciado": "Conforme a referida lei complementar, há impedimentos para a criação de novos municípios, já que estes, ainda que resultem do desmembramento de territórios da RIDE, não serão considerados parte dos territórios contemplados por inúmeros benefícios fiscais concedidos pela União.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_033"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 34,
+    "disciplina": "Direito Administrativo/Legislação",
+    "enunciado": "A RIDE, em seu recorte territorial, é formada por municípios de três unidades da Federação: Distrito Federal, Goiás e Minas Gerais.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_034"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 35,
+    "disciplina": "Direito Administrativo/Legislação",
+    "enunciado": "As atribuições do cargo definidas em lei não garantem, por si só, a concessão e a continuidade do pagamento dos adicionais de insalubridade e periculosidade.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_035"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 36,
+    "disciplina": "Direito Administrativo/Legislação",
+    "enunciado": "A nomeação poderá se dar tanto em caráter efetivo quanto em comissão, dependendo, ambos os casos, de prévia habilitação em concurso público de provas ou provas e títulos.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_036"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 37,
+    "disciplina": "Direito Administrativo/Legislação",
+    "enunciado": "Será aposentado o servidor que, avaliado em inspeção médica para fins de readaptação, for julgado incapaz para o serviço público.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_037"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 38,
+    "disciplina": "Legislação Específica/PCDF",
+    "enunciado": "O diploma de medicina é um dos diplomas aceitos para o ingresso na carreira de perito criminal da PCDF.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_038"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 39,
+    "disciplina": "Legislação Específica/PCDF",
+    "enunciado": "No âmbito da PCDF, incumbe à comissão permanente de disciplina promover o processo administrativo disciplinar, para a apuração de transgressões disciplinares imputadas a policiais civis.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_039"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 40,
+    "disciplina": "Legislação Específica/PCDF",
+    "enunciado": "A PCDF deve ser dirigida por um policial civil de carreira, bacharel em direito, oriundo de uma das carreiras da corporação.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_040"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 41,
+    "disciplina": "Direito Penal/Legislação",
+    "enunciado": "Caracteriza abuso de autoridade o cumprimento de mandado de busca e apreensão domiciliar fora do horário do expediente forense, se feito sem justa causa.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_041"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 42,
+    "disciplina": "Direito Administrativo/Legislação",
+    "enunciado": "As ações de improbidade administrativa admitem a solução pela via consensual, sendo legalmente prevista a possibilidade de celebração de acordo de não persecução cível.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_042"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 43,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "Um agente, com o objetivo de mensurar o risco de propagação da covid-19 em uma investigação na qual averiguava um possível descumprimento do artigo 268 do Código Penal, que define como crime de infração de medida sanitária \"infringir determinação do poder público, destinada a impedir introdução ou propagação de doença contagiosa\", obteve de uma testemunha as informações a seguir.\n\n•\tHouve, no local investigado, uma festa, com aglomeração de moças e rapazes; não havia álcool em gel e ninguém estava usando máscaras.\n•\tCada rapaz cumprimentou exatamente uma vez a todos os outros rapazes com apertos de mão.\n•\tCada moça cumprimentou exatamente uma vez a todos os outros presentes com um aceno.\n\nConsiderando que são verdadeiras as informações prestadas pela testemunha da situação hipotética precedente, julgue os itens seguintes.\n\nSe, na festa, havia 20 moças e 18 rapazes, o número de cumprimentos entre moças e rapazes com acenos foi superior a 350.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_043"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 44,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "Se na festa havia 20 moças, o número de cumprimentos com acenos entre moças foi superior a 200.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_044"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 45,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "O número de cumprimentos entre rapazes e moças é proporcional ao número de rapazes presentes.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_045"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 46,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "O número total de cumprimentos ocorridos na festa acenos e apertos de mão é proporcional ao número de pessoas presentes.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_046"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 47,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "Luís, Fernando, Paulo, Carlos e Marcos, suspeitos de terem praticado determinado crime, foram convocados para depor. Na delegacia, ocorreram os eventos descritos a seguir.\n\n•\tMarcos e Carlos preferiram ficar em silêncio.\n•\tFernando afirmou que o culpado era Marcos ou Carlos.\n•\tLuís afirmou que o culpado era Fernando ou Carlos.\n•\tPaulo afirmou que o culpado era Marcos ou Fernando.\n\nConsiderando que exatamente dois deles são culpados e que, em 2021, todos eles terão mais de quinze anos de idade, julgue os itens a seguir.\n\nSe os três que se pronunciaram mentiram nas afirmações, então os culpados são Luís e Paulo.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_047"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 48,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "A proposição \"Se Marcos é culpado, então Paulo ou Carlos são inocentes.\" equivale à proposição \"Se Paulo ou Carlos são culpados, então Marcos é inocente.\".",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_048"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 49,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "Se dois desses acusados forem aleatoriamente escolhidos para uma acareação, a probabilidade de serem os dois culpados é igual a 1/10.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_049"
+  },
+  {
+    "banca": "CEBRASPE",
+    "concurso": "Polícia Civil do Distrito Federal",
+    "ano": 2021,
+    "cargo": "Agente",
+    "numero": 50,
+    "disciplina": "Raciocínio Lógico",
+    "enunciado": "Considere que a diferença de idade entre os dois mais velhos seja igual a dez anos e que Carlos tenha nascido em 1994. Se, em 2021, a soma das idades dos cinco suspeitos for igual a 110 anos, então é correto afirmar que, no máximo, dois deles têm dezoito anos de idade ou menos.",
+    "alternativas": [
+      "Certo",
+      "Errado"
+    ],
+    "tipo": "certo_errado",
+    "id": "cebraspe_agente_2021_050"
+  }
+]
