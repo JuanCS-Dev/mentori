@@ -1,6 +1,7 @@
 import { QuestionsDB, ConcursoQuestion } from './database';
 import { initializeQuestionBank } from './questionSeeder';
 import { QuestionExplanation } from '../types';
+import { FALLBACK_QUESTIONS } from './fallbackQuestions';
 
 /**
  * Serviço de Questões Reais
@@ -126,158 +127,10 @@ export const QuestionsService = {
   },
 
   /**
-   * Questões de fallback quando a API não está disponível
-   * Questões reais do ENEM para demonstração
+   * Questoes de fallback quando a API nao esta disponivel
    */
   getFallbackQuestions(filter: QuestionFilter = {}): RealQuestion[] {
-    const fallbackQuestions: RealQuestion[] = [
-      // LINGUAGENS E CÓDIGOS
-      {
-        id: 'fallback_ling_001',
-        year: 2023,
-        source: 'ENEM',
-        discipline: 'Linguagens e Códigos',
-        statement: 'Amar é um deserto e seus temores.\nVida: drama de uma só cena.\nAmar é um deserto sem serras,\nonde a chuva não tem memória.\n\nCom base na análise estilística do poema, as figuras de linguagem predominantes são:',
-        options: [
-          'A) metáforas e aliterações, evidenciando musicalidade.',
-          'B) antíteses e paradoxos, revelando contradições existenciais.',
-          'C) personificação e hipérbole, exagerando sentimentos.',
-          'D) metonímias e sinestesias, mesclando sensações.',
-          'E) eufemismos e ironia, suavizando a crítica.'
-        ],
-        correctAnswer: 1,
-        difficulty: 'Médio',
-        explanation: 'O poema utiliza antíteses (deserto/chuva, vida/drama) e paradoxos para expressar contradições do amor e da existência.'
-      },
-      {
-        id: 'fallback_ling_002',
-        year: 2022,
-        source: 'ENEM',
-        discipline: 'Linguagens e Códigos',
-        statement: 'No trecho "A gente vai levando a vida como pode", a expressão "a gente" funciona sintaticamente como:',
-        options: [
-          'A) objeto direto.',
-          'B) objeto indireto.',
-          'C) sujeito.',
-          'D) predicativo do sujeito.',
-          'E) adjunto adnominal.'
-        ],
-        correctAnswer: 2,
-        difficulty: 'Fácil',
-        explanation: '"A gente" é o sujeito da oração, equivalendo a "nós" na linguagem coloquial.'
-      },
-
-      // MATEMÁTICA
-      {
-        id: 'fallback_mat_001',
-        year: 2023,
-        source: 'ENEM',
-        discipline: 'Matemática',
-        statement: 'Um comerciante comprou um produto por R$ 80,00 e deseja vendê-lo com um lucro de 25% sobre o preço de venda. O preço de venda desse produto deve ser:',
-        options: [
-          'A) R$ 100,00',
-          'B) R$ 106,67',
-          'C) R$ 96,00',
-          'D) R$ 120,00',
-          'E) R$ 160,00'
-        ],
-        correctAnswer: 1,
-        difficulty: 'Médio',
-        explanation: 'Se o lucro é 25% sobre o preço de venda (V), então: V - 80 = 0,25V → 0,75V = 80 → V = 80/0,75 = R$ 106,67'
-      },
-      {
-        id: 'fallback_mat_002',
-        year: 2022,
-        source: 'ENEM',
-        discipline: 'Matemática',
-        statement: 'A função f(x) = 2x² - 8x + 6 tem valor mínimo igual a:',
-        options: [
-          'A) -2',
-          'B) -1',
-          'C) 0',
-          'D) 2',
-          'E) 6'
-        ],
-        correctAnswer: 0,
-        difficulty: 'Médio',
-        explanation: 'Yv = -Δ/4a = -(64-48)/8 = -16/8 = -2. Ou: xv = 8/4 = 2, f(2) = 8 - 16 + 6 = -2'
-      },
-
-      // CIÊNCIAS HUMANAS
-      {
-        id: 'fallback_hum_001',
-        year: 2023,
-        source: 'ENEM',
-        discipline: 'Ciências Humanas',
-        statement: 'A Revolução Industrial iniciada na Inglaterra no século XVIII caracterizou-se principalmente por:',
-        options: [
-          'A) substituição da energia hidráulica pela energia nuclear.',
-          'B) mecanização da produção e uso do carvão como fonte de energia.',
-          'C) implantação do socialismo como sistema econômico dominante.',
-          'D) abolição completa do trabalho manual nas fábricas.',
-          'E) descentralização da produção para as áreas rurais.'
-        ],
-        correctAnswer: 1,
-        difficulty: 'Fácil',
-        explanation: 'A 1ª Revolução Industrial se caracterizou pela mecanização (máquinas a vapor) e uso intensivo de carvão mineral.'
-      },
-      {
-        id: 'fallback_hum_002',
-        year: 2022,
-        source: 'ENEM',
-        discipline: 'Ciências Humanas',
-        statement: 'O conceito de "mais-valia" desenvolvido por Karl Marx refere-se à:',
-        options: [
-          'A) diferença entre o valor produzido pelo trabalhador e o salário que ele recebe.',
-          'B) taxa de juros cobrada pelos bancos nos empréstimos.',
-          'C) inflação acumulada ao longo de um ano econômico.',
-          'D) diferença entre exportações e importações de um país.',
-          'E) valorização imobiliária em áreas urbanas centrais.'
-        ],
-        correctAnswer: 0,
-        difficulty: 'Médio',
-        explanation: 'Mais-valia é o conceito marxista que descreve a apropriação pelo capitalista do valor excedente produzido pelo trabalhador além do necessário para sua subsistência (salário).'
-      },
-
-      // CIÊNCIAS DA NATUREZA
-      {
-        id: 'fallback_nat_001',
-        year: 2023,
-        source: 'ENEM',
-        discipline: 'Ciências da Natureza',
-        statement: 'A lei de conservação da energia estabelece que:',
-        options: [
-          'A) a energia pode ser criada, mas não destruída.',
-          'B) a energia não pode ser criada nem destruída, apenas transformada.',
-          'C) a energia pode ser destruída em reações nucleares.',
-          'D) a energia mecânica é sempre maior que a energia térmica.',
-          'E) a energia cinética é sempre conservada em colisões.'
-        ],
-        correctAnswer: 1,
-        difficulty: 'Fácil',
-        explanation: 'A 1ª Lei da Termodinâmica estabelece que a energia total de um sistema isolado permanece constante - não pode ser criada nem destruída.'
-      },
-      {
-        id: 'fallback_nat_002',
-        year: 2022,
-        source: 'ENEM',
-        discipline: 'Ciências da Natureza',
-        statement: 'O pH de uma solução aquosa com concentração de íons H⁺ igual a 10⁻³ mol/L é:',
-        options: [
-          'A) 1',
-          'B) 2',
-          'C) 3',
-          'D) 7',
-          'E) 11'
-        ],
-        correctAnswer: 2,
-        difficulty: 'Fácil',
-        explanation: 'pH = -log[H⁺] = -log(10⁻³) = 3'
-      }
-    ];
-
-    // Aplicar filtros
-    let filtered = fallbackQuestions;
+    let filtered = [...FALLBACK_QUESTIONS];
 
     if (filter.discipline) {
       const searchTerm = filter.discipline.toLowerCase();

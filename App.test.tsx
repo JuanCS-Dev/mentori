@@ -67,68 +67,43 @@ describe('ConcursoAI App Integration', () => {
     });
   });
 
-  // Helper para entrar no app (sair da LandingPage)
+  // Helper para entrar no app (sair da SalesLanding)
   const enterApp = async () => {
-    const enterButtons = screen.getAllByText(/Iniciar/i);
+    // SalesLanding has multiple CTA buttons, use the header one
+    await waitFor(() => {
+      expect(screen.getByText(/Estude/i)).toBeInTheDocument();
+    });
+    const enterButtons = screen.getAllByText(/Comecar/i);
     fireEvent.click(enterButtons[0]);
     await waitFor(() => {
-      expect(screen.getByText(/Centro de Comando/i)).toBeInTheDocument();
+      // DashboardHub has WelcomeCard with "Bem-vindo ao Mentori"
+      expect(screen.getByText(/Bem-vindo ao Mentori/i)).toBeInTheDocument();
     });
   };
 
-  it('deve renderizar LandingPage e entrar no Dashboard', async () => {
+  it('deve renderizar SalesLanding e entrar no Dashboard', async () => {
     render(<App />);
 
-    // LandingPage renderiza primeiro
-    expect(screen.getByText(/Espaço Mentori AI/i)).toBeInTheDocument();
+    // SalesLanding renderiza primeiro
+    await waitFor(() => {
+      expect(screen.getByText(/Estude/i)).toBeInTheDocument();
+    });
+    expect(screen.getByText(/3x Mais Rapido/i)).toBeInTheDocument();
 
     // Entrar no app
     await enterApp();
 
-    // Dashboard visível
-    expect(screen.getByText(/Centro de Comando/i)).toBeInTheDocument();
+    // Dashboard visível - DashboardHub has WelcomeCard
+    expect(screen.getByText(/Bem-vindo ao Mentori/i)).toBeInTheDocument();
   });
 
-  it('deve navegar para Bank_Profiler via módulos cognitivos', async () => {
+  it('deve navegar para Ciclo de Estudos via QuickActions', async () => {
     render(<App />);
     await enterApp();
 
-    // Clicar no módulo Bank_Profiler
-    const profilerModule = screen.getByText(/Bank_Profiler/i);
-    fireEvent.click(profilerModule.closest('div[class*="cursor-pointer"]')!);
-
-    await waitFor(() => {
-        expect(screen.getByText(/Decodificador de Banca/i)).toBeInTheDocument();
-    }, { timeout: 3000 });
-  });
-
-  it('deve mostrar aviso de edital pendente na Discursive_Mentor', async () => {
-    render(<App />);
-    await enterApp();
-
-    // Clicar no módulo Discursive_Mentor
-    const discursiveModule = screen.getByText(/Discursive_Mentor/i);
-    fireEvent.click(discursiveModule.closest('div[class*="cursor-pointer"]')!);
-
-    await waitFor(() => {
-        expect(screen.getByText(/Acesso Negado/i)).toBeInTheDocument();
-    });
-
-    // Clicar para ir ao analisador
-    fireEvent.click(screen.getByText(/Executar Analisador/i));
-
-    await waitFor(() => {
-        expect(screen.getByText(/Importação de Edital/i)).toBeInTheDocument();
-    });
-  });
-
-  it('deve navegar para Ciclo de Estudos via botão Iniciar Modo Foco', async () => {
-    render(<App />);
-    await enterApp();
-
-    // Usar o botão "Iniciar Modo Foco" que está no dashboard
-    const focoButton = screen.getByText(/Iniciar Modo Foco/i);
-    fireEvent.click(focoButton);
+    // Usar o botão "Continuar Estudando" no QuickActions do DashboardHub
+    const continueButton = screen.getByText(/Continuar Estudando/i);
+    fireEvent.click(continueButton);
 
     // Esperar o lazy load do componente StudyCycle
     await waitFor(() => {
@@ -136,17 +111,27 @@ describe('ConcursoAI App Integration', () => {
     }, { timeout: 5000 });
   });
 
-  it('deve navegar para Edital_Analyzer e voltar', async () => {
+  it('deve mostrar DashboardHub com componentes principais', async () => {
     render(<App />);
     await enterApp();
 
-    // Clicar no módulo Edital_Analyzer
-    const editalModule = screen.getByText(/Edital_Analyzer/i);
-    fireEvent.click(editalModule.closest('div[class*="cursor-pointer"]')!);
+    // Verificar que DashboardHub tem os componentes principais
+    expect(screen.getByText(/Bem-vindo ao Mentori/i)).toBeInTheDocument();
+    expect(screen.getByText(/Estatisticas Rapidas/i)).toBeInTheDocument();
+    expect(screen.getByText(/Plano de Hoje/i)).toBeInTheDocument();
+    expect(screen.getByText(/Acoes Rapidas/i)).toBeInTheDocument();
+    // "Mentor IA" appears multiple times, use getAllByText
+    expect(screen.getAllByText(/Mentor IA/i).length).toBeGreaterThan(0);
+  });
 
-    // Esperar carregar
-    await waitFor(() => screen.getByText(/Importação de Edital/i));
+  it('deve ter botoes de acao no QuickActions', async () => {
+    render(<App />);
+    await enterApp();
 
-    expect(screen.getByText(/Importação de Edital/i)).toBeInTheDocument();
+    // Verificar que QuickActions tem os botoes principais
+    expect(screen.getByText(/Continuar Estudando/i)).toBeInTheDocument();
+    expect(screen.getByText(/Revisar Erros/i)).toBeInTheDocument();
+    expect(screen.getByText(/Simular Prova/i)).toBeInTheDocument();
+    expect(screen.getByText(/Falar com Mentor/i)).toBeInTheDocument();
   });
 });

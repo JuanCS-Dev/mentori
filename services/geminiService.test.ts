@@ -219,7 +219,7 @@ describe('GeminiService', () => {
       // Mock failure 3 times (MAX_RETRIES)
       mocks.generateContent.mockRejectedValue(new Error('Persistent error'));
 
-      await expect(GeminiService.analyzeEdital('test')).rejects.toThrow(/Falha após 3 tentativas/);
+      await expect(GeminiService.analyzeEdital('test')).rejects.toThrow(/Falha apos 3 tentativas/);
       expect(mocks.generateContent).toHaveBeenCalledTimes(3);
     });
 
