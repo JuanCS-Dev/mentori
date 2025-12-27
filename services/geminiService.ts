@@ -5,6 +5,7 @@ import {
   BankProfileJSON,
   NeuroStudyPlanJSON,
   QuestionAutopsy,
+  QuestionExplanation,
   MaterialJSON,
   DiscursiveTheme,
   DiscursiveEvaluation,
@@ -533,6 +534,111 @@ export const GeminiService = {
 
       return cleanAndParseJSON<QuestionAutopsy>(response.text);
     }, 'analyzeQuestionError');
+  },
+
+  /**
+   * FUNCIONALIDADE 6.5: GERADOR DE EXPLICAÇÕES PARA QUESTÕES
+   * Gera explicações detalhadas para questões do banco de questões
+   */
+  async generateExplanation(
+    enunciado: string,
+    alternativas: string[],
+    gabarito: number,
+    disciplina: string,
+    banca?: string
+  ): Promise<QuestionExplanation> {
+    return withRetry(async () => {
+      const ai = getAIClient();
+      const prompt = `
+        ${MENTORI_SYSTEM_INSTRUCTION}
+
+        Você é o maior especialista em explicar questões de concursos.
+        Sua missão é gerar uma EXPLICAÇÃO MAGISTRAL para esta questão.
+
+        **QUESTÃO:**
+        - Banca: ${banca || 'Desconhecida'}
+        - Disciplina: ${disciplina}
+        - Enunciado: ${enunciado}
+        - Alternativas:
+          ${alternativas.map((alt, i) => `${String.fromCharCode(65 + i)}) ${alt}`).join('\n          ')}
+        - Gabarito: ${String.fromCharCode(65 + gabarito)} (${alternativas[gabarito]})
+
+        **INSTRUÇÕES:**
+        1. Explique POR QUE a alternativa correta está certa (fundamentação jurídica/técnica)
+        2. Explique POR QUE cada alternativa errada está incorreta
+        3. Cite a fundamentação legal (artigos de lei, súmulas, jurisprudência STF/STJ)
+        4. Crie uma DICA MEMORÁVEL (mnemônico, frase de impacto) para fixação
+        5. Liste temas relacionados para aprofundamento
+
+        **FORMATO DE SAÍDA (JSON):**
+        {
+          "explicacao_correta": "Explicação completa e didática da resposta correta...",
+          "alternativas_erradas": [
+            { "indice": 0, "texto": "Texto da alternativa A", "motivo": "Por que está errada" },
+            ...
+          ],
+          "fundamentacao": "Art. X da Lei Y, Súmula Z do STF...",
+          "dica_memoravel": "Frase de impacto para nunca mais esquecer",
+          "temas_relacionados": ["Tema 1", "Tema 2"],
+          "nivel_dificuldade": "facil|medio|dificil|expert"
+        }
+      `;
+
+      const response = await ai.models.generateContent({
+        model: MODEL_FLASH, // Flash para performance (explicações em lote)
+        contents: prompt,
+        config: { responseMimeType: "application/json" }
+      });
+
+      return cleanAndParseJSON<QuestionExplanation>(response.text);
+    }, 'generateExplanation');
+  },
+
+  /**
+   * FUNCIONALIDADE 6.6: GERADOR DE EXPLICAÇÕES EM BATCH
+   * Gera explicações para múltiplas questões de forma eficiente
+   */
+  async generateExplanationsBatch(
+    questions: Array<{
+      id: string;
+      enunciado: string;
+      alternativas: string[];
+      gabarito: number;
+      disciplina: string;
+      banca?: string;
+    }>,
+    onProgress?: (completed: number, total: number) => void
+  ): Promise<Map<string, QuestionExplanation>> {
+    const results = new Map<string, QuestionExplanation>();
+    const total = questions.length;
+
+    for (let i = 0; i < questions.length; i++) {
+      const q = questions[i];
+      if (!q) continue;
+
+      try {
+        const explanation = await this.generateExplanation(
+          q.enunciado,
+          q.alternativas,
+          q.gabarito,
+          q.disciplina,
+          q.banca
+        );
+        results.set(q.id, explanation);
+
+        if (onProgress) {
+          onProgress(i + 1, total);
+        }
+      } catch (error) {
+        console.error(`[GeminiService] Erro ao gerar explicação para ${q.id}:`, error);
+        // Continue with next question
+      }
+
+      // Rate limiting: 500ms between requests
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+
+    return results;
   },
 
   /**

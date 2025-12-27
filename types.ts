@@ -79,6 +79,29 @@ export interface QuestionAutopsy {
   gravidade: string;
 }
 
+/**
+ * Explicação AI-generated para uma questão
+ * Gerada pelo GeminiService.generateExplanation()
+ */
+export interface QuestionExplanation {
+  /** Explicação completa da resposta correta */
+  explicacao_correta: string;
+  /** Por que cada alternativa incorreta está errada */
+  alternativas_erradas: {
+    indice: number;
+    texto: string;
+    motivo: string;
+  }[];
+  /** Fundamentação legal/jurídica (artigos, súmulas, jurisprudência) */
+  fundamentacao: string;
+  /** Dica memorável para não esquecer (mnemônico) */
+  dica_memoravel: string;
+  /** Temas relacionados para aprofundamento */
+  temas_relacionados: string[];
+  /** Nível de dificuldade percebido */
+  nivel_dificuldade: 'facil' | 'medio' | 'dificil' | 'expert';
+}
+
 // --- MATERIAL ---
 export interface MaterialJSON {
   titulo: string;

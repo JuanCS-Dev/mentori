@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Target, TrendingUp, Star, Zap, BookOpen, Clock, Sparkles, Play } from 'lucide-react';
+import { Target, TrendingUp, Star, Zap, BookOpen, Clock, Sparkles, Play, RotateCcw } from 'lucide-react';
 import { GeminiService } from '../services/geminiService';
 import { QuestionsService, RealQuestion } from '../services/questionsService';
 import { QuestionsDB } from '../services/database';
 import { QuestionAutopsy } from '../types';
 import { useProgress } from '../hooks/usePersistence';
-import { QuestionCard, DisplayQuestion, EmptyState } from '../components/QuestionCard';
+import { useQuestionReview } from '../hooks/useQuestionReview';
+import { QuestionCard, DisplayQuestion, EmptyState, ReviewBadgeType } from '../components/QuestionCard';
 import {
   AIControls,
   ConcursoControls,
@@ -33,6 +34,25 @@ export const QuestionBank: React.FC = () => {
   const [xpGained, setXpGained] = useState<number | null>(null);
 
   const { progress, recordQuestionAnswer, getAccuracy, getDisciplineAccuracy } = useProgress();
+  const {
+    recordAnswer: recordSRSAnswer,
+    prioritizeQuestions,
+    applyInterleaving,
+    getQuestionCard,
+    isQuestionDue,
+    stats: srsStats
+  } = useQuestionReview();
+
+  // Compute review badge for current question
+  const currentQuestionId = question?.id || '';
+  const currentCard = getQuestionCard(currentQuestionId);
+  const isDue = isQuestionDue(currentQuestionId);
+
+  const reviewBadge: ReviewBadgeType = currentCard ? (
+    currentCard.consecutiveIncorrect > 2 ? 'struggling' :
+      currentCard.interval >= 21 ? 'mature' :
+        isDue ? 'due' : 'learning'
+  ) : null;
 
   const [filters, setFilters] = useState({
     bank: 'Todas',
@@ -75,15 +95,24 @@ export const QuestionBank: React.FC = () => {
     setCurrentQuestionIndex(0);
 
     try {
-      const questions = await QuestionsService.fetchConcursoQuestions({
+      let questions = await QuestionsService.fetchConcursoQuestions({
         discipline: params.discipline,
         bank: filters.bank,
         year: filters.year,
         difficulty: filters.difficulty,
-        limit: 10
+        limit: 20 // Fetch more to allow for interleaving
       });
 
       if (questions.length > 0) {
+        // Apply SM-2 prioritization (due questions first)
+        questions = prioritizeQuestions(questions);
+
+        // Apply interleaving (70% topic switch for better retention)
+        questions = applyInterleaving(questions, 0.7);
+
+        // Limit to 10 after processing
+        questions = questions.slice(0, 10);
+
         setRealQuestions(questions);
         const first = questions[0];
         if (first) {
@@ -282,7 +311,17 @@ export const QuestionBank: React.FC = () => {
 
     const isCorrect = index === question.correctAnswer;
     const discipline = question.discipline || params.discipline || 'Geral';
+
+    // Record in progress tracking (updates Elo)
     recordQuestionAnswer(discipline, isCorrect);
+
+    // Record in SM-2 spaced repetition system
+    const currentRealQuestion = realQuestions[currentQuestionIndex];
+    if (currentRealQuestion) {
+      // Infer confidence from response time (future: add timer)
+      // For now, default to 'medium'
+      recordSRSAnswer(currentRealQuestion, isCorrect, 'medium');
+    }
 
     const baseXp = isCorrect ? 25 : 10;
     const xp = mode === 'questoes' ? baseXp + 5 : baseXp; // Bonus for real questions
@@ -328,6 +367,7 @@ export const QuestionBank: React.FC = () => {
         disciplineAccuracy={disciplineAccuracy}
         currentDiscipline={currentDiscipline}
         xp={progress.xp}
+        dueReviews={srsStats.dueToday}
       />
 
       {/* Mode Selector - Tabs */}
@@ -385,6 +425,7 @@ export const QuestionBank: React.FC = () => {
           analyzingError={analyzingError}
           realQuestionsCount={realQuestions.length}
           currentQuestionIndex={currentQuestionIndex}
+          reviewBadge={reviewBadge}
           onOptionSelect={handleOptionSelect}
           onAutopsy={handleAutopsy}
           onNextQuestion={handleNextRealQuestion}
@@ -405,6 +446,7 @@ interface StatsBarProps {
   disciplineAccuracy: number;
   currentDiscipline: string;
   xp: number;
+  dueReviews: number;
 }
 
 const StatsBar: React.FC<StatsBarProps> = ({
@@ -412,7 +454,8 @@ const StatsBar: React.FC<StatsBarProps> = ({
   accuracy,
   disciplineAccuracy,
   currentDiscipline,
-  xp
+  xp,
+  dueReviews
 }) => {
   return (
     <div className="flex items-center justify-between bg-white px-2 py-2 rounded-2xl border border-gray-100 shadow-sm mobile-stack">
@@ -429,6 +472,14 @@ const StatsBar: React.FC<StatsBarProps> = ({
             {accuracy}% acerto
           </span>
         </div>
+        {dueReviews > 0 && (
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-purple-50 border border-purple-100 animate-pulse">
+            <RotateCcw size={16} className="text-purple-500" />
+            <span className="text-xs font-bold text-purple-700 font-mono">
+              {dueReviews} revisões
+            </span>
+          </div>
+        )}
         {disciplineAccuracy > 0 && (
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-100">
             <Star size={16} className="text-amber-500" />

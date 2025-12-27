@@ -1,6 +1,67 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { QuestionsService, QuestionsCache, RealQuestion } from './questionsService';
 
+// Mock do módulo database (IndexedDB/Dexie)
+vi.mock('./database', () => ({
+  QuestionsDB: {
+    query: vi.fn(),
+    count: vi.fn(),
+    getBancas: vi.fn(),
+    getAnos: vi.fn(),
+    getDisciplinas: vi.fn(),
+    getErroredQuestions: vi.fn(),
+    bulkImport: vi.fn(),
+    clear: vi.fn(),
+  },
+  AttemptsDB: {
+    record: vi.fn(),
+    getStats: vi.fn(),
+    clear: vi.fn(),
+  },
+  db: {
+    questions: { count: vi.fn(), toArray: vi.fn(), bulkPut: vi.fn() },
+    attempts: { add: vi.fn(), toArray: vi.fn() },
+  },
+}));
+
+// Mock do questionSeeder
+vi.mock('./questionSeeder', () => ({
+  initializeQuestionBank: vi.fn().mockResolvedValue({ questionCount: 100, seeded: false }),
+}));
+
+// Import mocked modules
+import { QuestionsDB } from './database';
+
+// Dados mock para testes de Concurso
+const mockConcursoQuestions = [
+  {
+    id: 'test_001',
+    banca: 'CEBRASPE',
+    concurso: 'PRF',
+    ano: 2024,
+    cargo: 'Agente',
+    numero: 1,
+    disciplina: 'Direito Constitucional',
+    enunciado: 'Questão de teste sobre direitos fundamentais.',
+    alternativas: ['A) Opção A', 'B) Opção B', 'C) Opção C', 'D) Opção D', 'E) Opção E'],
+    gabarito: 0,
+    tipo: 'multipla_escolha' as const,
+  },
+  {
+    id: 'test_002',
+    banca: 'FGV',
+    concurso: 'TJ-SP',
+    ano: 2023,
+    cargo: 'Analista',
+    numero: 2,
+    disciplina: 'Direito Administrativo',
+    enunciado: 'Questão sobre atos administrativos.',
+    alternativas: ['C) Certo', 'E) Errado'],
+    gabarito: 0,
+    tipo: 'certo_errado' as const,
+  },
+];
+
 describe('QuestionsService', () => {
 
   beforeEach(() => {
@@ -10,6 +71,10 @@ describe('QuestionsService', () => {
       setItem: vi.fn(),
       removeItem: vi.fn(),
     });
+
+    // Reset mocks
+    vi.mocked(QuestionsDB.query).mockReset();
+    vi.mocked(QuestionsDB.query).mockResolvedValue(mockConcursoQuestions);
   });
 
   afterEach(() => {
@@ -195,9 +260,13 @@ describe('QuestionsService', () => {
 
       expect(questions.length).toBeGreaterThan(0);
       expect(questions[0].source).toBe('CONCURSO');
+      expect(QuestionsDB.query).toHaveBeenCalled();
     });
 
     it('should filter by discipline', async () => {
+      // Mock retorna apenas questões de Direito quando filtrado
+      vi.mocked(QuestionsDB.query).mockResolvedValue([mockConcursoQuestions[0]]);
+
       const questions = await QuestionsService.fetchConcursoQuestions({ discipline: 'Direito' });
 
       expect(questions.length).toBeGreaterThan(0);
@@ -207,27 +276,39 @@ describe('QuestionsService', () => {
     });
 
     it('should respect limit', async () => {
+      // Mock retorna apenas 1 questão
+      vi.mocked(QuestionsDB.query).mockResolvedValue([mockConcursoQuestions[0]]);
+
       const questions = await QuestionsService.fetchConcursoQuestions({ limit: 1 });
 
       expect(questions).toHaveLength(1);
     });
 
-    it('should include explanations', async () => {
+    it('should convert ConcursoQuestion to RealQuestion format', async () => {
       const questions = await QuestionsService.fetchConcursoQuestions();
-      const withExplanation = questions.filter(q => q.explanation);
 
-      expect(withExplanation.length).toBeGreaterThan(0);
+      expect(questions[0]).toHaveProperty('id');
+      expect(questions[0]).toHaveProperty('year');
+      expect(questions[0]).toHaveProperty('source');
+      expect(questions[0]).toHaveProperty('discipline');
+      expect(questions[0]).toHaveProperty('statement');
+      expect(questions[0]).toHaveProperty('options');
+      expect(questions[0]).toHaveProperty('correctAnswer');
     });
   });
 
   describe('fetchAllQuestions', () => {
     it('should combine ENEM and Concurso questions', async () => {
+      // Mock ENEM API response
       vi.mocked(fetch).mockResolvedValue({
         ok: true,
         json: () => Promise.resolve({
-          questions: [{ question: 'ENEM Q', alternatives: ['A'], correct_alternative: 'A' }]
+          questions: [{ question: 'ENEM Q', alternatives: ['A', 'B', 'C', 'D', 'E'], correct_alternative: 'A' }]
         })
       } as Response);
+
+      // Mock Concurso DB response
+      vi.mocked(QuestionsDB.query).mockResolvedValue(mockConcursoQuestions);
 
       const questions = await QuestionsService.fetchAllQuestions();
 

@@ -13,10 +13,16 @@ import {
   Terminal,
   ArrowRight,
   MessageSquare,
-  FileText
+  FileText,
+  RotateCcw,
+  Brain,
+  Flame
 } from 'lucide-react';
 import { QuestionAutopsy } from '../types';
 import { useMentor } from '../contexts/MentorContext';
+
+// Types for review badge
+export type ReviewBadgeType = 'due' | 'learning' | 'mature' | 'struggling' | null;
 
 type QuestionSource = 'ai' | 'enem' | 'concurso';
 
@@ -49,6 +55,7 @@ interface QuestionCardProps {
   analyzingError: boolean;
   realQuestionsCount: number;
   currentQuestionIndex: number;
+  reviewBadge?: ReviewBadgeType;
   onOptionSelect: (index: number) => void;
   onAutopsy: () => void;
   onNextQuestion: () => void;
@@ -64,6 +71,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   analyzingError,
   realQuestionsCount,
   currentQuestionIndex,
+  reviewBadge,
   onOptionSelect,
   onAutopsy,
   onNextQuestion,
@@ -81,6 +89,9 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               {questionSource === 'ai' ? 'GENERATION_MODE' : 'DATABASE_FETCH'}
             </span>
           </div>
+
+          {/* Review Badge */}
+          {reviewBadge && <ReviewBadge type={reviewBadge} />}
 
           <span className="font-mono text-[10px] text-slate-400 uppercase tracking-widest pl-2 border-l border-slate-100">
             {questionSource === 'ai'
@@ -353,6 +364,68 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ questionSource }) => {
           ? 'Defina os parâmetros acima e inicialize o gerador para criar questões inéditas.'
           : 'Utilize os filtros para acessar o banco de dados de questões reais.'}
       </p>
+    </div>
+  );
+};
+
+/**
+ * ReviewBadge - Visual indicator for SM-2 spaced repetition status
+ */
+interface ReviewBadgeProps {
+  type: ReviewBadgeType;
+}
+
+const BADGE_CONFIG = {
+  due: {
+    icon: RotateCcw,
+    label: 'REVISÃO',
+    bgColor: 'bg-purple-50',
+    borderColor: 'border-purple-200',
+    textColor: 'text-purple-600',
+    iconColor: 'text-purple-500',
+    animate: true
+  },
+  learning: {
+    icon: Brain,
+    label: 'APRENDENDO',
+    bgColor: 'bg-blue-50',
+    borderColor: 'border-blue-200',
+    textColor: 'text-blue-600',
+    iconColor: 'text-blue-500',
+    animate: false
+  },
+  mature: {
+    icon: CheckCircle,
+    label: 'DOMINADO',
+    bgColor: 'bg-emerald-50',
+    borderColor: 'border-emerald-200',
+    textColor: 'text-emerald-600',
+    iconColor: 'text-emerald-500',
+    animate: false
+  },
+  struggling: {
+    icon: Flame,
+    label: 'DIFÍCIL',
+    bgColor: 'bg-red-50',
+    borderColor: 'border-red-200',
+    textColor: 'text-red-600',
+    iconColor: 'text-red-500',
+    animate: true
+  }
+};
+
+const ReviewBadge: React.FC<ReviewBadgeProps> = ({ type }) => {
+  if (!type) return null;
+
+  const config = BADGE_CONFIG[type];
+  const Icon = config.icon;
+
+  return (
+    <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border ${config.bgColor} ${config.borderColor} ${config.animate ? 'animate-pulse' : ''}`}>
+      <Icon size={12} className={config.iconColor} />
+      <span className={`font-mono text-[9px] font-bold uppercase tracking-widest ${config.textColor}`}>
+        {config.label}
+      </span>
     </div>
   );
 };

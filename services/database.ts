@@ -6,6 +6,7 @@
  */
 
 import Dexie, { Table } from 'dexie';
+import { QuestionExplanation } from '../types';
 
 /**
  * Questão de concurso no formato do banco
@@ -28,6 +29,8 @@ export interface ConcursoQuestion {
   gabarito: number;
   tipo: 'certo_errado' | 'multipla_escolha';
   anulada?: boolean;
+  // AI-generated explanation (populated on-demand by GeminiService)
+  explicacao?: QuestionExplanation;
 }
 
 /**
@@ -196,6 +199,30 @@ export const QuestionsDB = {
    */
   async clear(): Promise<void> {
     await db.questions.clear();
+  },
+
+  /**
+   * Atualizar explicação de uma questão
+   */
+  async updateExplanation(questionId: string, explicacao: QuestionExplanation): Promise<void> {
+    await db.questions.update(questionId, { explicacao });
+  },
+
+  /**
+   * Buscar questão por ID
+   */
+  async getById(questionId: string): Promise<ConcursoQuestion | undefined> {
+    return db.questions.get(questionId);
+  },
+
+  /**
+   * Buscar questões sem explicação (para geração em batch)
+   */
+  async getQuestionsWithoutExplanation(limit = 50): Promise<ConcursoQuestion[]> {
+    const questions = await db.questions.toArray();
+    return questions
+      .filter(q => !q.explicacao)
+      .slice(0, limit);
   }
 };
 
@@ -239,5 +266,64 @@ export const AttemptsDB = {
    */
   async clear(): Promise<void> {
     await db.attempts.clear();
+  },
+
+  /**
+   * Estatísticas de tempo por disciplina
+   */
+  async getTimeStats(): Promise<{
+    avgTimeSeconds: number;
+    totalTimeSeconds: number;
+    byDiscipline: Record<string, { avgTime: number; count: number }>;
+  }> {
+    const attempts = await db.attempts.toArray();
+    const withTime = attempts.filter(a => a.timeSpent !== undefined && a.timeSpent > 0);
+
+    if (withTime.length === 0) {
+      return { avgTimeSeconds: 0, totalTimeSeconds: 0, byDiscipline: {} };
+    }
+
+    const totalTime = withTime.reduce((sum, a) => sum + (a.timeSpent || 0), 0);
+    const avgTime = Math.round(totalTime / withTime.length);
+
+    // Get questions to group by discipline
+    const questions = await db.questions.toArray();
+    const questionMap = new Map(questions.map(q => [q.id, q]));
+
+    const byDiscipline: Record<string, { totalTime: number; count: number }> = {};
+
+    for (const attempt of withTime) {
+      const question = questionMap.get(attempt.questionId);
+      if (!question) continue;
+
+      const disc = question.disciplina;
+      if (!byDiscipline[disc]) {
+        byDiscipline[disc] = { totalTime: 0, count: 0 };
+      }
+      byDiscipline[disc].totalTime += attempt.timeSpent || 0;
+      byDiscipline[disc].count++;
+    }
+
+    // Calculate averages
+    const result: Record<string, { avgTime: number; count: number }> = {};
+    for (const [disc, data] of Object.entries(byDiscipline)) {
+      result[disc] = {
+        avgTime: Math.round(data.totalTime / data.count),
+        count: data.count
+      };
+    }
+
+    return {
+      avgTimeSeconds: avgTime,
+      totalTimeSeconds: totalTime,
+      byDiscipline: result
+    };
+  },
+
+  /**
+   * Histórico de tentativas para uma questão específica
+   */
+  async getQuestionAttempts(questionId: string): Promise<QuestionAttempt[]> {
+    return db.attempts.where('questionId').equals(questionId).toArray();
   }
 };
