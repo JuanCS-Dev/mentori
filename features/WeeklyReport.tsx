@@ -111,12 +111,12 @@ export const WeeklyReport: React.FC<WeeklyReportProps> = ({
 
   // Calculate weekly stats
   const weeklyStats = useMemo((): WeeklyStats => {
-    const disciplines = Object.entries(progress.disciplines || {}).map(([name, data]) => {
-      const discipline = data as { correct?: number; total?: number; totalMinutes?: number; lastElo?: number };
+    const disciplines = Object.entries(progress.disciplineStats || {}).map(([name, data]) => {
+      const discipline = data as { correct?: number; answered?: number; elo?: number };
       const correct = discipline.correct || 0;
-      const total = discipline.total || 0;
-      const minutes = discipline.totalMinutes || 0;
-      const elo = discipline.lastElo || 1000;
+      const total = discipline.answered || 0;
+      const minutes = Math.round(total * 1.5); // Estimate: 1.5 min per question
+      const elo = discipline.elo || 1000;
 
       // Determine trend (simplified - would need historical data for real implementation)
       let trend: 'up' | 'down' | 'stable' = 'stable';
@@ -151,7 +151,7 @@ export const WeeklyReport: React.FC<WeeklyReportProps> = ({
       accuracy: questionsAnswered > 0
         ? Math.round((questionsCorrect / questionsAnswered) * 100)
         : 0,
-      streak: progress.currentStreak || 0,
+      streak: progress.streakDays || 0,
       disciplines
     };
   }, [progress, weekStart, weekEnd, weeklyConfig]);
@@ -378,7 +378,7 @@ export const WeeklyReport: React.FC<WeeklyReportProps> = ({
             Recomendações para Próxima Semana
           </h3>
           <div className="space-y-2">
-            {prediction.focusRecommendations.slice(0, 3).map((rec, index) => (
+            {prediction.focusRecommendations.slice(0, 3).map((rec) => (
               <div
                 key={rec.disciplina}
                 className={`rounded-lg p-3 border ${

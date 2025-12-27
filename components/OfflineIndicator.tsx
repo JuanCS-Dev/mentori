@@ -6,7 +6,7 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Wifi, WifiOff, Cloud, CloudOff, RefreshCw, Check } from 'lucide-react';
+import { Wifi, WifiOff, Cloud, RefreshCw, Check } from 'lucide-react';
 
 interface OfflineIndicatorProps {
   className?: string;
@@ -77,10 +77,14 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
 
     setIsSyncing(true);
     try {
-      // Trigger sync via service worker
-      if ('serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype) {
+      // Trigger sync via service worker (Background Sync API)
+      if ('serviceWorker' in navigator) {
         const registration = await navigator.serviceWorker.ready;
-        await registration.sync.register('sync-progress');
+        // Background Sync API may not be available in all browsers
+        const syncManager = (registration as ServiceWorkerRegistration & { sync?: { register: (tag: string) => Promise<void> } }).sync;
+        if (syncManager) {
+          await syncManager.register('sync-progress');
+        }
       }
 
       // Clear pending actions (simplified - real implementation would verify sync)

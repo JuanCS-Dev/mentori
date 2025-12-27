@@ -253,7 +253,6 @@ interface HeatmapProps {
 export const Heatmap: React.FC<HeatmapProps> = ({
   data,
   columns = 7,
-  showLabels = true,
   className = ''
 }) => {
   const getColor = (value: number): string => {

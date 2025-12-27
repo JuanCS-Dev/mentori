@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Play, Plus, Search, Terminal, GraduationCap, Target, Brain, Library } from 'lucide-react';
+import { BookOpen, Plus, Terminal, GraduationCap } from 'lucide-react';
 
 export const LandingPage: React.FC<{ onEnterApp?: () => void }> = ({ onEnterApp }) => {
   return (

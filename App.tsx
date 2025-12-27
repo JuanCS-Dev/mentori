@@ -1,10 +1,16 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { Layout } from './components/Layout';
 import { LoadingFallback } from './components/LoadingFallback';
+import { LevelUpModal } from './components/LevelUpModal';
+import { BadgeUnlockModal } from './components/LevelUpModal';
+import { OfflineIndicator } from './components/OfflineIndicator';
 import { EditalJSON, BankProfileJSON, NeuroStudyPlanJSON, AppView } from './types';
 import { BarChart2, CheckSquare, ArrowRight, TrendingUp, AlertTriangle, PenTool, Brain, Play, BookOpen, Layers } from 'lucide-react';
-import { usePersistence } from './hooks/usePersistence';
+import { usePersistence, useProgress } from './hooks/usePersistence';
 import { MentorProvider } from './contexts/MentorContext';
+import { LevelUpResult } from './features/Gamification/LevelSystem';
+import { Badge } from './features/Gamification/BadgeSystem';
+import { useExplanationGenerator } from './hooks/useExplanationGenerator';
 
 // =============================================================================
 // LAZY LOADED FEATURES (CODE SPLITTING)
@@ -17,6 +23,7 @@ const MaterialGenerator = React.lazy(() => import('./features/MaterialGenerator'
 const DiscursiveMentor = React.lazy(() => import('./features/DiscursiveMentor').then(module => ({ default: module.DiscursiveMentor })));
 const ProgressDashboard = React.lazy(() => import('./features/ProgressDashboard').then(module => ({ default: module.ProgressDashboard })));
 const StudyCycle = React.lazy(() => import('./features/StudyCycle').then(module => ({ default: module.StudyCycle })));
+const WeeklyReport = React.lazy(() => import('./features/WeeklyReport').then(module => ({ default: module.WeeklyReport })));
 import { LandingPage } from './features/LandingPage';
 
 const App: React.FC = () => {
@@ -26,7 +33,42 @@ const App: React.FC = () => {
   const [editalData, setEditalData] = usePersistence<EditalJSON | null>('editalData', null);
   const [profileData, setProfileData] = usePersistence<BankProfileJSON | null>('profileData', null);
   const [studyPlan, setStudyPlan] = usePersistence<NeuroStudyPlanJSON | null>('studyPlan', null);
-  const [userMood, setUserMood] = usePersistence<'focused' | 'tired' | 'anxious'>('userMood', 'focused');
+  const [userMood] = usePersistence<'focused' | 'tired' | 'anxious'>('userMood', 'focused');
+
+  // Gamification modals state
+  const [levelUpData, setLevelUpData] = useState<LevelUpResult | null>(null);
+  const [unlockedBadge, setUnlockedBadge] = useState<Badge | null>(null);
+
+  // Get gamification events from progress hook
+  const { consumeGamificationEvents } = useProgress();
+
+  // Background AI explanation generation (runs in idle time)
+  const explanationState = useExplanationGenerator(true, 5);
+
+  // Log explanation generation status (development only)
+  useEffect(() => {
+    if (explanationState.isGenerating) {
+      console.log(`🧠 Generating explanations... ${explanationState.questionsProcessed} done, ${explanationState.questionsRemaining} remaining`);
+    }
+  }, [explanationState.isGenerating, explanationState.questionsProcessed, explanationState.questionsRemaining]);
+
+  // Poll for gamification events (triggered by question answers)
+  useEffect(() => {
+    const checkEvents = () => {
+      const events = consumeGamificationEvents();
+      for (const event of events) {
+        if (event.type === 'level_up') {
+          setLevelUpData(event.data as LevelUpResult);
+        } else if (event.type === 'badge_unlocked') {
+          setUnlockedBadge(event.data as Badge);
+        }
+      }
+    };
+
+    // Check every second for new events
+    const interval = setInterval(checkEvents, 1000);
+    return () => clearInterval(interval);
+  }, [consumeGamificationEvents]);
 
   const renderDashboard = () => (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -193,9 +235,37 @@ const App: React.FC = () => {
                 </div>
               </div>
             )}
+
+            {currentView === AppView.WEEKLY_REPORT && (
+              <WeeklyReport
+                onClose={() => setCurrentView(AppView.PROGRESS)}
+                onNavigateToDiscipline={(discipline) => {
+                  console.log('Navigate to discipline:', discipline);
+                  setCurrentView(AppView.QUESTIONS);
+                }}
+              />
+            )}
             </Suspense>
+
+            {/* Offline Indicator */}
+            <OfflineIndicator className="fixed bottom-4 right-4 z-50" />
           </Layout>
         </MentorProvider>
+      )}
+
+      {/* Gamification Modals */}
+      {levelUpData && (
+        <LevelUpModal
+          result={levelUpData}
+          onClose={() => setLevelUpData(null)}
+        />
+      )}
+
+      {unlockedBadge && (
+        <BadgeUnlockModal
+          badge={unlockedBadge}
+          onClose={() => setUnlockedBadge(null)}
+        />
       )}
     </>
   );

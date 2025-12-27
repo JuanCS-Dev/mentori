@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loader2, Sparkles, GraduationCap, BookOpen, Calendar, Search } from 'lucide-react';
+import { Loader2, Sparkles, GraduationCap, BookOpen, Search } from 'lucide-react';
 
 type QuestionSource = 'ai' | 'enem' | 'concurso';
 

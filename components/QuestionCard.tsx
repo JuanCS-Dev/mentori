@@ -18,7 +18,7 @@ import {
   Brain,
   Flame
 } from 'lucide-react';
-import { QuestionAutopsy } from '../types';
+import { QuestionAutopsy, QuestionExplanation } from '../types';
 import { useMentor } from '../contexts/MentorContext';
 
 // Types for review badge
@@ -44,6 +44,8 @@ export interface DisplayQuestion {
   contextId?: string;   // Código do texto (ex: "CB1A1")
   contextText?: string; // Conteúdo do texto de apoio
   command?: string;     // Frase introdutória (ex: "Julgue os itens a seguir...")
+  // AI-generated explanation
+  aiExplanation?: QuestionExplanation;
 }
 
 interface QuestionCardProps {
@@ -221,7 +223,6 @@ const FeedbackSection: React.FC<FeedbackSectionProps> = ({
   errorAutopsy,
   analyzingError,
   realQuestionsCount,
-  currentQuestionIndex,
   onAutopsy,
   onNextQuestion,
   onGenerate
@@ -305,9 +306,52 @@ const FeedbackSection: React.FC<FeedbackSectionProps> = ({
         <h4 className="flex items-center gap-2 font-mono font-bold text-emerald-600 mb-3 text-xs uppercase tracking-widest">
           <CheckCircle size={14} /> Análise da Resposta Correta
         </h4>
-        <p className="text-sm text-slate-700 leading-relaxed pl-1">
-          {questionSource === 'ai' ? question.comment : (question.explanation || "Gabarito oficial processado.")}
-        </p>
+
+        {/* AI-generated explanation if available */}
+        {question.aiExplanation ? (
+          <div className="space-y-4">
+            <p className="text-sm text-slate-700 leading-relaxed">
+              {question.aiExplanation.explicacao_correta}
+            </p>
+
+            {/* Dica memorável */}
+            <div className="bg-violet-50 p-4 rounded-xl border border-violet-100">
+              <h5 className="flex items-center gap-2 font-mono font-bold text-violet-600 mb-2 text-[10px] uppercase tracking-widest">
+                <Sparkles size={12} /> Dica Memorável
+              </h5>
+              <p className="text-sm text-violet-800 italic">
+                {question.aiExplanation.dica_memoravel}
+              </p>
+            </div>
+
+            {/* Fundamentação */}
+            {question.aiExplanation.fundamentacao && (
+              <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                <h5 className="flex items-center gap-2 font-mono font-bold text-blue-600 mb-2 text-[10px] uppercase tracking-widest">
+                  <BookOpen size={12} /> Fundamentação
+                </h5>
+                <p className="text-sm text-blue-800">
+                  {question.aiExplanation.fundamentacao}
+                </p>
+              </div>
+            )}
+
+            {/* Temas relacionados */}
+            {question.aiExplanation.temas_relacionados && question.aiExplanation.temas_relacionados.length > 0 && (
+              <div className="flex flex-wrap gap-2 mt-2">
+                {question.aiExplanation.temas_relacionados.map((tema, idx) => (
+                  <span key={idx} className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full">
+                    {tema}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <p className="text-sm text-slate-700 leading-relaxed pl-1">
+            {questionSource === 'ai' ? question.comment : (question.explanation || "Gabarito oficial processado.")}
+          </p>
+        )}
 
         {questionSource === 'ai' && question.trap && (
           <div className="mt-4 pt-4 border-t border-slate-50">

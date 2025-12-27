@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import {
   BarChart2, Calendar, Brain, Settings,
   Sparkles, PenTool, TrendingUp, RefreshCw, MessageSquare,
-  Terminal, Command, Loader2, Send
+  Terminal, Command, Loader2, Send, FileText
 } from 'lucide-react';
 import { AppView } from '../types';
 import { useMentor } from '../contexts/MentorContext';
@@ -50,6 +50,7 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, onNavigate, childre
     { view: AppView.PLAN, label: 'Plano', icon: <Calendar size={20} /> },
     { view: AppView.QUESTIONS, label: 'Questões', icon: <Brain size={20} /> },
     { view: AppView.PROGRESS, label: 'Estatísticas', icon: <TrendingUp size={20} /> },
+    { view: AppView.WEEKLY_REPORT, label: 'Relatório', icon: <FileText size={20} /> },
     { view: AppView.DISCURSIVE, label: 'Mentor', icon: <PenTool size={20} /> },
   ];
 

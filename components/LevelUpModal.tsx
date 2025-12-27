@@ -7,7 +7,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { Star, ChevronUp, Award, Sparkles } from 'lucide-react';
-import { LevelUpResult, getTitleForLevel, getColorForLevel, LevelService } from '../features/Gamification/LevelSystem';
+import { LevelUpResult, getTitleForLevel, getColorForLevel } from '../features/Gamification/LevelSystem';
 
 interface LevelUpModalProps {
   result: LevelUpResult;
@@ -217,14 +217,10 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
 
 // ===== BADGE UNLOCK MODAL =====
 
+import { Badge, RARITY_CONFIG, BadgeRarity } from '../features/Gamification/BadgeSystem';
+
 interface BadgeUnlockModalProps {
-  badge: {
-    name: string;
-    description: string;
-    icon: string;
-    rarity: string;
-    xp: number;
-  };
+  badge: Badge;
   onClose: () => void;
 }
 
@@ -278,7 +274,7 @@ export const BadgeUnlockModal: React.FC<BadgeUnlockModalProps> = ({
             </p>
             <p className="text-white font-bold">{badge.name}</p>
             <p className="text-xs text-gray-400">{badge.description}</p>
-            <p className="text-xs mt-1" style={{ color }}>+{badge.xp} XP</p>
+            <p className="text-xs mt-1" style={{ color }}>+{RARITY_CONFIG[badge.rarity as BadgeRarity]?.xp || 25} XP</p>
           </div>
         </div>
       </div>

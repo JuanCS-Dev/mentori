@@ -29,9 +29,7 @@ interface AIConfig {
 }
 
 // Environment detection
-const isServer = typeof window === 'undefined';
 const isBrowser = typeof window !== 'undefined';
-const isCloudFunction = typeof process !== 'undefined' && !!process.env.FUNCTION_TARGET;
 
 // Determine provider based on environment
 function getAIConfig(): AIConfig {

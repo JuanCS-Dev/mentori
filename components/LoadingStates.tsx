@@ -92,20 +92,38 @@ export const SkeletonCard: React.FC<{ className?: string }> = ({ className = '' 
   </div>
 );
 
-export const SkeletonQuestion: React.FC = () => (
-  <div className="bg-gray-800 rounded-xl p-6">
-    <Skeleton className="h-4 w-1/4 mb-4" />
-    <SkeletonText lines={3} className="mb-6" />
-    <div className="space-y-3">
-      {[1, 2, 3, 4, 5].map(i => (
-        <div key={i} className="flex items-center gap-3">
-          <Skeleton className="w-6 h-6 rounded-full" />
-          <Skeleton className="h-4 flex-1" />
-        </div>
-      ))}
+export const SkeletonQuestion: React.FC<{ variant?: 'dark' | 'light' }> = ({ variant = 'light' }) => {
+  const isDark = variant === 'dark';
+  const bgColor = isDark ? 'bg-gray-800' : 'bg-white border border-slate-100';
+  const skeletonColor = isDark ? 'bg-gray-700' : 'bg-slate-200';
+
+  return (
+    <div className={`${bgColor} rounded-2xl p-8 shadow-sm animate-pulse`}>
+      {/* Header skeleton */}
+      <div className="flex justify-between items-center mb-6">
+        <div className={`h-4 w-32 ${skeletonColor} rounded`} />
+        <div className={`h-4 w-24 ${skeletonColor} rounded`} />
+      </div>
+
+      {/* Statement skeleton */}
+      <div className="space-y-3 mb-8">
+        <div className={`h-5 w-full ${skeletonColor} rounded`} />
+        <div className={`h-5 w-4/5 ${skeletonColor} rounded`} />
+        <div className={`h-5 w-3/4 ${skeletonColor} rounded`} />
+      </div>
+
+      {/* Options skeleton */}
+      <div className="space-y-4">
+        {[1, 2, 3, 4, 5].map(i => (
+          <div key={i} className={`flex items-center gap-4 p-4 ${isDark ? 'bg-gray-700/50' : 'bg-slate-50'} rounded-xl`}>
+            <div className={`w-8 h-8 ${skeletonColor} rounded-full`} />
+            <div className={`h-4 flex-1 ${skeletonColor} rounded`} />
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export const SkeletonList: React.FC<{ items?: number }> = ({ items = 5 }) => (
   <div className="space-y-3">

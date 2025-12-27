@@ -260,7 +260,7 @@ export const StudyScheduler = {
    * Alterna para manter engajamento
    */
   determineBlockType(
-    discipline: DisciplineConfig,
+    _discipline: DisciplineConfig,
     blockIndex: number
   ): 'theory' | 'questions' | 'review' | 'simulado' {
     // Primeiro bloco: teoria

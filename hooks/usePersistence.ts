@@ -1,6 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { calculateNewRating, getKFactor } from '../features/AdaptiveDifficulty/EloEngine';
 import { recordHealth } from '../services/chaosOrchestrator';
+import { LevelService, LevelUpResult, calculateLevelData, levelFromXP } from '../features/Gamification/LevelSystem';
+import { BadgeService, Badge, RARITY_CONFIG } from '../features/Gamification/BadgeSystem';
+import { StreakService, StreakData, StreakUpdate, MILESTONE_REWARDS } from '../services/streakService';
 
 const STORAGE_PREFIX = 'mentori_';
 const OLD_STORAGE_PREFIX = 'concursoai_';
@@ -196,7 +199,32 @@ export interface UserProgress {
   xp: number;
   level: number;
   overallElo: number;
+  // New gamification fields
+  badges: string[];  // Badge IDs desbloqueados
+  consecutiveCorrect: number;  // Para tracking de streak de acertos
+  maxConsecutiveCorrect: number;  // Recorde
+  lastSessionAccuracy: number;  // Para badge de sessão
+  streakData: StreakData;  // Dados completos de streak
 }
+
+/**
+ * Events emitted when gamification milestones are reached
+ */
+export interface GamificationEvent {
+  type: 'level_up' | 'badge_unlocked' | 'streak_milestone';
+  data: LevelUpResult | Badge | { milestone: number; reward: { xp: number; title: string } };
+}
+
+const defaultStreakData: StreakData = {
+  currentStreak: 0,
+  longestStreak: 0,
+  lastStudyDate: null,
+  freezesAvailable: 1,
+  freezeUsedThisWeek: false,
+  weekStart: new Date().toISOString().split('T')[0]!,
+  totalStudyDays: 0,
+  milestones: []
+};
 
 const defaultProgress: UserProgress = {
   questionsAnswered: 0,
@@ -207,8 +235,16 @@ const defaultProgress: UserProgress = {
   disciplineStats: {},
   xp: 0,
   level: 1,
-  overallElo: 1000
+  overallElo: 1000,
+  badges: [],
+  consecutiveCorrect: 0,
+  maxConsecutiveCorrect: 0,
+  lastSessionAccuracy: 0,
+  streakData: defaultStreakData
 };
+
+// Gamification event queue for UI notifications
+let gamificationEventQueue: GamificationEvent[] = [];
 
 export function useProgress() {
   const [progress, setProgress, clearProgress] = usePersistence<UserProgress>(
@@ -216,8 +252,24 @@ export function useProgress() {
     defaultProgress
   );
 
-  const recordQuestionAnswer = useCallback((discipline: string, isCorrect: boolean) => {
+  /**
+   * Records a question answer with full gamification integration
+   * - Updates Elo ratings
+   * - Calculates XP using LevelService
+   * - Checks for badge unlocks
+   * - Tracks consecutive correct answers
+   */
+  const recordQuestionAnswer = useCallback((
+    discipline: string,
+    isCorrect: boolean,
+    difficulty: string = 'medio'
+  ): { xpGained: number; levelUp: LevelUpResult | null; newBadges: Badge[] } => {
+    let xpGained = 0;
+    let levelUpResult: LevelUpResult | null = null;
+    let newBadges: Badge[] = [];
+
     setProgress(prev => {
+      // 1. Update discipline stats
       const newStats = { ...prev.disciplineStats };
       if (!newStats[discipline]) {
         newStats[discipline] = { answered: 0, correct: 0, elo: 1000 };
@@ -227,72 +279,172 @@ export function useProgress() {
         newStats[discipline].correct += 1;
       }
 
-      // Calculate new Elo ratings
+      // 2. Calculate new Elo ratings
       const matchesPlayed = prev.questionsAnswered;
       const kFactor = getKFactor(matchesPlayed);
-      // Assuming average question difficulty is 1000 if not provided (will refine later)
       const questionDifficulty = 1000;
 
       const newOverallElo = calculateNewRating(prev.overallElo, questionDifficulty, isCorrect ? 1 : 0, kFactor);
-
       const currentDisciplineElo = newStats[discipline].elo;
       const newDisciplineElo = calculateNewRating(currentDisciplineElo, questionDifficulty, isCorrect ? 1 : 0, kFactor);
       newStats[discipline].elo = newDisciplineElo;
 
-      // Calculate XP (10 base + 15 bonus for correct)
-      const xpGained = isCorrect ? 25 : 10;
+      // 3. Calculate XP using LevelService
+      const consecutiveCorrect = isCorrect ? prev.consecutiveCorrect + 1 : 0;
+      xpGained = LevelService.calculateQuestionXP(isCorrect, difficulty, consecutiveCorrect);
+
+      // 4. Apply XP and check for level up
       const newXp = prev.xp + xpGained;
-      const newLevel = Math.floor(newXp / 500) + 1;
+      const newLevel = levelFromXP(newXp);
+      const previousLevel = prev.level;
+
+      if (newLevel > previousLevel) {
+        levelUpResult = LevelService.addXP(prev.xp, isCorrect ? 'question_correct' : 'question_answered');
+        gamificationEventQueue.push({ type: 'level_up', data: levelUpResult });
+      }
+
+      // 5. Update max consecutive correct
+      const newMaxConsecutive = Math.max(prev.maxConsecutiveCorrect, consecutiveCorrect);
+
+      // 6. Check for new badges
+      const maxElo = Math.max(newOverallElo, ...Object.values(newStats).map(s => s.elo));
+      const disciplinesAbove1500 = Object.values(newStats).filter(s => s.elo >= 1500).length;
+
+      // Ensure streakData exists (for backwards compatibility with old data)
+      const streakData = prev.streakData || defaultStreakData;
+
+      const userStats = {
+        totalQuestions: prev.questionsAnswered + 1,
+        currentStreak: streakData.currentStreak,
+        maxConsecutiveCorrect: newMaxConsecutive,
+        lastSessionAccuracy: prev.lastSessionAccuracy || 0,
+        maxElo,
+        disciplinesAbove1500
+      };
+
+      const unlockableBadges = BadgeService.checkUnlockable(
+        { unlocked: prev.badges, progress: {} },
+        userStats
+      );
+
+      let newBadgeIds = [...prev.badges];
+      let bonusXP = 0;
+
+      for (const badge of unlockableBadges) {
+        if (!newBadgeIds.includes(badge.id)) {
+          newBadgeIds.push(badge.id);
+          bonusXP += RARITY_CONFIG[badge.rarity].xp;
+          newBadges.push(badge);
+          gamificationEventQueue.push({ type: 'badge_unlocked', data: badge });
+        }
+      }
+
+      const finalXp = newXp + bonusXP;
+      const finalLevel = levelFromXP(finalXp);
 
       return {
         ...prev,
         questionsAnswered: prev.questionsAnswered + 1,
         questionsCorrect: prev.questionsCorrect + (isCorrect ? 1 : 0),
         disciplineStats: newStats,
-        xp: newXp,
-        level: newLevel,
-        overallElo: newOverallElo
+        xp: finalXp,
+        level: finalLevel,
+        overallElo: newOverallElo,
+        consecutiveCorrect,
+        maxConsecutiveCorrect: newMaxConsecutive,
+        badges: newBadgeIds
       };
     });
+
+    return { xpGained, levelUp: levelUpResult, newBadges };
   }, [setProgress]);
 
-  const recordStudyTime = useCallback((minutes: number) => {
+  /**
+   * Records study time with streak integration
+   */
+  const recordStudyTime = useCallback((minutes: number): StreakUpdate | null => {
     const today = new Date().toISOString().split('T')[0] ?? '';
+    let streakUpdate: StreakUpdate | null = null;
 
     setProgress(prev => {
-      const wasStudyingToday = prev.lastStudyDate === today;
-      const wasStudyingYesterday = (() => {
-        if (!prev.lastStudyDate) return false;
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        const yesterdayStr = yesterday.toISOString().split('T')[0] ?? '';
-        return prev.lastStudyDate === yesterdayStr;
-      })();
+      // 1. Update streak using StreakService (with backwards compatibility)
+      const streakData = { ...(prev.streakData || defaultStreakData) };
+      streakUpdate = StreakService.recordActivity(streakData);
 
-      let newStreak = prev.streakDays;
-      if (!wasStudyingToday) {
-        if (wasStudyingYesterday) {
-          newStreak += 1;
-        } else if (prev.lastStudyDate !== today) {
-          newStreak = 1;
+      // 2. Calculate XP for study time + streak bonus
+      let xpGained = Math.floor(minutes); // 1 XP per minute
+
+      // Bonus XP for streak milestone
+      if (streakUpdate.milestoneReached) {
+        const reward = MILESTONE_REWARDS[streakUpdate.milestoneReached as keyof typeof MILESTONE_REWARDS];
+        if (reward) {
+          xpGained += reward.xp;
+          gamificationEventQueue.push({
+            type: 'streak_milestone',
+            data: { milestone: streakUpdate.milestoneReached, reward }
+          });
         }
       }
 
-      // XP for study time (1 XP per minute)
-      const xpGained = minutes;
+      // 3. Apply XP
       const newXp = prev.xp + xpGained;
-      const newLevel = Math.floor(newXp / 500) + 1;
+      const newLevel = levelFromXP(newXp);
 
       return {
         ...prev,
         totalStudyMinutes: prev.totalStudyMinutes + minutes,
         lastStudyDate: today,
-        streakDays: newStreak,
+        streakDays: streakData.currentStreak,
+        streakData,
         xp: newXp,
         level: newLevel
       };
     });
+
+    return streakUpdate;
   }, [setProgress]);
+
+  /**
+   * Use a streak freeze
+   */
+  const useStreakFreeze = useCallback((): boolean => {
+    let success = false;
+
+    setProgress(prev => {
+      const streakData = { ...prev.streakData };
+      success = StreakService.useFreeze(streakData);
+
+      if (success) {
+        return { ...prev, streakData };
+      }
+      return prev;
+    });
+
+    return success;
+  }, [setProgress]);
+
+  /**
+   * Get and clear pending gamification events (for UI notifications)
+   */
+  const consumeGamificationEvents = useCallback((): GamificationEvent[] => {
+    const events = [...gamificationEventQueue];
+    gamificationEventQueue = [];
+    return events;
+  }, []);
+
+  /**
+   * Get level data using LevelService
+   */
+  const getLevelData = useCallback(() => {
+    return calculateLevelData(progress.xp);
+  }, [progress.xp]);
+
+  /**
+   * Check if streak is at risk
+   */
+  const isStreakAtRisk = useCallback(() => {
+    return StreakService.isAtRisk(progress.streakData || defaultStreakData);
+  }, [progress.streakData]);
 
   const getAccuracy = useCallback(() => {
     if (progress.questionsAnswered === 0) return 0;
@@ -309,6 +461,10 @@ export function useProgress() {
     progress,
     recordQuestionAnswer,
     recordStudyTime,
+    useStreakFreeze,
+    consumeGamificationEvents,
+    getLevelData,
+    isStreakAtRisk,
     getAccuracy,
     getDisciplineAccuracy,
     clearProgress

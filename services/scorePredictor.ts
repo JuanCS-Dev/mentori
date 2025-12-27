@@ -68,9 +68,6 @@ export interface FocusRecommendation {
 
 // ===== CONSTANTS =====
 
-/** Elo médio esperado para aprovação */
-const APPROVAL_ELO_THRESHOLD = 1200;
-
 /** Elo de um candidato iniciante */
 const BASELINE_ELO = 1000;
 
@@ -249,7 +246,7 @@ export const ScorePredictor = {
    */
   generateFocusRecommendations(
     performances: DisciplinePerformance[],
-    breakdown: DisciplineScoreBreakdown[]
+    _breakdown: DisciplineScoreBreakdown[]
   ): FocusRecommendation[] {
     return performances
       .map(perf => {

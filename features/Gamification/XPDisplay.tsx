@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useProgress } from '../../hooks/usePersistence';
+import { getColorForLevel, LevelService } from './LevelSystem';
 
 export const XPDisplay: React.FC = () => {
-    const { progress } = useProgress();
+    const { progress, getLevelData } = useProgress();
     const [animate, setAnimate] = useState(false);
     const [prevXP, setPrevXP] = useState(progress.xp);
+
+    // Get real level data from LevelService
+    const levelData = getLevelData();
 
     useEffect(() => {
         if (progress.xp > prevXP) {
@@ -15,22 +19,32 @@ export const XPDisplay: React.FC = () => {
         }
     }, [progress.xp, prevXP]);
 
-    const levelProgress = (progress.xp % 500) / 500 * 100;
+    const levelColor = getColorForLevel(levelData.level);
 
     return (
         <div className="flex flex-col gap-1 w-full max-w-[200px]">
             <div className="flex justify-between items-center text-xs font-bold uppercase text-gray-400">
-                <span>Level {progress.level}</span>
+                <span style={{ color: levelColor }}>
+                    Lvl {levelData.level} · {levelData.title}
+                </span>
                 <span className={`${animate ? 'text-green-500 scale-110' : 'text-gray-500'} transition-all duration-300`}>
-                    {progress.xp} XP
+                    {LevelService.formatXP(progress.xp)} XP
                 </span>
             </div>
             <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div
-                    className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-700 ease-out"
-                    style={{ width: `${levelProgress}%` }}
+                    className="h-full transition-all duration-700 ease-out"
+                    style={{
+                        width: `${levelData.xpProgress}%`,
+                        background: `linear-gradient(to right, ${levelColor}, ${levelColor}dd)`
+                    }}
                 />
             </div>
+            {levelData.nextTitle && levelData.levelsToNextTitle <= 5 && (
+                <div className="text-[10px] text-gray-400 text-right">
+                    {levelData.levelsToNextTitle} níveis para {levelData.nextTitle}
+                </div>
+            )}
         </div>
     );
 };

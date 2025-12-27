@@ -220,7 +220,8 @@ describe('useProgress', () => {
 
     expect(result.current.progress.questionsAnswered).toBe(1);
     expect(result.current.progress.questionsCorrect).toBe(1);
-    expect(result.current.progress.xp).toBe(25); // 10 base + 15 bonus
+    // LevelService: 5 (answered) + 10 (correct) = 15 XP + 25 (first_question badge) = 40
+    expect(result.current.progress.xp).toBe(40);
     expect(result.current.progress.disciplineStats['Matemática'].correct).toBe(1);
   });
 
@@ -233,7 +234,8 @@ describe('useProgress', () => {
 
     expect(result.current.progress.questionsAnswered).toBe(1);
     expect(result.current.progress.questionsCorrect).toBe(0);
-    expect(result.current.progress.xp).toBe(10); // base only
+    // LevelService: 5 (answered) = 5 XP + 25 (first_question badge) = 30
+    expect(result.current.progress.xp).toBe(30);
     expect(result.current.progress.disciplineStats['Português'].correct).toBe(0);
   });
 
@@ -259,7 +261,21 @@ describe('useProgress', () => {
       lastStudyDate: '2025-01-14', // yesterday
       disciplineStats: {},
       xp: 100,
-      level: 1
+      level: 1,
+      badges: [],
+      consecutiveCorrect: 0,
+      maxConsecutiveCorrect: 0,
+      lastSessionAccuracy: 0,
+      streakData: {
+        currentStreak: 5,
+        longestStreak: 5,
+        lastStudyDate: '2025-01-14',
+        freezesAvailable: 1,
+        freezeUsedThisWeek: false,
+        weekStart: '2025-01-13',
+        totalStudyDays: 5,
+        milestones: [3]
+      }
     }));
 
     const { result } = renderHook(() => useProgress());
@@ -280,7 +296,21 @@ describe('useProgress', () => {
       lastStudyDate: '2025-01-10', // 5 days ago
       disciplineStats: {},
       xp: 100,
-      level: 1
+      level: 1,
+      badges: [],
+      consecutiveCorrect: 0,
+      maxConsecutiveCorrect: 0,
+      lastSessionAccuracy: 0,
+      streakData: {
+        currentStreak: 5,
+        longestStreak: 5,
+        lastStudyDate: '2025-01-10',
+        freezesAvailable: 1,
+        freezeUsedThisWeek: false,
+        weekStart: '2025-01-06',
+        totalStudyDays: 5,
+        milestones: [3]
+      }
     }));
 
     const { result } = renderHook(() => useProgress());
@@ -336,6 +366,7 @@ describe('useProgress', () => {
   });
 
   it('should level up based on XP', () => {
+    // LevelSystem uses exponential curve: level 2 at 282 XP, level 3 at 801 XP
     vi.mocked(localStorage.getItem).mockReturnValue(JSON.stringify({
       questionsAnswered: 0,
       questionsCorrect: 0,
@@ -343,18 +374,34 @@ describe('useProgress', () => {
       streakDays: 0,
       lastStudyDate: '',
       disciplineStats: {},
-      xp: 490,
-      level: 1
+      xp: 270,  // Just below level 2 threshold (282)
+      level: 1,
+      badges: [],
+      consecutiveCorrect: 0,
+      maxConsecutiveCorrect: 0,
+      lastSessionAccuracy: 0,
+      streakData: {
+        currentStreak: 0,
+        longestStreak: 0,
+        lastStudyDate: null,
+        freezesAvailable: 1,
+        freezeUsedThisWeek: false,
+        weekStart: '2025-01-13',
+        totalStudyDays: 0,
+        milestones: []
+      }
     }));
 
     const { result } = renderHook(() => useProgress());
 
     act(() => {
-      result.current.recordQuestionAnswer('Test', true); // +25 XP = 515 XP
+      // Correct answer: 5 (answered) + 10 (correct) = 15 XP + 25 (first_question badge) = 40 XP
+      // Total: 270 + 40 = 310 XP (level 2)
+      result.current.recordQuestionAnswer('Test', true);
     });
 
-    expect(result.current.progress.xp).toBe(515);
-    expect(result.current.progress.level).toBe(2); // 500+ XP = level 2
+    expect(result.current.progress.xp).toBe(310);
+    expect(result.current.progress.level).toBe(2);
   });
 
   it('should clear progress', () => {

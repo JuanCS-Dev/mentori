@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
     getChaosStatus,
     setChaosConfig,
     getHealthStatus,
-    getCircuitStatus,
-    HealthSignal
+    getCircuitStatus
 } from '../services/chaosOrchestrator';
-import { Zap, Activity, AlertTriangle, ShieldAlert, X } from 'lucide-react';
+import { Zap, Activity, ShieldAlert, X } from 'lucide-react';
 
 export function ChaosControlPanel() {
     const [isOpen, setIsOpen] = useState(false);

@@ -1,5 +1,6 @@
 import { QuestionsDB, ConcursoQuestion } from './database';
 import { initializeQuestionBank } from './questionSeeder';
+import { QuestionExplanation } from '../types';
 
 /**
  * Serviço de Questões Reais
@@ -32,6 +33,8 @@ export interface RealQuestion {
   difficulty?: 'Fácil' | 'Médio' | 'Difícil';
   bank?: string;
   role?: string;
+  // AI-generated structured explanation
+  aiExplanation?: QuestionExplanation;
 }
 
 export interface QuestionFilter {
@@ -413,7 +416,9 @@ export const QuestionsService = {
       role: q.cargo,
       // Inferir dificuldade pelo tamanho do enunciado + texto base
       difficulty: (q.enunciado.length + (q.texto_base?.length || 0)) > 600 ? 'Difícil' :
-                  (q.enunciado.length + (q.texto_base?.length || 0)) > 300 ? 'Médio' : 'Fácil'
+                  (q.enunciado.length + (q.texto_base?.length || 0)) > 300 ? 'Médio' : 'Fácil',
+      // AI-generated explanation (if available)
+      aiExplanation: q.explicacao
     };
   },
 

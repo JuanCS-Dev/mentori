@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { Share2, Zap, Brain, TrendingUp } from 'lucide-react';
+import React from 'react';
+import { Share2, Zap, Brain } from 'lucide-react';
 import { NeuroStudyPlanJSON } from '../types';
 
 interface NeuroShareCardProps {

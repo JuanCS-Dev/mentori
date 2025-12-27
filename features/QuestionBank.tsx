@@ -7,6 +7,8 @@ import { QuestionAutopsy } from '../types';
 import { useProgress } from '../hooks/usePersistence';
 import { useQuestionReview } from '../hooks/useQuestionReview';
 import { QuestionCard, DisplayQuestion, EmptyState, ReviewBadgeType } from '../components/QuestionCard';
+import { SkeletonQuestion } from '../components/LoadingStates';
+import { NoQuestions } from '../components/EmptyStates';
 import {
   AIControls,
   ConcursoControls,
@@ -32,6 +34,7 @@ export const QuestionBank: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [errorAutopsy, setErrorAutopsy] = useState<QuestionAutopsy | null>(null);
   const [xpGained, setXpGained] = useState<number | null>(null);
+  const [noQuestionsFound, setNoQuestionsFound] = useState(false);
 
   const { progress, recordQuestionAnswer, getAccuracy, getDisciplineAccuracy } = useProgress();
   const {
@@ -93,6 +96,7 @@ export const QuestionBank: React.FC = () => {
     setErrorAutopsy(null);
     setRealQuestions([]);
     setCurrentQuestionIndex(0);
+    setNoQuestionsFound(false);
 
     try {
       let questions = await QuestionsService.fetchConcursoQuestions({
@@ -129,15 +133,16 @@ export const QuestionBank: React.FC = () => {
             contextId: first.contextId,
             contextText: first.contextText,
             command: first.command,
-            explanation: first.explanation
+            explanation: first.explanation,
+            aiExplanation: first.aiExplanation
           });
         }
       } else {
-        alert('Nenhuma questão encontrada para estes filtros.');
+        setNoQuestionsFound(true);
       }
     } catch (e) {
       console.error(e);
-      alert('Erro ao buscar questões.');
+      setNoQuestionsFound(true);
     } finally {
       setLoading(false);
     }
@@ -158,6 +163,7 @@ export const QuestionBank: React.FC = () => {
     setErrorAutopsy(null);
     setRealQuestions([]);
     setCurrentQuestionIndex(0);
+    setNoQuestionsFound(false);
 
     try {
       if (config.useAI) {
@@ -226,16 +232,17 @@ export const QuestionBank: React.FC = () => {
               contextId: first.contextId,
               contextText: first.contextText,
               command: first.command,
-              explanation: first.explanation
+              explanation: first.explanation,
+              aiExplanation: first.aiExplanation
             });
           }
         } else {
-          alert('Nenhuma questão encontrada para estes filtros.');
+          setNoQuestionsFound(true);
         }
       }
     } catch (e) {
       console.error(e);
-      alert('Erro ao iniciar simulado.');
+      setNoQuestionsFound(true);
     } finally {
       setLoading(false);
     }
@@ -249,6 +256,7 @@ export const QuestionBank: React.FC = () => {
     setQuestion(null);
     setErrorAutopsy(null);
     setRealQuestions([]);
+    setNoQuestionsFound(false);
 
     try {
       const q = await GeminiService.generateQuestion(
@@ -269,7 +277,7 @@ export const QuestionBank: React.FC = () => {
       });
     } catch (e) {
       console.error(e);
-      alert('Erro ao gerar questão com IA.');
+      setNoQuestionsFound(true);
     } finally {
       setLoading(false);
     }
@@ -299,7 +307,8 @@ export const QuestionBank: React.FC = () => {
         contextId: next.contextId,
         contextText: next.contextText,
         command: next.command,
-        explanation: next.explanation
+        explanation: next.explanation,
+        aiExplanation: next.aiExplanation
       });
     }
   };
@@ -433,7 +442,18 @@ export const QuestionBank: React.FC = () => {
         />
       )}
 
-      {!question && !loading && (
+      {/* Loading skeleton */}
+      {loading && !question && (
+        <SkeletonQuestion />
+      )}
+
+      {/* No questions found state */}
+      {noQuestionsFound && !loading && (
+        <NoQuestions onLoad={mode === 'gerador' ? handleGenerateAI : handleSearch} />
+      )}
+
+      {/* Empty state when no question, not loading, and not showing error */}
+      {!question && !loading && !noQuestionsFound && (
         <EmptyState questionSource={mode === 'gerador' ? 'ai' : 'concurso'} />
       )}
     </div>
@@ -601,7 +621,6 @@ const SimuladoControls: React.FC<SimuladoControlsProps> = ({ dbMeta, loading, us
     discipline: ''
   });
 
-  const currentLevel = SIMULADO_LEVELS[level];
   const isDesafioUnlocked = userAccuracy >= 70; // Precisa de 70%+ para desbloquear Desafio IA
 
   const handleLevelChange = (newLevel: SimuladoLevel) => {
