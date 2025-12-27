@@ -1,0 +1,140 @@
+LICENCA PROPRIETARIA MENTORI
+Versao 1.0 - Dezembro 2025
+
+Copyright (c) 2025 Juan Carlos Santos. Todos os direitos reservados.
+
+================================================================================
+                              TERMOS E CONDICOES
+================================================================================
+
+1. DEFINICOES
+
+   "Software" refere-se ao codigo-fonte, binarios, documentacao, assets,
+   algoritmos, designs e todos os materiais relacionados ao projeto Mentori.
+
+   "Licenciante" refere-se a Juan Carlos Santos, titular dos direitos autorais.
+
+   "Uso Comercial" significa qualquer uso do Software que gere receita direta
+   ou indireta, incluindo mas nao limitado a: venda, licenciamento, SaaS,
+   publicidade, ou uso interno em organizacoes com fins lucrativos.
+
+   "Uso Pessoal" significa uso exclusivamente para estudo, aprendizado ou
+   desenvolvimento pessoal, sem qualquer finalidade comercial.
+
+2. CONCESSAO DE DIREITOS
+
+   2.1 NAO E CONCEDIDA nenhuma licenca, direito ou permissao para usar,
+       copiar, modificar, mesclar, publicar, distribuir, sublicenciar
+       ou vender copias do Software.
+
+   2.2 O acesso ao codigo-fonte neste repositorio NAO constitui autorizacao
+       para qualquer uso alem da visualizacao.
+
+3. RESTRICOES
+
+   Voce NAO pode, sob nenhuma circunstancia:
+
+   a) Usar o Software ou qualquer parte dele para fins comerciais
+   b) Copiar, reproduzir ou duplicar o Software
+   c) Modificar, adaptar ou criar obras derivadas
+   d) Distribuir, sublicenciar ou transferir o Software
+   e) Fazer engenharia reversa, descompilar ou desmontar
+   f) Remover ou alterar avisos de direitos autorais
+   g) Usar o nome "Mentori" ou marcas relacionadas
+   h) Hospedar, deployar ou disponibilizar o Software publicamente
+   i) Usar os algoritmos, logica de negocio ou arquitetura em outros projetos
+   j) Treinar modelos de IA ou machine learning com este codigo
+
+4. PROPRIEDADE INTELECTUAL
+
+   4.1 O Software e todos os direitos de propriedade intelectual relacionados
+       sao e permanecerao propriedade exclusiva do Licenciante.
+
+   4.2 Isso inclui, mas nao se limita a:
+       - Algoritmos de spaced repetition customizados
+       - Sistema de gamificacao e progressao
+       - Integracao com IA (prompts, fluxos, personas)
+       - Design de interface e experiencia do usuario
+       - Banco de questoes e estrutura de dados
+       - Metodologia de estudos implementada
+
+5. DADOS E PRIVACIDADE
+
+   5.1 Qualquer dado gerado pelo uso nao autorizado do Software pertence
+       ao Licenciante.
+
+   5.2 O uso nao autorizado pode resultar em coleta de informacoes para
+       fins de protecao de direitos autorais.
+
+6. ISENCAO DE GARANTIAS
+
+   O SOFTWARE E FORNECIDO "COMO ESTA", SEM GARANTIAS DE QUALQUER TIPO,
+   EXPRESSAS OU IMPLICITAS, INCLUINDO MAS NAO LIMITADO A GARANTIAS DE
+   COMERCIALIZACAO, ADEQUACAO A UM FIM ESPECIFICO E NAO VIOLACAO.
+
+7. LIMITACAO DE RESPONSABILIDADE
+
+   EM NENHUMA HIPOTESE O LICENCIANTE SERA RESPONSAVEL POR QUAISQUER DANOS
+   DIRETOS, INDIRETOS, INCIDENTAIS, ESPECIAIS, EXEMPLARES OU CONSEQUENCIAIS
+   DECORRENTES DO USO OU IMPOSSIBILIDADE DE USO DO SOFTWARE.
+
+8. VIOLACAO E PENALIDADES
+
+   8.1 Qualquer uso nao autorizado constitui violacao de direitos autorais
+       e esta sujeito a:
+       - Acoes judiciais civis e criminais
+       - Indenizacao por danos materiais e morais
+       - Multa de R$ 50.000,00 (cinquenta mil reais) por violacao
+       - Custas processuais e honorarios advocaticios
+
+   8.2 O Licenciante reserva-se o direito de monitorar o uso do Software
+       e tomar medidas legais contra violacoes.
+
+9. LICENCIAMENTO COMERCIAL
+
+   Para obter uma licenca comercial, entre em contato:
+
+   Email: licensing@mentori.app
+   Assunto: Licenca Comercial Mentori
+
+   Licencas comerciais podem incluir:
+   - Licenca de uso empresarial
+   - Licenca de marca branca (white-label)
+   - Licenca de revenda
+   - Licenca educacional para instituicoes
+
+10. JURISDICAO E FORO
+
+    Esta licenca sera regida e interpretada de acordo com as leis da
+    Republica Federativa do Brasil. Fica eleito o foro da comarca de
+    Sao Paulo/SP para dirimir quaisquer controversias.
+
+11. DISPOSICOES GERAIS
+
+    11.1 Se qualquer disposicao desta licenca for considerada invalida,
+         as demais disposicoes permanecerao em pleno vigor.
+
+    11.2 A falha do Licenciante em exercer qualquer direito nao constitui
+         renuncia a esse direito.
+
+    11.3 Esta licenca constitui o acordo integral entre as partes e
+         substitui todos os acordos anteriores.
+
+================================================================================
+                              AVISO IMPORTANTE
+================================================================================
+
+ESTE SOFTWARE E PROTEGIDO POR LEIS DE DIREITOS AUTORAIS BRASILEIRAS
+(Lei 9.610/98) E TRATADOS INTERNACIONAIS.
+
+A VIOLACAO DE DIREITOS AUTORAIS E CRIME PREVISTO NO ART. 184 DO CODIGO
+PENAL BRASILEIRO, COM PENA DE 3 MESES A 4 ANOS DE RECLUSAO.
+
+================================================================================
+
+Ao acessar este repositorio, voce reconhece que leu, entendeu e concorda
+em cumprir todos os termos desta licenca.
+
+Para duvidas: legal@mentori.app
+
+(c) 2025 Juan Carlos Santos - Todos os direitos reservados.

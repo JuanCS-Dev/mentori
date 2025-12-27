@@ -6,7 +6,7 @@ Estude 3x mais rapido com plano personalizado, 700+ questoes reais e mentor IA 2
 
 [![Tests](https://img.shields.io/badge/tests-193%20passing-brightgreen)]()
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)]()
-[![License](https://img.shields.io/badge/license-MIT-green)]()
+[![License](https://img.shields.io/badge/license-Proprietary-red)]()
 
 ---
 
@@ -269,7 +269,14 @@ Baseado em pesquisas e metodos comprovados:
 
 ## License
 
-MIT
+**Proprietary - Todos os direitos reservados.**
+
+Este software e protegido por direitos autorais. Nenhuma parte pode ser copiada,
+modificada, distribuida ou usada comercialmente sem autorizacao expressa.
+
+Para licenciamento comercial: licensing@mentori.app
+
+Veja [LICENSE](./LICENSE) para termos completos.
 
 ---
 
