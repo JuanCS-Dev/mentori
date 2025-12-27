@@ -31,7 +31,7 @@
 | **Preco Mensal** | R$ 47,00 |
 | **Preco Anual** | R$ 397,00 (30% desconto) |
 | **Garantia** | 7 dias incondicional |
-| **Suporte** | suporte@mentori.app |
+| **Suporte** | juan@vertice-maximus.com |
 
 ### Descricao Curta (ate 150 caracteres)
 ```

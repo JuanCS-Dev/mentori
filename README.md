@@ -274,7 +274,7 @@ Baseado em pesquisas e metodos comprovados:
 Este software e protegido por direitos autorais. Nenhuma parte pode ser copiada,
 modificada, distribuida ou usada comercialmente sem autorizacao expressa.
 
-Para licenciamento comercial: licensing@mentori.app
+Para licenciamento comercial: juan@vertice-maximus.com
 
 Veja [LICENSE](./LICENSE) para termos completos.
 
@@ -284,4 +284,4 @@ Veja [LICENSE](./LICENSE) para termos completos.
 
 Feito com dedicacao para concurseiros brasileiros.
 
-**Contato:** suporte@mentori.app
+**Contato:** juan@vertice-maximus.com
