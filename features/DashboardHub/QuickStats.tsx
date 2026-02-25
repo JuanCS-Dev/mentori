@@ -1,38 +1,49 @@
-import React from 'react';
-import { Target, Clock, CheckCircle, XCircle } from 'lucide-react';
-import { UserProgress } from '../../hooks/usePersistence';
+import React from "react";
+import { Target, Clock, CheckCircle, XCircle, Activity } from "lucide-react";
+import { UserProgress } from "../../hooks/usePersistence";
 
 interface QuickStatsProps {
   progress: UserProgress;
   accuracy: number;
 }
 
-export const QuickStats: React.FC<QuickStatsProps> = ({ progress, accuracy }) => {
+export const QuickStats: React.FC<QuickStatsProps> = ({
+  progress,
+  accuracy,
+}) => {
   const todayStats = getTodayStats();
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6">
-      <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">
-        Estatisticas Rapidas
-      </h3>
+    <div className="bg-[#121216] rounded-lg border border-zinc-900 p-8 relative overflow-hidden group">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-3">
+          <Activity size={16} className="text-[#00F0FF]" />
+          <h3 className="text-xs font-mono font-bold text-zinc-500 uppercase tracking-[0.3em]">
+            Live Analytics
+          </h3>
+        </div>
+        <div className="flex gap-1">
+          <div className="w-1.5 h-px bg-zinc-800"></div>
+          <div className="w-1.5 h-px bg-zinc-800"></div>
+          <div className="w-1.5 h-px bg-[#00F0FF]"></div>
+        </div>
+      </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
         {/* Questions Today */}
         <StatCard
           icon={Target}
-          iconColor="text-blue-500"
-          iconBg="bg-blue-50"
-          label="Questoes Hoje"
+          color="#00F0FF"
+          label="Neural Drills"
           value={todayStats.questionsToday}
-          subtext={`Meta: 20`}
+          subtext={`Target: 20`}
         />
 
         {/* Accuracy */}
         <StatCard
           icon={CheckCircle}
-          iconColor="text-green-500"
-          iconBg="bg-green-50"
-          label="Taxa de Acerto"
+          color="#22C55E"
+          label="Accuracy Rating"
           value={`${accuracy}%`}
           subtext={`${progress.questionsCorrect}/${progress.questionsAnswered}`}
         />
@@ -40,34 +51,41 @@ export const QuickStats: React.FC<QuickStatsProps> = ({ progress, accuracy }) =>
         {/* Study Time */}
         <StatCard
           icon={Clock}
-          iconColor="text-purple-500"
-          iconBg="bg-purple-50"
-          label="Tempo de Estudo"
+          color="#A855F7"
+          label="Uptime"
           value={formatMinutes(progress.totalStudyMinutes)}
-          subtext="total acumulado"
+          subtext="Cumulative"
         />
 
         {/* Errors to Review */}
         <StatCard
           icon={XCircle}
-          iconColor="text-orange-500"
-          iconBg="bg-orange-50"
-          label="Erros para Revisar"
+          color="#EF4444"
+          label="Faults Detected"
           value={progress.questionsAnswered - progress.questionsCorrect}
-          subtext="pendentes"
+          subtext="Pending Review"
         />
       </div>
 
       {/* Progress Bar */}
-      <div className="mt-6 pt-4 border-t border-slate-100">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-slate-600">Meta diaria: {todayStats.questionsToday}/20 questoes</span>
-          <span className="text-sm font-bold text-slate-900">{Math.min(100, Math.round((todayStats.questionsToday / 20) * 100))}%</span>
+      <div className="mt-10 pt-6 border-t border-zinc-900/50">
+        <div className="flex items-center justify-between mb-3 font-mono">
+          <span className="text-[10px] text-zinc-500 uppercase tracking-widest">
+            Mission Progress: {todayStats.questionsToday}/20 Cycles
+          </span>
+          <span className="text-[10px] font-bold text-[#00F0FF]">
+            {Math.min(100, Math.round((todayStats.questionsToday / 20) * 100))}%
+          </span>
         </div>
-        <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+        <div className="h-1 bg-black rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-500"
-            style={{ width: `${Math.min(100, (todayStats.questionsToday / 20) * 100)}%` }}
+            className="h-full bg-gradient-to-r from-[#00F0FF]/50 to-[#00F0FF] rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(0,240,255,0.4)]"
+            style={{
+              width: `${Math.min(
+                100,
+                (todayStats.questionsToday / 20) * 100,
+              )}%`,
+            }}
           />
         </div>
       </div>
@@ -77,37 +95,48 @@ export const QuickStats: React.FC<QuickStatsProps> = ({ progress, accuracy }) =>
 
 interface StatCardProps {
   icon: React.FC<{ size?: number; className?: string }>;
-  iconColor: string;
-  iconBg: string;
+  color: string;
   label: string;
   value: string | number;
   subtext: string;
 }
 
-const StatCard: React.FC<StatCardProps> = ({ icon: Icon, iconColor, iconBg, label, value, subtext }) => (
-  <div className="flex items-start gap-3">
-    <div className={`w-10 h-10 rounded-lg ${iconBg} flex items-center justify-center shrink-0`}>
-      <Icon size={20} className={iconColor} />
+const StatCard: React.FC<StatCardProps> = ({
+  icon: Icon,
+  color,
+  label,
+  value,
+  subtext,
+}) => (
+  <div className="flex flex-col gap-3 group/stat">
+    <div className="flex items-center gap-2">
+      <div className="p-1.5 rounded bg-zinc-900/50 border border-zinc-800 group-hover/stat:border-zinc-700 transition-colors">
+        <Icon size={14} style={{ color }} />
+      </div>
+      <span className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest group-hover/stat:text-zinc-400 transition-colors">
+        {label}
+      </span>
     </div>
-    <div>
-      <div className="text-2xl font-bold text-slate-900">{value}</div>
-      <div className="text-xs text-slate-500">{label}</div>
-      <div className="text-[10px] text-slate-400">{subtext}</div>
+    <div className="flex flex-col">
+      <div className="text-3xl font-black text-white italic tracking-tighter font-mono">
+        {value}
+      </div>
+      <div className="text-[9px] font-mono text-zinc-700 uppercase tracking-widest mt-1">
+        {subtext}
+      </div>
     </div>
   </div>
 );
 
 function formatMinutes(minutes: number): string {
-  if (minutes < 60) return `${minutes}min`;
+  if (minutes < 60) return `${minutes}M`;
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
-  return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
+  return mins > 0 ? `${hours}H ${mins}M` : `${hours}H`;
 }
 
 function getTodayStats() {
-  // In a real implementation, this would track daily stats
-  // For now, return placeholder
   return {
-    questionsToday: Math.floor(Math.random() * 15) + 5
+    questionsToday: Math.floor(Math.random() * 15) + 5,
   };
 }

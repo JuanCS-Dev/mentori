@@ -1,35 +1,39 @@
-import React from 'react';
-import { Clock, Brain, FileQuestion, TrendingDown } from 'lucide-react';
+import React from "react";
+import { Clock, Brain, FileQuestion, TrendingDown } from "lucide-react";
 
 const painPoints = [
   {
     icon: Clock,
-    title: 'Horas Perdidas',
-    description: 'Voce estuda 4-6 horas por dia, mas sente que nao avanca. O material e infinito e o tempo e curto.',
-    stat: '73%',
-    statLabel: 'dos concurseiros sentem isso'
+    title: "Horas Perdidas",
+    description:
+      "Voce estuda 4-6 horas por dia, mas sente que nao avanca. O material e infinito e o tempo e curto.",
+    stat: "73%",
+    statLabel: "dos concurseiros sentem isso",
   },
   {
     icon: Brain,
-    title: 'Esquecimento Constante',
-    description: 'Revisou semana passada, mas hoje ja nao lembra. A curva do esquecimento e implacavel.',
-    stat: '80%',
-    statLabel: 'do conteudo e esquecido em 7 dias'
+    title: "Esquecimento Constante",
+    description:
+      "Revisou semana passada, mas hoje ja nao lembra. A curva do esquecimento e implacavel.",
+    stat: "80%",
+    statLabel: "do conteudo e esquecido em 7 dias",
   },
   {
     icon: FileQuestion,
-    title: 'Edital Confuso',
-    description: 'Edital com 50+ paginas, dezenas de materias. Por onde comecar? Qual a prioridade?',
-    stat: '60%',
-    statLabel: 'desistem por falta de direcao'
+    title: "Edital Confuso",
+    description:
+      "Edital com 50+ paginas, dezenas de materias. Por onde comecar? Qual a prioridade?",
+    stat: "60%",
+    statLabel: "desistem por falta de direcao",
   },
   {
     icon: TrendingDown,
-    title: 'Sem Evolucao Visivel',
-    description: 'Voce estuda muito mas nao ve progresso. Sem metricas, sem feedback, sem motivacao.',
-    stat: '45%',
-    statLabel: 'abandonam em 3 meses'
-  }
+    title: "Sem Evolucao Visivel",
+    description:
+      "Voce estuda muito mas nao ve progresso. Sem metricas, sem feedback, sem motivacao.",
+    stat: "45%",
+    statLabel: "abandonam em 3 meses",
+  },
 ];
 
 export const PainPoints: React.FC = () => {
@@ -47,7 +51,8 @@ export const PainPoints: React.FC = () => {
             <span className="text-red-500">Nao Conseguem Aprovacao?</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Nao e falta de esforco. E falta de metodo cientifico e tecnologia adequada.
+            Nao e falta de esforco. E falta de metodo cientifico e tecnologia
+            adequada.
           </p>
         </div>
 
@@ -75,8 +80,12 @@ export const PainPoints: React.FC = () => {
 
                 {/* Stat */}
                 <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-black text-red-500">{pain.stat}</span>
-                  <span className="text-sm text-slate-500">{pain.statLabel}</span>
+                  <span className="text-3xl font-black text-red-500">
+                    {pain.stat}
+                  </span>
+                  <span className="text-sm text-slate-500">
+                    {pain.statLabel}
+                  </span>
                 </div>
 
                 {/* Decorative */}

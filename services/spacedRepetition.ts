@@ -14,11 +14,11 @@ export interface SRSCard {
   front: string;
   back: string;
   // SM-2 campos
-  easeFactor: number;    // Fator de facilidade (min 1.3, default 2.5)
-  interval: number;      // Intervalo em dias até próxima revisão
-  repetitions: number;   // Número de revisões consecutivas corretas
-  nextReview: string;    // Data ISO da próxima revisão
-  lastReview?: string;   // Data ISO da última revisão
+  easeFactor: number; // Fator de facilidade (min 1.3, default 2.5)
+  interval: number; // Intervalo em dias até próxima revisão
+  repetitions: number; // Número de revisões consecutivas corretas
+  nextReview: string; // Data ISO da próxima revisão
+  lastReview?: string; // Data ISO da última revisão
   // Metadata
   discipline?: string;
   topic?: string;
@@ -44,7 +44,10 @@ export interface ReviewResult {
 /**
  * Calcula o próximo intervalo usando o algoritmo SM-2
  */
-export function calculateNextReview(card: SRSCard, quality: ReviewQuality): SRSCard {
+export function calculateNextReview(
+  card: SRSCard,
+  quality: ReviewQuality,
+): SRSCard {
   let { easeFactor, interval, repetitions } = card;
 
   // Se qualidade < 3, resetar o progresso (errou)
@@ -72,12 +75,13 @@ export function calculateNextReview(card: SRSCard, quality: ReviewQuality): SRSC
   if (interval > 4) {
     const fuzz = Math.random() < 0.5 ? 1 : -1;
     const fuzzAmount = Math.ceil(interval * (0.05 + Math.random() * 0.05)); // 5-10%
-    interval = interval + (fuzz * fuzzAmount);
+    interval = interval + fuzz * fuzzAmount;
   }
 
   // Atualizar o fator de facilidade (EF)
   // EF' = EF + (0.1 - (5-q) * (0.08 + (5-q) * 0.02))
-  const newEaseFactor = easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+  const newEaseFactor =
+    easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
 
   // EF mínimo é 1.3 para evitar intervalos muito curtos
   easeFactor = Math.max(1.3, newEaseFactor);
@@ -94,19 +98,24 @@ export function calculateNextReview(card: SRSCard, quality: ReviewQuality): SRSC
     nextReview: nextReviewDate.toISOString(),
     lastReview: new Date().toISOString(),
     totalReviews: card.totalReviews + 1,
-    correctReviews: card.correctReviews + (quality >= 3 ? 1 : 0)
+    correctReviews: card.correctReviews + (quality >= 3 ? 1 : 0),
   };
 }
 
 /**
  * Cria um novo card SRS a partir de um flashcard
  */
-export function createSRSCard(front: string, back: string, discipline?: string, topic?: string): SRSCard {
+export function createSRSCard(
+  front: string,
+  back: string,
+  discipline?: string,
+  topic?: string,
+): SRSCard {
   return {
     id: generateCardId(),
     front,
     back,
-    easeFactor: 2.5,   // Default SM-2
+    easeFactor: 2.5, // Default SM-2
     interval: 0,
     repetitions: 0,
     nextReview: new Date().toISOString(), // Disponível para revisão imediata
@@ -114,7 +123,7 @@ export function createSRSCard(front: string, back: string, discipline?: string, 
     totalReviews: 0,
     correctReviews: 0,
     discipline,
-    topic
+    topic,
   };
 }
 
@@ -125,7 +134,7 @@ export function getCardsForReview(cards: SRSCard[], limit?: number): SRSCard[] {
   const now = new Date();
 
   const dueCards = cards
-    .filter(card => new Date(card.nextReview) <= now)
+    .filter((card) => new Date(card.nextReview) <= now)
     .sort((a, b) => {
       // Priorizar cards com menor fator de facilidade (mais difíceis)
       // e cards que estão mais atrasados
@@ -142,26 +151,39 @@ export function getCardsForReview(cards: SRSCard[], limit?: number): SRSCard[] {
  */
 export function getDeckStats(cards: SRSCard[]) {
   const now = new Date();
-  const today = now.toISOString().split('T')[0];
+  const today = now.toISOString().split("T")[0];
 
-  const dueToday = cards.filter(card => new Date(card.nextReview) <= now).length;
-  const newCards = cards.filter(card => card.repetitions === 0).length;
-  const learningCards = cards.filter(card => card.repetitions > 0 && card.interval < 21).length;
-  const matureCards = cards.filter(card => card.interval >= 21).length;
+  const dueToday = cards.filter(
+    (card) => new Date(card.nextReview) <= now,
+  ).length;
+  const newCards = cards.filter((card) => card.repetitions === 0).length;
+  const learningCards = cards.filter(
+    (card) => card.repetitions > 0 && card.interval < 21,
+  ).length;
+  const matureCards = cards.filter((card) => card.interval >= 21).length;
 
-  const reviewedToday = cards.filter(card =>
-    card.lastReview && card.lastReview.split('T')[0] === today
+  const reviewedToday = cards.filter(
+    (card) => card.lastReview && card.lastReview.split("T")[0] === today,
   ).length;
 
-  const averageEaseFactor = cards.length > 0
-    ? cards.reduce((sum, card) => sum + card.easeFactor, 0) / cards.length
-    : 2.5;
+  const averageEaseFactor =
+    cards.length > 0
+      ? cards.reduce((sum, card) => sum + card.easeFactor, 0) / cards.length
+      : 2.5;
 
-  const retentionRate = cards.length > 0
-    ? cards.reduce((sum, card) =>
-      sum + (card.totalReviews > 0 ? card.correctReviews / card.totalReviews : 0), 0
-    ) / cards.length * 100
-    : 0;
+  const retentionRate =
+    cards.length > 0
+      ? (cards.reduce(
+          (sum, card) =>
+            sum +
+            (card.totalReviews > 0
+              ? card.correctReviews / card.totalReviews
+              : 0),
+          0,
+        ) /
+          cards.length) *
+        100
+      : 0;
 
   return {
     total: cards.length,
@@ -171,24 +193,28 @@ export function getDeckStats(cards: SRSCard[]) {
     matureCards,
     reviewedToday,
     averageEaseFactor: averageEaseFactor.toFixed(2),
-    retentionRate: retentionRate.toFixed(1)
+    retentionRate: retentionRate.toFixed(1),
   };
 }
 
 /**
  * Calcula previsão de revisões para os próximos dias
  */
-export function getReviewForecast(cards: SRSCard[], days: number = 7): { date: string; count: number }[] {
+export function getReviewForecast(
+  cards: SRSCard[],
+  days: number = 7,
+): { date: string; count: number }[] {
   const forecast: { date: string; count: number }[] = [];
   const now = new Date();
 
   for (let i = 0; i < days; i++) {
     const targetDate = new Date(now);
     targetDate.setDate(targetDate.getDate() + i);
-    const dateStr = targetDate.toISOString().split('T')[0] ?? '';
+    const dateStr = targetDate.toISOString().split("T")[0] ?? "";
 
-    const count = cards.filter(card => {
-      const reviewDate = new Date(card.nextReview).toISOString().split('T')[0] ?? '';
+    const count = cards.filter((card) => {
+      const reviewDate =
+        new Date(card.nextReview).toISOString().split("T")[0] ?? "";
       return reviewDate === dateStr;
     }).length;
 
@@ -201,16 +227,23 @@ export function getReviewForecast(cards: SRSCard[], days: number = 7): { date: s
 /**
  * Converte qualidade simplificada (correto/errado) para escala SM-2
  */
-export function simpleToSM2Quality(correct: boolean, confidence: 'easy' | 'medium' | 'hard'): ReviewQuality {
+export function simpleToSM2Quality(
+  correct: boolean,
+  confidence: "easy" | "medium" | "hard",
+): ReviewQuality {
   if (!correct) {
-    return confidence === 'hard' ? 0 : 1;
+    return confidence === "hard" ? 0 : 1;
   }
 
   switch (confidence) {
-    case 'easy': return 5;
-    case 'medium': return 4;
-    case 'hard': return 3;
-    default: return 4;
+    case "easy":
+      return 5;
+    case "medium":
+      return 4;
+    case "hard":
+      return 3;
+    default:
+      return 4;
   }
 }
 
@@ -222,7 +255,7 @@ function generateCardId(): string {
 /**
  * Storage helpers para persistir deck de cards
  */
-const STORAGE_KEY = 'concursoai_srs_cards';
+const STORAGE_KEY = "concursoai_srs_cards";
 
 export const SRSStorage = {
   saveCards(cards: SRSCard[]): void {
@@ -246,7 +279,7 @@ export const SRSStorage = {
 
   updateCard(updatedCard: SRSCard): void {
     const cards = this.loadCards();
-    const index = cards.findIndex(c => c.id === updatedCard.id);
+    const index = cards.findIndex((c) => c.id === updatedCard.id);
     if (index !== -1) {
       cards[index] = updatedCard;
       this.saveCards(cards);
@@ -254,11 +287,11 @@ export const SRSStorage = {
   },
 
   deleteCard(cardId: string): void {
-    const cards = this.loadCards().filter(c => c.id !== cardId);
+    const cards = this.loadCards().filter((c) => c.id !== cardId);
     this.saveCards(cards);
   },
 
   clearAll(): void {
     localStorage.removeItem(STORAGE_KEY);
-  }
+  },
 };

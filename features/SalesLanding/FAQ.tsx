@@ -1,39 +1,47 @@
-import React, { useState } from 'react';
-import { ChevronDown, MessageCircle } from 'lucide-react';
+import React, { useState } from "react";
+import { ChevronDown, MessageCircle } from "lucide-react";
 
 const faqs = [
   {
-    question: 'O Mentori funciona para qualquer concurso?',
-    answer: 'Sim! O Mentori analisa qualquer edital e cria um plano personalizado. Temos foco especial em concursos federais (INSS, Receita, PRF, PF) e tribunais, mas funciona para qualquer area.'
+    question: "O Mentori funciona para qualquer concurso?",
+    answer:
+      "Sim! O Mentori analisa qualquer edital e cria um plano personalizado. Temos foco especial em concursos federais (INSS, Receita, PRF, PF) e tribunais, mas funciona para qualquer area.",
   },
   {
-    question: 'Como funciona o periodo de teste?',
-    answer: 'Voce tem 7 dias para testar todas as funcionalidades sem pagar nada. Nao pedimos cartao de credito no inicio. Se nao gostar, basta nao continuar - sem burocracia.'
+    question: "Como funciona o periodo de teste?",
+    answer:
+      "Voce tem 7 dias para testar todas as funcionalidades sem pagar nada. Nao pedimos cartao de credito no inicio. Se nao gostar, basta nao continuar - sem burocracia.",
   },
   {
-    question: 'A IA substitui um professor?',
-    answer: 'O Mentori complementa seus estudos. Nossa IA explica questoes, tira duvidas e organiza seu cronograma. Para aprender a materia, recomendamos cursos e materiais em conjunto.'
+    question: "A IA substitui um professor?",
+    answer:
+      "O Mentori complementa seus estudos. Nossa IA explica questoes, tira duvidas e organiza seu cronograma. Para aprender a materia, recomendamos cursos e materiais em conjunto.",
   },
   {
-    question: 'Posso cancelar a qualquer momento?',
-    answer: 'Sim! No plano mensal, voce cancela quando quiser sem multa. No anual, temos garantia de 30 dias. Nao queremos prender ninguem - queremos que voce fique por resultados.'
+    question: "Posso cancelar a qualquer momento?",
+    answer:
+      "Sim! No plano mensal, voce cancela quando quiser sem multa. No anual, temos garantia de 30 dias. Nao queremos prender ninguem - queremos que voce fique por resultados.",
   },
   {
-    question: 'De onde vem as questoes?',
-    answer: 'Todas as +700 questoes sao de provas reais aplicadas por bancas como CEBRASPE, FGV, FCC e VUNESP. Cada questao tem explicacao detalhada gerada por nossa IA.'
+    question: "De onde vem as questoes?",
+    answer:
+      "Todas as +700 questoes sao de provas reais aplicadas por bancas como CEBRASPE, FGV, FCC e VUNESP. Cada questao tem explicacao detalhada gerada por nossa IA.",
   },
   {
-    question: 'Funciona no celular?',
-    answer: 'Sim! O Mentori e totalmente responsivo e funciona em qualquer dispositivo - computador, tablet ou celular. Estude onde e quando quiser.'
+    question: "Funciona no celular?",
+    answer:
+      "Sim! O Mentori e totalmente responsivo e funciona em qualquer dispositivo - computador, tablet ou celular. Estude onde e quando quiser.",
   },
   {
-    question: 'O que e Spaced Repetition?',
-    answer: 'E uma tecnica cientifica baseada na curva do esquecimento. O sistema calcula o momento ideal para voce revisar cada conteudo, maximizando a retencao de longo prazo.'
+    question: "O que e Spaced Repetition?",
+    answer:
+      "E uma tecnica cientifica baseada na curva do esquecimento. O sistema calcula o momento ideal para voce revisar cada conteudo, maximizando a retencao de longo prazo.",
   },
   {
-    question: 'Quanto tempo leva para ver resultados?',
-    answer: 'A maioria dos usuarios reporta melhora na organizacao em 1 semana e aumento na taxa de acertos em 30 dias. Resultados concretos dependem do seu comprometimento.'
-  }
+    question: "Quanto tempo leva para ver resultados?",
+    answer:
+      "A maioria dos usuarios reporta melhora na organizacao em 1 semana e aumento na taxa de acertos em 30 dias. Resultados concretos dependem do seu comprometimento.",
+  },
 ];
 
 export const FAQ: React.FC = () => {
@@ -48,8 +56,7 @@ export const FAQ: React.FC = () => {
             FAQ
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-            Perguntas{' '}
-            <span className="text-blue-400">Frequentes</span>
+            Perguntas <span className="text-blue-400">Frequentes</span>
           </h2>
           <p className="text-xl text-white/60">
             Tudo que voce precisa saber antes de comecar.
@@ -63,19 +70,21 @@ export const FAQ: React.FC = () => {
               key={index}
               className={`rounded-xl border transition-colors ${
                 openIndex === index
-                  ? 'bg-white/10 border-white/20'
-                  : 'bg-white/5 border-white/10 hover:border-white/20'
+                  ? "bg-white/10 border-white/20"
+                  : "bg-white/5 border-white/10 hover:border-white/20"
               }`}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full flex items-center justify-between p-6 text-left"
               >
-                <span className="font-bold text-white pr-8">{faq.question}</span>
+                <span className="font-bold text-white pr-8">
+                  {faq.question}
+                </span>
                 <ChevronDown
                   size={20}
                   className={`text-white/60 shrink-0 transition-transform ${
-                    openIndex === index ? 'rotate-180' : ''
+                    openIndex === index ? "rotate-180" : ""
                   }`}
                 />
               </button>

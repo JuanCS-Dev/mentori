@@ -1,5 +1,5 @@
-import * as pdfjsLib from 'pdfjs-dist';
-import { chaosCrash, chaosLatency, chaosCorruption } from './chaosOrchestrator';
+import * as pdfjsLib from "pdfjs-dist";
+import { chaosCrash, chaosLatency, chaosCorruption } from "./chaosOrchestrator";
 
 // Configure PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -28,16 +28,15 @@ export interface ConversionResult {
  * - .docx (Basic extraction via JSZip + XML parsing)
  */
 export const MarkItDownService = {
-
   /**
    * Main entry point to convert a file to Markdown-friendly text.
    */
   async convertFile(file: File): Promise<ConversionResult> {
-    const extension = file.name.split('.').pop()?.toLowerCase();
+    const extension = file.name.split(".").pop()?.toLowerCase();
 
     // CRM: Chaos Crash Simulation
     try {
-      chaosCrash('MarkItDownService');
+      chaosCrash("MarkItDownService");
     } catch (e) {
       return { text: "", error: (e as Error).message };
     }
@@ -47,16 +46,16 @@ export const MarkItDownService = {
       return await chaosLatency(async () => {
         let result: ConversionResult;
         switch (extension) {
-          case 'txt':
-          case 'md':
-          case 'csv':
-          case 'json':
+          case "txt":
+          case "md":
+          case "csv":
+          case "json":
             result = await this.readTextFile(file);
             break;
-          case 'pdf':
+          case "pdf":
             result = await this.extractPdfText(file);
             break;
-          case 'docx':
+          case "docx":
             result = await this.extractDocxText(file);
             break;
           default:
@@ -64,12 +63,11 @@ export const MarkItDownService = {
         }
 
         // CRM: Chaos Corruption Simulation
-        return chaosCorruption(result, 'MarkItDownService');
-      }, 'convertFile');
-
+        return chaosCorruption(result, "MarkItDownService");
+      }, "convertFile");
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      console.error('Erro ao processar arquivo:', error);
+      const message = error instanceof Error ? error.message : "Unknown error";
+      console.error("Erro ao processar arquivo:", error);
       return { text: "", error: `Falha ao processar arquivo: ${message}` };
     }
   },
@@ -92,10 +90,10 @@ export const MarkItDownService = {
 
         // PDF.js types are complex union types - using assertion for text items
         const pageText = (textContent.items as Array<{ str?: string }>)
-          .filter((item) => typeof item.str === 'string')
+          .filter((item) => typeof item.str === "string")
           .map((item) => item.str!)
-          .join(' ')
-          .replace(/\s+/g, ' ')
+          .join(" ")
+          .replace(/\s+/g, " ")
           .trim();
 
         if (pageText) {
@@ -103,25 +101,25 @@ export const MarkItDownService = {
         }
       }
 
-      const fullText = textParts.join('\n\n');
+      const fullText = textParts.join("\n\n");
 
       if (!fullText.trim()) {
         return {
           text: `[PDF ESCANEADO: ${file.name}]\n\nEste PDF parece ser uma imagem escaneada sem texto extraível. Por favor, cole o texto do edital manualmente ou use um PDF com texto selecionável.`,
-          metadata: { type: 'pdf', size: file.size, pages: numPages }
+          metadata: { type: "pdf", size: file.size, pages: numPages },
         };
       }
 
       return {
         text: `[EDITAL EXTRAÍDO: ${file.name}]\n[${numPages} páginas]\n\n${fullText}`,
-        metadata: { type: 'pdf', size: file.size, pages: numPages }
+        metadata: { type: "pdf", size: file.size, pages: numPages },
       };
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      console.error('Erro ao extrair PDF:', error);
+      const message = error instanceof Error ? error.message : "Unknown error";
+      console.error("Erro ao extrair PDF:", error);
       return {
         text: "",
-        error: `Falha ao extrair PDF: ${message}. Tente colar o texto diretamente.`
+        error: `Falha ao extrair PDF: ${message}. Tente colar o texto diretamente.`,
       };
     }
   },
@@ -141,15 +139,15 @@ export const MarkItDownService = {
 
       return {
         text: `[DOCUMENTO EXTRAÍDO: ${file.name}]\n\n${text}`,
-        metadata: { type: 'docx', size: file.size }
+        metadata: { type: "docx", size: file.size },
       };
     } catch (error: unknown) {
-      console.error('Erro ao extrair DOCX:', error);
+      console.error("Erro ao extrair DOCX:", error);
       // Fallback message
       return {
         text: `[DOCUMENTO: ${file.name}]\n\nNão foi possível extrair o texto automaticamente. Por favor, abra o documento no Word, selecione todo o texto (Ctrl+A), copie (Ctrl+C) e cole aqui.`,
-        metadata: { type: 'docx', size: file.size },
-        error: 'Extração de DOCX requer colar texto manualmente'
+        metadata: { type: "docx", size: file.size },
+        error: "Extração de DOCX requer colar texto manualmente",
       };
     }
   },
@@ -158,10 +156,13 @@ export const MarkItDownService = {
    * Helper to read DOCX content
    * Uses basic ZIP extraction to get document.xml
    */
-  async readDocxAsText(_arrayBuffer: ArrayBuffer, _fileName: string): Promise<string> {
+  async readDocxAsText(
+    _arrayBuffer: ArrayBuffer,
+    _fileName: string,
+  ): Promise<string> {
     // For now, prompt user to paste text
     // Full DOCX extraction would require JSZip library
-    throw new Error('DOCX extraction requires manual paste');
+    throw new Error("DOCX extraction requires manual paste");
   },
 
   async readTextFile(file: File): Promise<ConversionResult> {
@@ -172,11 +173,11 @@ export const MarkItDownService = {
         const text = e.target?.result as string;
         // Basic Markdown normalization
         const normalizedText = `[ARQUIVO IMPORTADO: ${file.name}]\n\n${text}`;
-        resolve({ text: normalizedText, metadata: { type: 'text' } });
+        resolve({ text: normalizedText, metadata: { type: "text" } });
       };
 
       reader.onerror = () => reject(new Error("Erro de leitura de arquivo"));
       reader.readAsText(file);
     });
-  }
+  },
 };

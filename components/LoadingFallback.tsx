@@ -1,5 +1,5 @@
-import React from 'react';
-import { Loader2, Brain } from 'lucide-react';
+import React from "react";
+import { Loader2, Brain } from "lucide-react";
 
 export const LoadingFallback: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ export const LoadingFallback: React.FC = () => {
             <Brain className="h-4 w-4 text-kitchen-accent-blueText" />
           </div>
         </div>
-        
+
         <div className="text-center space-y-1">
           <h3 className="text-sm font-bold font-mono text-kitchen-text-primary uppercase tracking-wider">
             Initializing Workspace...

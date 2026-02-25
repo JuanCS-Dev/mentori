@@ -5,8 +5,8 @@
  * a sincronização de dados pendentes.
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { Wifi, WifiOff, Cloud, RefreshCw, Check } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from "react";
+import { Wifi, WifiOff, Cloud, RefreshCw, Check } from "lucide-react";
 
 interface OfflineIndicatorProps {
   className?: string;
@@ -14,8 +14,8 @@ interface OfflineIndicatorProps {
 }
 
 export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
-  className = '',
-  showWhenOnline = false
+  className = "",
+  showWhenOnline = false,
 }) => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showBanner, setShowBanner] = useState(false);
@@ -37,12 +37,12 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
       setShowBanner(true);
     };
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
@@ -50,7 +50,7 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
   useEffect(() => {
     const checkPending = () => {
       try {
-        const stored = localStorage.getItem('mentori_pending_sync');
+        const stored = localStorage.getItem("mentori_pending_sync");
         if (stored) {
           const actions = JSON.parse(stored);
           setPendingActions(Array.isArray(actions) ? actions.length : 0);
@@ -78,22 +78,26 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
     setIsSyncing(true);
     try {
       // Trigger sync via service worker (Background Sync API)
-      if ('serviceWorker' in navigator) {
+      if ("serviceWorker" in navigator) {
         const registration = await navigator.serviceWorker.ready;
         // Background Sync API may not be available in all browsers
-        const syncManager = (registration as ServiceWorkerRegistration & { sync?: { register: (tag: string) => Promise<void> } }).sync;
+        const syncManager = (
+          registration as ServiceWorkerRegistration & {
+            sync?: { register: (tag: string) => Promise<void> };
+          }
+        ).sync;
         if (syncManager) {
-          await syncManager.register('sync-progress');
+          await syncManager.register("sync-progress");
         }
       }
 
       // Clear pending actions (simplified - real implementation would verify sync)
-      localStorage.removeItem('mentori_pending_sync');
+      localStorage.removeItem("mentori_pending_sync");
       setPendingActions(0);
       setJustSynced(true);
       setTimeout(() => setJustSynced(false), 2000);
     } catch (error) {
-      console.error('[OfflineIndicator] Sync failed:', error);
+      console.error("[OfflineIndicator] Sync failed:", error);
     } finally {
       setIsSyncing(false);
     }
@@ -125,7 +129,9 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
               <Cloud size={16} />
             )}
             <span className="text-sm font-medium">
-              {isSyncing ? 'Sincronizando...' : `Sincronizar (${pendingActions})`}
+              {isSyncing
+                ? "Sincronizando..."
+                : `Sincronizar (${pendingActions})`}
             </span>
           </button>
         ) : justSynced ? (
@@ -145,9 +151,7 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
       {showBanner && (
         <div
           className={`fixed top-0 left-0 right-0 z-50 py-2 text-center text-sm font-medium transition-all duration-300 ${
-            isOnline
-              ? 'bg-emerald-500 text-white'
-              : 'bg-amber-500 text-white'
+            isOnline ? "bg-emerald-500 text-white" : "bg-amber-500 text-white"
           }`}
         >
           {isOnline ? (
@@ -158,7 +162,8 @@ export const OfflineIndicator: React.FC<OfflineIndicatorProps> = ({
           ) : (
             <span className="flex items-center justify-center gap-2">
               <WifiOff size={14} />
-              Você está offline. Suas ações serão sincronizadas quando a conexão voltar.
+              Você está offline. Suas ações serão sincronizadas quando a conexão
+              voltar.
             </span>
           )}
         </div>
@@ -177,12 +182,12 @@ export function useOnlineStatus(): boolean {
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
@@ -198,13 +203,13 @@ export function useOfflineSync() {
 
   const addPendingAction = useCallback((action: object) => {
     try {
-      const stored = localStorage.getItem('mentori_pending_sync');
+      const stored = localStorage.getItem("mentori_pending_sync");
       const actions = stored ? JSON.parse(stored) : [];
       actions.push({ ...action, timestamp: Date.now() });
-      localStorage.setItem('mentori_pending_sync', JSON.stringify(actions));
+      localStorage.setItem("mentori_pending_sync", JSON.stringify(actions));
       setPendingCount(actions.length);
     } catch (error) {
-      console.error('[useOfflineSync] Failed to add action:', error);
+      console.error("[useOfflineSync] Failed to add action:", error);
     }
   }, []);
 
@@ -212,13 +217,17 @@ export function useOfflineSync() {
     if (!isOnline) return false;
 
     try {
-      if ('serviceWorker' in navigator) {
+      if ("serviceWorker" in navigator) {
         const registration = await navigator.serviceWorker.ready;
-        if ('sync' in registration) {
-          await (registration as any).sync.register('sync-progress');
+        if ("sync" in registration) {
+          await (
+            registration as {
+              sync: { register: (tag: string) => Promise<void> };
+            }
+          ).sync.register("sync-progress");
         }
       }
-      localStorage.removeItem('mentori_pending_sync');
+      localStorage.removeItem("mentori_pending_sync");
       setPendingCount(0);
       return true;
     } catch {
@@ -230,7 +239,7 @@ export function useOfflineSync() {
     isOnline,
     pendingCount,
     addPendingAction,
-    syncNow
+    syncNow,
   };
 }
 

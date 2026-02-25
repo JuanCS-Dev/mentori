@@ -1,6 +1,6 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { AlertTriangle, RefreshCw, Home, Bug } from 'lucide-react';
-import { recordHealth, chaosCrash } from '../services/chaosOrchestrator';
+import React, { Component, ErrorInfo, ReactNode } from "react";
+import { AlertTriangle, RefreshCw, Home, Bug } from "lucide-react";
+import { recordHealth, chaosCrash } from "../services/chaosOrchestrator";
 
 interface Props {
   children: ReactNode;
@@ -27,7 +27,7 @@ export class ErrorBoundary extends Component<Props, State> {
     this.state = {
       hasError: false,
       error: null,
-      errorInfo: null
+      errorInfo: null,
     };
 
     // Chaos: potential crash injection on mount
@@ -44,13 +44,13 @@ export class ErrorBoundary extends Component<Props, State> {
     this.setState({ errorInfo });
 
     // Log error for debugging
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
 
     // Record to health signals
     recordHealth({
-      service: `component:${this.props.componentName || 'unknown'}`,
-      status: 'failed',
-      lastError: error.message
+      service: `component:${this.props.componentName || "unknown"}`,
+      status: "failed",
+      lastError: error.message,
     });
 
     // Call optional error handler
@@ -61,12 +61,12 @@ export class ErrorBoundary extends Component<Props, State> {
     this.setState({
       hasError: false,
       error: null,
-      errorInfo: null
+      errorInfo: null,
     });
   };
 
   handleGoHome = (): void => {
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   handleReload = (): void => {
@@ -97,8 +97,8 @@ export class ErrorBoundary extends Component<Props, State> {
 
               {/* Error Description */}
               <p className="text-slate-500 mb-6">
-                Ocorreu um erro inesperado. Não se preocupe, seus dados estão salvos.
-                Tente uma das opções abaixo.
+                Ocorreu um erro inesperado. Não se preocupe, seus dados estão
+                salvos. Tente uma das opções abaixo.
               </p>
 
               {/* Action Buttons */}
@@ -143,7 +143,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
             {/* Support Link */}
             <p className="text-center text-sm text-slate-400 mt-4">
-              Problema persistindo?{' '}
+              Problema persistindo?{" "}
               <button
                 onClick={this.handleReload}
                 className="text-indigo-500 hover:text-indigo-600 font-medium"
@@ -165,7 +165,7 @@ export class ErrorBoundary extends Component<Props, State> {
  */
 export function withErrorBoundary<P extends object>(
   WrappedComponent: React.ComponentType<P>,
-  fallback?: ReactNode
+  fallback?: ReactNode,
 ): React.FC<P> {
   return function WithErrorBoundaryComponent(props: P) {
     return (
@@ -182,13 +182,13 @@ export function withErrorBoundary<P extends object>(
  */
 export function handleAsyncError(
   operation: () => Promise<void>,
-  onError?: (error: Error) => void
+  onError?: (error: Error) => void,
 ): () => Promise<void> {
   return async () => {
     try {
       await operation();
     } catch (error) {
-      console.error('Async operation failed:', error);
+      console.error("Async operation failed:", error);
       onError?.(error as Error);
     }
   };

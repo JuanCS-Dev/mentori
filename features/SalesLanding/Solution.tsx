@@ -1,58 +1,68 @@
-import React from 'react';
-import { Sparkles, FileText, RotateCcw, MessageCircle, ArrowRight } from 'lucide-react';
+import React from "react";
+import {
+  Sparkles,
+  FileText,
+  RotateCcw,
+  MessageCircle,
+  ArrowRight,
+} from "lucide-react";
 
 const solutions = [
   {
     icon: FileText,
-    title: 'Analise Automatica do Edital',
-    description: 'Cole o PDF do edital e nossa IA extrai todas as materias, pesos e topicos automaticamente. Em segundos.',
-    color: 'blue'
+    title: "Analise Automatica do Edital",
+    description:
+      "Cole o PDF do edital e nossa IA extrai todas as materias, pesos e topicos automaticamente. Em segundos.",
+    color: "blue",
   },
   {
     icon: RotateCcw,
-    title: 'Spaced Repetition Cientifico',
-    description: 'Sistema baseado em neurociencia que calcula o momento exato para revisar cada conteudo. Nunca mais esqueca.',
-    color: 'purple'
+    title: "Spaced Repetition Cientifico",
+    description:
+      "Sistema baseado em neurociencia que calcula o momento exato para revisar cada conteudo. Nunca mais esqueca.",
+    color: "purple",
   },
   {
     icon: Sparkles,
-    title: '700+ Questoes Reais CEBRASPE/FGV',
-    description: 'Banco de questoes reais de provas anteriores, com explicacoes detalhadas geradas por IA.',
-    color: 'pink'
+    title: "700+ Questoes Reais CEBRASPE/FGV",
+    description:
+      "Banco de questoes reais de provas anteriores, com explicacoes detalhadas geradas por IA.",
+    color: "pink",
   },
   {
     icon: MessageCircle,
-    title: 'Mentor IA 24/7',
-    description: 'Tire duvidas a qualquer hora. Nosso mentor entende seu edital e responde com base no seu contexto.',
-    color: 'green'
-  }
+    title: "Mentor IA 24/7",
+    description:
+      "Tire duvidas a qualquer hora. Nosso mentor entende seu edital e responde com base no seu contexto.",
+    color: "green",
+  },
 ];
 
 const colorClasses = {
   blue: {
-    bg: 'bg-blue-100',
-    text: 'text-blue-600',
-    border: 'border-blue-200',
-    gradient: 'from-blue-500 to-blue-600'
+    bg: "bg-blue-100",
+    text: "text-blue-600",
+    border: "border-blue-200",
+    gradient: "from-blue-500 to-blue-600",
   },
   purple: {
-    bg: 'bg-purple-100',
-    text: 'text-purple-600',
-    border: 'border-purple-200',
-    gradient: 'from-purple-500 to-purple-600'
+    bg: "bg-purple-100",
+    text: "text-purple-600",
+    border: "border-purple-200",
+    gradient: "from-purple-500 to-purple-600",
   },
   pink: {
-    bg: 'bg-pink-100',
-    text: 'text-pink-600',
-    border: 'border-pink-200',
-    gradient: 'from-pink-500 to-pink-600'
+    bg: "bg-pink-100",
+    text: "text-pink-600",
+    border: "border-pink-200",
+    gradient: "from-pink-500 to-pink-600",
   },
   green: {
-    bg: 'bg-emerald-100',
-    text: 'text-emerald-600',
-    border: 'border-emerald-200',
-    gradient: 'from-emerald-500 to-emerald-600'
-  }
+    bg: "bg-emerald-100",
+    text: "text-emerald-600",
+    border: "border-emerald-200",
+    gradient: "from-emerald-500 to-emerald-600",
+  },
 };
 
 export const Solution: React.FC = () => {
@@ -71,10 +81,15 @@ export const Solution: React.FC = () => {
             A SOLUCAO
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-            Como o <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Mentori</span> Resolve
+            Como o{" "}
+            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Mentori
+            </span>{" "}
+            Resolve
           </h2>
           <p className="text-xl text-white/60 max-w-2xl mx-auto">
-            Combinamos Inteligencia Artificial de ponta com metodos cientificos de aprendizagem.
+            Combinamos Inteligencia Artificial de ponta com metodos cientificos
+            de aprendizagem.
           </p>
         </div>
 
@@ -82,7 +97,8 @@ export const Solution: React.FC = () => {
         <div className="grid md:grid-cols-2 gap-6">
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
-            const colors = colorClasses[solution.color as keyof typeof colorClasses];
+            const colors =
+              colorClasses[solution.color as keyof typeof colorClasses];
 
             return (
               <div
@@ -91,7 +107,9 @@ export const Solution: React.FC = () => {
               >
                 <div className="flex gap-6">
                   {/* Icon */}
-                  <div className={`shrink-0 w-14 h-14 rounded-xl ${colors.bg} ${colors.text} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                  <div
+                    className={`shrink-0 w-14 h-14 rounded-xl ${colors.bg} ${colors.text} flex items-center justify-center group-hover:scale-110 transition-transform`}
+                  >
                     <Icon size={28} />
                   </div>
 
@@ -127,7 +145,7 @@ export const Solution: React.FC = () => {
         {/* Result Statement */}
         <div className="mt-8 text-center">
           <p className="text-2xl font-bold text-white">
-            Resultado:{' '}
+            Resultado:{" "}
             <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
               Voce estuda menos, aprende mais, e esquece nunca.
             </span>

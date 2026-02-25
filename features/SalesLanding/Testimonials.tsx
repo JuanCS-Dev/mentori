@@ -1,39 +1,43 @@
-import React from 'react';
-import { Star, Quote } from 'lucide-react';
+import React from "react";
+import { Star, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    name: 'Joao Silva',
-    role: 'Aprovado PRF 2024',
-    avatar: 'JS',
-    content: 'Depois de 3 anos tentando, finalmente passei usando o Mentori. O sistema de revisao espacada foi game changer. Nunca mais esqueci os artigos da 8.112.',
+    name: "Joao Silva",
+    role: "Aprovado PRF 2024",
+    avatar: "JS",
+    content:
+      "Depois de 3 anos tentando, finalmente passei usando o Mentori. O sistema de revisao espacada foi game changer. Nunca mais esqueci os artigos da 8.112.",
     stars: 5,
-    highlight: '3 anos tentando -> Aprovado em 8 meses'
+    highlight: "3 anos tentando -> Aprovado em 8 meses",
   },
   {
-    name: 'Maria Santos',
-    role: 'Aprovada TRT-SP',
-    avatar: 'MS',
-    content: 'O mentor IA me ajudou demais nas duvidas de madrugada. Eu trabalhava de dia e estudava a noite. Ter suporte 24h foi essencial.',
+    name: "Maria Santos",
+    role: "Aprovada TRT-SP",
+    avatar: "MS",
+    content:
+      "O mentor IA me ajudou demais nas duvidas de madrugada. Eu trabalhava de dia e estudava a noite. Ter suporte 24h foi essencial.",
     stars: 5,
-    highlight: 'Estudando so a noite -> Top 50 colocados'
+    highlight: "Estudando so a noite -> Top 50 colocados",
   },
   {
-    name: 'Carlos Oliveira',
-    role: 'Aprovado INSS',
-    avatar: 'CO',
-    content: 'As questoes comentadas com IA sao incriveis. Cada explicacao e personalizada pro meu nivel. Minha taxa de acerto foi de 45% pra 78%.',
+    name: "Carlos Oliveira",
+    role: "Aprovado INSS",
+    avatar: "CO",
+    content:
+      "As questoes comentadas com IA sao incriveis. Cada explicacao e personalizada pro meu nivel. Minha taxa de acerto foi de 45% pra 78%.",
     stars: 5,
-    highlight: '45% -> 78% taxa de acerto'
+    highlight: "45% -> 78% taxa de acerto",
   },
   {
-    name: 'Ana Rodrigues',
-    role: 'Aprovada Receita Federal',
-    avatar: 'AR',
-    content: 'O cronograma adaptativo entendeu meu ritmo. Nos dias que eu tava cansada, ele ajustava automaticamente. Zero burnout ate a prova.',
+    name: "Ana Rodrigues",
+    role: "Aprovada Receita Federal",
+    avatar: "AR",
+    content:
+      "O cronograma adaptativo entendeu meu ritmo. Nos dias que eu tava cansada, ele ajustava automaticamente. Zero burnout ate a prova.",
     stars: 5,
-    highlight: 'Zero burnout em 10 meses de estudo'
-  }
+    highlight: "Zero burnout em 10 meses de estudo",
+  },
 ];
 
 export const Testimonials: React.FC = () => {
@@ -46,8 +50,7 @@ export const Testimonials: React.FC = () => {
             DEPOIMENTOS
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
-            Quem Usou,{' '}
-            <span className="text-yellow-500">Aprovou</span>
+            Quem Usou, <span className="text-yellow-500">Aprovou</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
             Historias reais de concurseiros que transformaram seus resultados.
@@ -69,7 +72,12 @@ export const Testimonials: React.FC = () => {
               {/* Stars */}
               <div className="flex gap-1 mb-4">
                 {Array.from({ length: testimonial.stars }).map((_, i) => (
-                  <Star key={i} size={16} fill="#FBBF24" className="text-yellow-400" />
+                  <Star
+                    key={i}
+                    size={16}
+                    fill="#FBBF24"
+                    className="text-yellow-400"
+                  />
                 ))}
               </div>
 
@@ -89,8 +97,12 @@ export const Testimonials: React.FC = () => {
                   {testimonial.avatar}
                 </div>
                 <div>
-                  <div className="font-bold text-slate-900">{testimonial.name}</div>
-                  <div className="text-sm text-slate-500">{testimonial.role}</div>
+                  <div className="font-bold text-slate-900">
+                    {testimonial.name}
+                  </div>
+                  <div className="text-sm text-slate-500">
+                    {testimonial.role}
+                  </div>
                 </div>
               </div>
             </div>
@@ -104,7 +116,12 @@ export const Testimonials: React.FC = () => {
             <div className="text-sm text-white/60">Avaliacao Media</div>
             <div className="flex justify-center gap-1 mt-2">
               {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} size={12} fill="#FBBF24" className="text-yellow-400" />
+                <Star
+                  key={i}
+                  size={12}
+                  fill="#FBBF24"
+                  className="text-yellow-400"
+                />
               ))}
             </div>
           </div>

@@ -4,28 +4,30 @@
  * Skeleton loaders e spinners para UX polish
  */
 
-import React from 'react';
-import { Loader2 } from 'lucide-react';
+import React from "react";
+import { Loader2 } from "lucide-react";
 
 // ===== SPINNER =====
 
 interface SpinnerProps {
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   className?: string;
 }
 
 export const Spinner: React.FC<SpinnerProps> = ({
-  size = 'md',
-  className = ''
+  size = "md",
+  className = "",
 }) => {
   const sizes = {
-    sm: 'w-4 h-4',
-    md: 'w-6 h-6',
-    lg: 'w-8 h-8'
+    sm: "w-4 h-4",
+    md: "w-6 h-6",
+    lg: "w-8 h-8",
   };
 
   return (
-    <Loader2 className={`animate-spin text-violet-500 ${sizes[size]} ${className}`} />
+    <Loader2
+      className={`animate-spin text-violet-500 ${sizes[size]} ${className}`}
+    />
   );
 };
 
@@ -36,7 +38,7 @@ interface PageLoaderProps {
 }
 
 export const PageLoader: React.FC<PageLoaderProps> = ({
-  message = 'Carregando...'
+  message = "Carregando...",
 }) => {
   return (
     <div className="fixed inset-0 bg-gray-900 flex flex-col items-center justify-center z-50">
@@ -61,25 +63,27 @@ interface SkeletonProps {
   className?: string;
 }
 
-export const Skeleton: React.FC<SkeletonProps> = ({ className = '' }) => (
+export const Skeleton: React.FC<SkeletonProps> = ({ className = "" }) => (
   <div className={`animate-pulse bg-gray-700 rounded ${className}`} />
 );
 
 export const SkeletonText: React.FC<{ lines?: number; className?: string }> = ({
   lines = 3,
-  className = ''
+  className = "",
 }) => (
   <div className={`space-y-2 ${className}`}>
     {Array.from({ length: lines }).map((_, i) => (
       <Skeleton
         key={i}
-        className={`h-4 ${i === lines - 1 ? 'w-3/4' : 'w-full'}`}
+        className={`h-4 ${i === lines - 1 ? "w-3/4" : "w-full"}`}
       />
     ))}
   </div>
 );
 
-export const SkeletonCard: React.FC<{ className?: string }> = ({ className = '' }) => (
+export const SkeletonCard: React.FC<{ className?: string }> = ({
+  className = "",
+}) => (
   <div className={`bg-gray-800 rounded-xl p-4 ${className}`}>
     <div className="flex items-center gap-3 mb-4">
       <Skeleton className="w-10 h-10 rounded-full" />
@@ -92,10 +96,12 @@ export const SkeletonCard: React.FC<{ className?: string }> = ({ className = '' 
   </div>
 );
 
-export const SkeletonQuestion: React.FC<{ variant?: 'dark' | 'light' }> = ({ variant = 'light' }) => {
-  const isDark = variant === 'dark';
-  const bgColor = isDark ? 'bg-gray-800' : 'bg-white border border-slate-100';
-  const skeletonColor = isDark ? 'bg-gray-700' : 'bg-slate-200';
+export const SkeletonQuestion: React.FC<{ variant?: "dark" | "light" }> = ({
+  variant = "light",
+}) => {
+  const isDark = variant === "dark";
+  const bgColor = isDark ? "bg-gray-800" : "bg-white border border-slate-100";
+  const skeletonColor = isDark ? "bg-gray-700" : "bg-slate-200";
 
   return (
     <div className={`${bgColor} rounded-2xl p-8 shadow-sm animate-pulse`}>
@@ -114,8 +120,13 @@ export const SkeletonQuestion: React.FC<{ variant?: 'dark' | 'light' }> = ({ var
 
       {/* Options skeleton */}
       <div className="space-y-4">
-        {[1, 2, 3, 4, 5].map(i => (
-          <div key={i} className={`flex items-center gap-4 p-4 ${isDark ? 'bg-gray-700/50' : 'bg-slate-50'} rounded-xl`}>
+        {[1, 2, 3, 4, 5].map((i) => (
+          <div
+            key={i}
+            className={`flex items-center gap-4 p-4 ${
+              isDark ? "bg-gray-700/50" : "bg-slate-50"
+            } rounded-xl`}
+          >
             <div className={`w-8 h-8 ${skeletonColor} rounded-full`} />
             <div className={`h-4 flex-1 ${skeletonColor} rounded`} />
           </div>
@@ -135,7 +146,7 @@ export const SkeletonList: React.FC<{ items?: number }> = ({ items = 5 }) => (
 
 export const SkeletonStats: React.FC = () => (
   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-    {[1, 2, 3, 4].map(i => (
+    {[1, 2, 3, 4].map((i) => (
       <div key={i} className="bg-gray-800 rounded-xl p-4">
         <Skeleton className="h-3 w-1/2 mb-2" />
         <Skeleton className="h-8 w-3/4" />
@@ -148,16 +159,16 @@ export const SkeletonStats: React.FC = () => (
 
 interface InlineLoaderProps {
   text?: string;
-  size?: 'sm' | 'md';
+  size?: "sm" | "md";
 }
 
 export const InlineLoader: React.FC<InlineLoaderProps> = ({
-  text = 'Carregando',
-  size = 'md'
+  text = "Carregando",
+  size = "md",
 }) => (
   <div className="flex items-center gap-2 text-gray-400">
-    <Spinner size={size === 'sm' ? 'sm' : 'md'} />
-    <span className={size === 'sm' ? 'text-xs' : 'text-sm'}>{text}...</span>
+    <Spinner size={size === "sm" ? "sm" : "md"} />
+    <span className={size === "sm" ? "text-xs" : "text-sm"}>{text}...</span>
   </div>
 );
 
@@ -174,17 +185,17 @@ interface ButtonLoadingProps {
 
 export const ButtonWithLoading: React.FC<ButtonLoadingProps> = ({
   isLoading,
-  loadingText = 'Carregando',
+  loadingText = "Carregando",
   children,
-  className = '',
+  className = "",
   onClick,
-  disabled
+  disabled,
 }) => (
   <button
     onClick={onClick}
     disabled={disabled || isLoading}
     className={`flex items-center justify-center gap-2 transition-all ${
-      isLoading ? 'opacity-70 cursor-not-allowed' : ''
+      isLoading ? "opacity-70 cursor-not-allowed" : ""
     } ${className}`}
   >
     {isLoading ? (
@@ -212,8 +223,8 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   progress,
   label,
   showPercentage = true,
-  color = 'bg-violet-500',
-  className = ''
+  color = "bg-violet-500",
+  className = "",
 }) => (
   <div className={className}>
     {(label || showPercentage) && (
@@ -242,5 +253,5 @@ export default {
   SkeletonStats,
   InlineLoader,
   ButtonWithLoading,
-  ProgressBar
+  ProgressBar,
 };

@@ -13,14 +13,10 @@ Exemplos:
 """
 
 import sys
-import os
 from pathlib import Path
 
 # Adicionar diretório ao path
 sys.path.insert(0, str(Path(__file__).parent))
-
-from parser import parse_pdf, merge_with_gabarito, generate_ids, flatten_questions
-import json
 
 
 def cmd_parse(args):
@@ -39,6 +35,7 @@ def cmd_parse(args):
 
     # Importar e rodar parser
     from parser import main as parser_main
+
     sys.argv = ["parser.py", prova_path]
     if gabarito_path:
         sys.argv.extend(["--gabarito", gabarito_path])
@@ -57,7 +54,7 @@ def cmd_test():
         print(f"\n⚠️  Pasta de teste não encontrada: {test_dir}")
         print("\nPara testar, crie a pasta e adicione PDFs:")
         print(f"  mkdir -p {test_dir}")
-        print(f"  # Baixe uma prova do CEBRASPE e coloque lá")
+        print("  # Baixe uma prova do CEBRASPE e coloque lá")
         print("\nOu use diretamente:")
         print("  python run.py parse <caminho_do_pdf>")
         return
@@ -76,6 +73,7 @@ def cmd_test():
     print(f"\n🔄 Parsing: {first_pdf.name}")
 
     from parser import main as parser_main
+
     sys.argv = ["parser.py", str(first_pdf)]
     parser_main()
 
@@ -98,6 +96,7 @@ def cmd_batch(args):
         print(f"\n[{i}/{len(pdfs)}] Processing: {pdf.name}")
         try:
             from parser import main as parser_main
+
             sys.argv = ["parser.py", str(pdf)]
             parser_main()
         except Exception as e:

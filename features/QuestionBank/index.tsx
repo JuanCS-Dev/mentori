@@ -1,35 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { Zap } from 'lucide-react';
-import { GeminiService } from '../../services/geminiService';
-import { QuestionsService, RealQuestion } from '../../services/questionsService';
-import { QuestionsDB } from '../../services/database';
-import { QuestionAutopsy } from '../../types';
-import { useProgress } from '../../hooks/usePersistence';
-import { useQuestionReview } from '../../hooks/useQuestionReview';
-import { QuestionCard, DisplayQuestion, EmptyState, ReviewBadgeType } from '../../components/QuestionCard';
-import { SkeletonQuestion } from '../../components/LoadingStates';
-import { NoQuestions } from '../../components/EmptyStates';
+import React, { useState, useEffect } from "react";
+import { Zap } from "lucide-react";
+import { NebiusService } from "../../services/nebiusEngine";
+import {
+  QuestionsService,
+  RealQuestion,
+} from "../../services/questionsService";
+import { QuestionsDB } from "../../services/database";
+import { QuestionAutopsy } from "../../types";
+import { useProgress } from "../../hooks/usePersistence";
+import { useQuestionReview } from "../../hooks/useQuestionReview";
+import {
+  QuestionCard,
+  DisplayQuestion,
+  EmptyState,
+  ReviewBadgeType,
+} from "../../components/QuestionCard";
+import { SkeletonQuestion } from "../../components/LoadingStates";
+import { NoQuestions } from "../../components/EmptyStates";
 import {
   AIControls,
   ConcursoControls,
-  ProgressIndicator
-} from '../../components/QuestionControls';
+  ProgressIndicator,
+} from "../../components/QuestionControls";
 import {
   StatsBar,
   ModeSelector,
   SimuladoControls,
   QuestionMode,
   SimuladoConfig,
-  DbMeta
-} from './components';
+  DbMeta,
+} from "./components";
 
 export const QuestionBank: React.FC = () => {
-  const [mode, setMode] = useState<QuestionMode>('questoes');
+  const [mode, setMode] = useState<QuestionMode>("questoes");
   const [params, setParams] = useState({
-    discipline: '',
-    topic: '',
-    bank: 'CEBRASPE',
-    difficulty: 'Medio'
+    discipline: "",
+    topic: "",
+    bank: "CEBRASPE",
+    difficulty: "Medio",
   });
   const [loading, setLoading] = useState(false);
   const [analyzingError, setAnalyzingError] = useState(false);
@@ -38,41 +46,48 @@ export const QuestionBank: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [errorAutopsy, setErrorAutopsy] = useState<QuestionAutopsy | null>(null);
+  const [errorAutopsy, setErrorAutopsy] = useState<QuestionAutopsy | null>(
+    null,
+  );
   const [xpGained, setXpGained] = useState<number | null>(null);
   const [noQuestionsFound, setNoQuestionsFound] = useState(false);
 
-  const { progress, recordQuestionAnswer, getAccuracy, getDisciplineAccuracy } = useProgress();
+  const { progress, recordQuestionAnswer, getAccuracy, getDisciplineAccuracy } =
+    useProgress();
   const {
     recordAnswer: recordSRSAnswer,
     prioritizeQuestions,
     applyInterleaving,
     getQuestionCard,
     isQuestionDue,
-    stats: srsStats
+    stats: srsStats,
   } = useQuestionReview();
 
   // Compute review badge for current question
-  const currentQuestionId = question?.id || '';
+  const currentQuestionId = question?.id || "";
   const currentCard = getQuestionCard(currentQuestionId);
   const isDue = isQuestionDue(currentQuestionId);
 
-  const reviewBadge: ReviewBadgeType = currentCard ? (
-    currentCard.consecutiveIncorrect > 2 ? 'struggling' :
-      currentCard.interval >= 21 ? 'mature' :
-        isDue ? 'due' : 'learning'
-  ) : null;
+  const reviewBadge: ReviewBadgeType = currentCard
+    ? currentCard.consecutiveIncorrect > 2
+      ? "struggling"
+      : currentCard.interval >= 21
+        ? "mature"
+        : isDue
+          ? "due"
+          : "learning"
+    : null;
 
   const [filters, setFilters] = useState({
-    bank: 'Todas',
+    bank: "Todas",
     year: 0,
-    difficulty: 'Qualquer'
+    difficulty: "Qualquer",
   });
 
   const [dbMeta, setDbMeta] = useState<DbMeta>({
     years: [],
     disciplinas: [],
-    count: 0
+    count: 0,
   });
 
   useEffect(() => {
@@ -81,11 +96,11 @@ export const QuestionBank: React.FC = () => {
         const [years, disciplinas, count] = await Promise.all([
           QuestionsDB.getAnos(),
           QuestionsDB.getDisciplinas(),
-          QuestionsDB.count()
+          QuestionsDB.count(),
         ]);
         setDbMeta({ years, disciplinas, count });
       } catch (e) {
-        console.error('Erro ao carregar metadados:', e);
+        console.error("Erro ao carregar metadados:", e);
       }
     };
     loadDbMeta();
@@ -107,7 +122,7 @@ export const QuestionBank: React.FC = () => {
         bank: filters.bank,
         year: filters.year,
         difficulty: filters.difficulty,
-        limit: 20
+        limit: 20,
       });
 
       if (questions.length > 0) {
@@ -125,14 +140,14 @@ export const QuestionBank: React.FC = () => {
             correctAnswer: first.correctAnswer,
             discipline: first.discipline,
             year: first.year,
-            source: 'CONCURSO',
+            source: "CONCURSO",
             bank: first.bank,
             role: first.role,
             contextId: first.contextId,
             contextText: first.contextText,
             command: first.command,
             explanation: first.explanation,
-            aiExplanation: first.aiExplanation
+            aiExplanation: first.aiExplanation,
           });
         }
       } else {
@@ -160,21 +175,21 @@ export const QuestionBank: React.FC = () => {
       if (config.useAI) {
         const aiQuestions: RealQuestion[] = [];
         for (let i = 0; i < Math.min(config.questionCount, 10); i++) {
-          const q = await GeminiService.generateQuestion(
-            config.discipline || 'Direito Constitucional',
-            'Questao avancada',
-            'CEBRASPE',
-            'Dificil'
+          const q = await NebiusService.generateQuestion(
+            config.discipline || "Direito Constitucional",
+            "Questao avancada",
+            "CEBRASPE",
+            "Dificil",
           );
           aiQuestions.push({
             id: `ai_desafio_${Date.now()}_${i}`,
             year: new Date().getFullYear(),
-            source: 'CONCURSO',
+            source: "CONCURSO",
             discipline: q.discipline,
             statement: q.statement,
             options: q.options,
             correctAnswer: q.correctAnswer,
-            bank: 'IA Personalizada'
+            bank: "IA Personalizada",
           });
         }
 
@@ -189,19 +204,19 @@ export const QuestionBank: React.FC = () => {
               correctAnswer: first.correctAnswer,
               discipline: first.discipline,
               year: first.year,
-              source: 'CONCURSO',
+              source: "CONCURSO",
               bank: first.bank,
-              role: 'IA Personalizada',
+              role: "IA Personalizada",
               contextId: first.contextId,
               contextText: first.contextText,
-              command: first.command
+              command: first.command,
             });
           }
         }
       } else {
         const questions = await QuestionsService.fetchConcursoQuestions({
           discipline: config.discipline,
-          limit: config.questionCount
+          limit: config.questionCount,
         });
 
         if (questions.length > 0) {
@@ -215,14 +230,14 @@ export const QuestionBank: React.FC = () => {
               correctAnswer: first.correctAnswer,
               discipline: first.discipline,
               year: first.year,
-              source: 'CONCURSO',
+              source: "CONCURSO",
               bank: first.bank,
               role: first.role,
               contextId: first.contextId,
               contextText: first.contextText,
               command: first.command,
               explanation: first.explanation,
-              aiExplanation: first.aiExplanation
+              aiExplanation: first.aiExplanation,
             });
           }
         } else {
@@ -247,11 +262,11 @@ export const QuestionBank: React.FC = () => {
     setNoQuestionsFound(false);
 
     try {
-      const q = await GeminiService.generateQuestion(
-        params.discipline || 'Direito Constitucional',
-        params.topic || 'Topico Geral',
+      const q = await NebiusService.generateQuestion(
+        params.discipline || "Direito Constitucional",
+        params.topic || "Topico Geral",
         params.bank,
-        params.difficulty
+        params.difficulty,
       );
       setQuestion({
         id: `ai_${Date.now()}`,
@@ -261,7 +276,7 @@ export const QuestionBank: React.FC = () => {
         discipline: q.discipline,
         bank: q.bank,
         comment: q.comment,
-        trap: q.trap
+        trap: q.trap,
       });
     } catch (e) {
       console.error(e);
@@ -296,7 +311,7 @@ export const QuestionBank: React.FC = () => {
         contextText: next.contextText,
         command: next.command,
         explanation: next.explanation,
-        aiExplanation: next.aiExplanation
+        aiExplanation: next.aiExplanation,
       });
     }
   };
@@ -307,17 +322,17 @@ export const QuestionBank: React.FC = () => {
     setShowAnswer(true);
 
     const isCorrect = index === question.correctAnswer;
-    const discipline = question.discipline || params.discipline || 'Geral';
+    const discipline = question.discipline || params.discipline || "Geral";
 
     recordQuestionAnswer(discipline, isCorrect);
 
     const currentRealQuestion = realQuestions[currentQuestionIndex];
     if (currentRealQuestion) {
-      recordSRSAnswer(currentRealQuestion, isCorrect, 'medium');
+      recordSRSAnswer(currentRealQuestion, isCorrect, "medium");
     }
 
     const baseXp = isCorrect ? 25 : 10;
-    const xp = mode === 'questoes' ? baseXp + 5 : baseXp;
+    const xp = mode === "questoes" ? baseXp + 5 : baseXp;
     setXpGained(xp);
     setTimeout(() => setXpGained(null), 2000);
   };
@@ -326,21 +341,22 @@ export const QuestionBank: React.FC = () => {
     if (!question || selectedOption === null) return;
     setAnalyzingError(true);
     try {
-      const result = await GeminiService.analyzeQuestionError(
+      const result = await NebiusService.analyzeQuestionError(
         question.statement,
-        question.options[selectedOption] ?? '',
-        question.options[question.correctAnswer] ?? ''
+        question.options[selectedOption] ?? "",
+        question.options[question.correctAnswer] ?? "",
       );
       setErrorAutopsy(result);
     } catch (e) {
       console.error(e);
-      alert('Erro na autopsia.');
+      alert("Erro na autopsia.");
     } finally {
       setAnalyzingError(false);
     }
   };
 
-  const currentDiscipline = question?.discipline || params.discipline || 'Geral';
+  const currentDiscipline =
+    question?.discipline || params.discipline || "Geral";
   const disciplineAccuracy = getDisciplineAccuracy(currentDiscipline);
 
   return (
@@ -348,8 +364,7 @@ export const QuestionBank: React.FC = () => {
       {xpGained !== null && (
         <div className="fixed top-20 right-8 z-50 animate-in slide-in-from-right fade-in duration-300">
           <div className="bg-white border border-kitchen-border px-6 py-3 rounded-xl shadow-lg flex items-center gap-2 font-bold font-mono text-amber-600">
-            <Zap size={20} className="fill-amber-600" />
-            +{xpGained} XP
+            <Zap size={20} className="fill-amber-600" />+{xpGained} XP
           </div>
         </div>
       )}
@@ -365,7 +380,7 @@ export const QuestionBank: React.FC = () => {
 
       <ModeSelector mode={mode} onModeChange={setMode} />
 
-      {mode === 'questoes' && (
+      {mode === "questoes" && (
         <ConcursoControls
           discipline={params.discipline}
           loading={loading}
@@ -373,13 +388,15 @@ export const QuestionBank: React.FC = () => {
           availableYears={dbMeta.years}
           availableDisciplinas={dbMeta.disciplinas}
           questionCount={dbMeta.count}
-          onDisciplineChange={(discipline) => setParams({ ...params, discipline })}
+          onDisciplineChange={(discipline) =>
+            setParams({ ...params, discipline })
+          }
           onFilterChange={setFilters}
           onGenerate={handleSearch}
         />
       )}
 
-      {mode === 'simulado' && (
+      {mode === "simulado" && (
         <SimuladoControls
           dbMeta={dbMeta}
           loading={loading}
@@ -388,7 +405,7 @@ export const QuestionBank: React.FC = () => {
         />
       )}
 
-      {mode === 'gerador' && (
+      {mode === "gerador" && (
         <AIControls
           params={params}
           loading={loading}
@@ -407,7 +424,7 @@ export const QuestionBank: React.FC = () => {
       {question && (
         <QuestionCard
           question={question}
-          questionSource={mode === 'gerador' ? 'ai' : 'concurso'}
+          questionSource={mode === "gerador" ? "ai" : "concurso"}
           selectedOption={selectedOption}
           showAnswer={showAnswer}
           errorAutopsy={errorAutopsy}
@@ -418,20 +435,20 @@ export const QuestionBank: React.FC = () => {
           onOptionSelect={handleOptionSelect}
           onAutopsy={handleAutopsy}
           onNextQuestion={handleNextRealQuestion}
-          onGenerate={mode === 'gerador' ? handleGenerateAI : handleSearch}
+          onGenerate={mode === "gerador" ? handleGenerateAI : handleSearch}
         />
       )}
 
-      {loading && !question && (
-        <SkeletonQuestion />
-      )}
+      {loading && !question && <SkeletonQuestion />}
 
       {noQuestionsFound && !loading && (
-        <NoQuestions onLoad={mode === 'gerador' ? handleGenerateAI : handleSearch} />
+        <NoQuestions
+          onLoad={mode === "gerador" ? handleGenerateAI : handleSearch}
+        />
       )}
 
       {!question && !loading && !noQuestionsFound && (
-        <EmptyState questionSource={mode === 'gerador' ? 'ai' : 'concurso'} />
+        <EmptyState questionSource={mode === "gerador" ? "ai" : "concurso"} />
       )}
     </div>
   );

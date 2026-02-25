@@ -1,18 +1,18 @@
-import { render, screen, fireEvent, within, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 
 // Mock scrollIntoView (não existe em jsdom)
 Element.prototype.scrollIntoView = vi.fn();
 
 // Mock pdfjs-dist
-vi.mock('pdfjs-dist', () => ({
-  GlobalWorkerOptions: { workerSrc: '' },
-  version: '3.0.0',
-  getDocument: vi.fn()
+vi.mock("pdfjs-dist", () => ({
+  GlobalWorkerOptions: { workerSrc: "" },
+  version: "3.0.0",
+  getDocument: vi.fn(),
 }));
 
 // Mock database (IndexedDB não existe em jsdom)
-vi.mock('./services/database', () => ({
+vi.mock("./services/database", () => ({
   QuestionsDB: {
     query: vi.fn().mockResolvedValue([]),
     count: vi.fn().mockResolvedValue(0),
@@ -35,14 +35,16 @@ vi.mock('./services/database', () => ({
 }));
 
 // Mock questionSeeder
-vi.mock('./services/questionSeeder', () => ({
-  initializeQuestionBank: vi.fn().mockResolvedValue({ questionCount: 0, seeded: false }),
+vi.mock("./services/questionSeeder", () => ({
+  initializeQuestionBank: vi
+    .fn()
+    .mockResolvedValue({ questionCount: 0, seeded: false }),
 }));
 
-// Mock GeminiService
+// Mock NebiusService
 const mockAnalyzeEdital = vi.fn();
-vi.mock('./services/geminiService', () => ({
-  GeminiService: {
+vi.mock("./services/nebiusEngine", () => ({
+  NebiusService: {
     analyzeEdital: (text: string) => mockAnalyzeEdital(text),
     analyzeBankProfile: vi.fn(),
     generateNeuroStudyPlan: vi.fn(),
@@ -50,20 +52,30 @@ vi.mock('./services/geminiService', () => ({
     generateSurgicalMaterial: vi.fn(),
     generateDiscursiveTheme: vi.fn(),
     evaluateDiscursive: vi.fn(),
-    getProviderInfo: vi.fn().mockReturnValue({ provider: 'google-ai-studio' })
-  }
+    getProviderInfo: vi
+      .fn()
+      .mockReturnValue({ provider: "sovereign-ai-studio" }),
+  },
 }));
 
-import App from './App';
+import App from "./App";
 
-describe('ConcursoAI App Integration', () => {
-
+describe("ConcursoAI App Integration", () => {
   beforeEach(() => {
     localStorage.clear();
     vi.clearAllMocks();
     mockAnalyzeEdital.mockResolvedValue({
-        metadata: { banca: 'FGV', orgao: 'TCU', cargos: ['Auditor'], nivel_escolaridade: 'Superior', remuneracao: '22k' },
-        cronograma: [], fases: [], verticalizado: [], alertas: []
+      metadata: {
+        banca: "FGV",
+        orgao: "TCU",
+        cargos: ["Auditor"],
+        nivel_escolaridade: "Superior",
+        remuneracao: "22k",
+      },
+      cronograma: [],
+      fases: [],
+      verticalizado: [],
+      alertas: [],
     });
   });
 
@@ -81,7 +93,7 @@ describe('ConcursoAI App Integration', () => {
     });
   };
 
-  it('deve renderizar SalesLanding e entrar no Dashboard', async () => {
+  it("deve renderizar SalesLanding e entrar no Dashboard", async () => {
     render(<App />);
 
     // SalesLanding renderiza primeiro
@@ -97,7 +109,7 @@ describe('ConcursoAI App Integration', () => {
     expect(screen.getByText(/Bem-vindo ao Mentori/i)).toBeInTheDocument();
   });
 
-  it('deve navegar para Ciclo de Estudos via QuickActions', async () => {
+  it("deve navegar para Ciclo de Estudos via QuickActions", async () => {
     render(<App />);
     await enterApp();
 
@@ -106,12 +118,17 @@ describe('ConcursoAI App Integration', () => {
     fireEvent.click(continueButton);
 
     // Esperar o lazy load do componente StudyCycle
-    await waitFor(() => {
-      expect(screen.getByText(/Método.*Alexandre.*Meirelles/i)).toBeInTheDocument();
-    }, { timeout: 5000 });
+    await waitFor(
+      () => {
+        expect(
+          screen.getByText(/Método.*Alexandre.*Meirelles/i),
+        ).toBeInTheDocument();
+      },
+      { timeout: 5000 },
+    );
   });
 
-  it('deve mostrar DashboardHub com componentes principais', async () => {
+  it("deve mostrar DashboardHub com componentes principais", async () => {
     render(<App />);
     await enterApp();
 
@@ -124,7 +141,7 @@ describe('ConcursoAI App Integration', () => {
     expect(screen.getAllByText(/Mentor IA/i).length).toBeGreaterThan(0);
   });
 
-  it('deve ter botoes de acao no QuickActions', async () => {
+  it("deve ter botoes de acao no QuickActions", async () => {
     render(<App />);
     await enterApp();
 

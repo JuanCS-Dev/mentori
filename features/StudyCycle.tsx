@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { RefreshCw, Target, Calendar, Clock, Settings } from 'lucide-react';
-import { usePersistence, useProgress } from '../hooks/usePersistence';
-import { EditalJSON } from '../types';
-import { ActiveStudyArea, SubjectList } from '../components/StudyCycleComponents';
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { RefreshCw, Target, Calendar, Clock, Settings } from "lucide-react";
+import { usePersistence, useProgress } from "../hooks/usePersistence";
+import { EditalJSON } from "../types";
 import {
-  StudyScheduler,
-  SchedulerConfig
-} from '../services/studyScheduler';
+  ActiveStudyArea,
+  SubjectList,
+} from "../components/StudyCycleComponents";
+import { StudyScheduler, SchedulerConfig } from "../services/studyScheduler";
 import {
   AlertBanner,
   generateProgressAlerts,
   StreakAlert,
-  CountdownBadge
-} from '../components/AlertBanner';
+  CountdownBadge,
+} from "../components/AlertBanner";
 
 /**
  * Ciclo de Estudos - Kitchen Theme Refactor
@@ -24,7 +24,7 @@ interface CycleSubject {
   targetHours: number;
   completedMinutes: number;
   color: string;
-  priority: 'alta' | 'media' | 'baixa';
+  priority: "alta" | "media" | "baixa";
 }
 
 interface StudyCycleData {
@@ -41,9 +41,16 @@ interface StudyCycleProps {
 }
 
 const COLORS = [
-  'bg-blue-500', 'bg-emerald-500', 'bg-purple-500', 'bg-amber-500',
-  'bg-rose-500', 'bg-cyan-500', 'bg-indigo-500', 'bg-pink-500',
-  'bg-teal-500', 'bg-orange-500'
+  "bg-blue-500",
+  "bg-emerald-500",
+  "bg-purple-500",
+  "bg-amber-500",
+  "bg-rose-500",
+  "bg-cyan-500",
+  "bg-indigo-500",
+  "bg-pink-500",
+  "bg-teal-500",
+  "bg-orange-500",
 ];
 
 const defaultCycleData: StudyCycleData = {
@@ -52,25 +59,33 @@ const defaultCycleData: StudyCycleData = {
   cycleNumber: 1,
   totalCyclesCompleted: 0,
   createdAt: new Date().toISOString(),
-  lastStudyDate: ''
+  lastStudyDate: "",
 };
 
 export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
-  const [cycleData, setCycleData] = usePersistence<StudyCycleData>('studyCycle', defaultCycleData);
+  const [cycleData, setCycleData] = usePersistence<StudyCycleData>(
+    "studyCycle",
+    defaultCycleData,
+  );
   const [isStudying, setIsStudying] = useState(false);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [showConfig, setShowConfig] = useState(false);
-  const [dismissedAlerts, setDismissedAlerts] = useState<Set<string>>(new Set());
+  const [dismissedAlerts, setDismissedAlerts] = useState<Set<string>>(
+    new Set(),
+  );
 
   // Scheduler config
-  const [schedulerConfig, setSchedulerConfig] = usePersistence<SchedulerConfig>('schedulerConfig', {
-    dailyAvailableHours: 4,
-    examDate: '',
-    restDays: [0],
-    preferredStartTime: '08:00',
-    blockDurationMinutes: 50,
-    breakDurationMinutes: 10
-  });
+  const [schedulerConfig, setSchedulerConfig] = usePersistence<SchedulerConfig>(
+    "schedulerConfig",
+    {
+      dailyAvailableHours: 4,
+      examDate: "",
+      restDays: [0],
+      preferredStartTime: "08:00",
+      blockDurationMinutes: 50,
+      breakDurationMinutes: 10,
+    },
+  );
 
   // Progress for alerts
   const { progress } = useProgress();
@@ -80,7 +95,7 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
     let interval: ReturnType<typeof setInterval>;
     if (isStudying) {
       interval = setInterval(() => {
-        setElapsedSeconds(s => s + 1);
+        setElapsedSeconds((s) => s + 1);
       }, 1000);
     }
     return () => clearInterval(interval);
@@ -90,8 +105,14 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
 
   const cycleProgress = useMemo(() => {
     if (cycleData.subjects.length === 0) return 0;
-    const totalTarget = cycleData.subjects.reduce((sum, s) => sum + s.targetHours * 60, 0);
-    const totalCompleted = cycleData.subjects.reduce((sum, s) => sum + s.completedMinutes, 0);
+    const totalTarget = cycleData.subjects.reduce(
+      (sum, s) => sum + s.targetHours * 60,
+      0,
+    );
+    const totalCompleted = cycleData.subjects.reduce(
+      (sum, s) => sum + s.completedMinutes,
+      0,
+    );
     return totalTarget > 0 ? (totalCompleted / totalTarget) * 100 : 0;
   }, [cycleData.subjects]);
 
@@ -103,20 +124,25 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
 
   // Calcular progresso de metas
   const goalProgress = useMemo(() => {
-    const weeklyMinutes = cycleData.subjects.reduce((sum, s) => sum + s.completedMinutes, 0);
+    const weeklyMinutes = cycleData.subjects.reduce(
+      (sum, s) => sum + s.completedMinutes,
+      0,
+    );
     const dailyTarget = schedulerConfig.dailyAvailableHours * 60;
     const weeklyTarget = dailyTarget * (7 - schedulerConfig.restDays.length);
 
     // Estimar minutos estudados hoje baseado no ciclo atual
     const todayMinutes = isStudying ? Math.floor(elapsedSeconds / 60) : 0;
-    const dailyPercentage = dailyTarget > 0 ? (todayMinutes / dailyTarget) * 100 : 0;
-    const weeklyPercentage = weeklyTarget > 0 ? (weeklyMinutes / weeklyTarget) * 100 : 0;
+    const dailyPercentage =
+      dailyTarget > 0 ? (todayMinutes / dailyTarget) * 100 : 0;
+    const weeklyPercentage =
+      weeklyTarget > 0 ? (weeklyMinutes / weeklyTarget) * 100 : 0;
     const deviationPercent = weeklyPercentage - 100;
 
-    let status: 'on_track' | 'ahead' | 'behind' | 'critical' = 'on_track';
-    if (deviationPercent < -30) status = 'critical';
-    else if (deviationPercent < -15) status = 'behind';
-    else if (deviationPercent > 10) status = 'ahead';
+    let status: "on_track" | "ahead" | "behind" | "critical" = "on_track";
+    if (deviationPercent < -30) status = "critical";
+    else if (deviationPercent < -15) status = "behind";
+    else if (deviationPercent > 10) status = "ahead";
 
     return { deviationPercent, status, dailyPercentage };
   }, [cycleData.subjects, schedulerConfig, elapsedSeconds, isStudying]);
@@ -126,32 +152,34 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
     const allAlerts = generateProgressAlerts(
       goalProgress,
       countdown || undefined,
-      progress.streakDays
+      progress.streakDays,
     );
-    return allAlerts.filter(a => !dismissedAlerts.has(a.id));
+    return allAlerts.filter((a) => !dismissedAlerts.has(a.id));
   }, [goalProgress, countdown, progress.streakDays, dismissedAlerts]);
 
   const handleDismissAlert = (id: string) => {
-    setDismissedAlerts(prev => new Set([...prev, id]));
+    setDismissedAlerts((prev) => new Set([...prev, id]));
   };
 
   const importFromEdital = useCallback(() => {
     if (!editalData?.verticalizado) return;
 
-    const newSubjects: CycleSubject[] = editalData.verticalizado.map((disc, index) => ({
-      id: `subject_${Date.now()}_${index}`,
-      name: disc.disciplina,
-      targetHours: getHoursFromWeight(disc.peso),
-      completedMinutes: 0,
-      color: COLORS[index % COLORS.length] ?? 'bg-slate-500',
-      priority: getPriorityFromWeight(disc.peso)
-    }));
+    const newSubjects: CycleSubject[] = editalData.verticalizado.map(
+      (disc, index) => ({
+        id: `subject_${Date.now()}_${index}`,
+        name: disc.disciplina,
+        targetHours: getHoursFromWeight(disc.peso),
+        completedMinutes: 0,
+        color: COLORS[index % COLORS.length] ?? "bg-slate-500",
+        priority: getPriorityFromWeight(disc.peso),
+      }),
+    );
 
-    setCycleData(prev => ({
+    setCycleData((prev) => ({
       ...prev,
       subjects: newSubjects,
       currentSubjectIndex: 0,
-      cycleNumber: 1
+      cycleNumber: 1,
     }));
   }, [editalData, setCycleData]);
 
@@ -161,21 +189,25 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
       name,
       targetHours: hours,
       completedMinutes: 0,
-      color: COLORS[cycleData.subjects.length % COLORS.length] ?? 'bg-slate-500',
-      priority: 'media'
+      color:
+        COLORS[cycleData.subjects.length % COLORS.length] ?? "bg-slate-500",
+      priority: "media",
     };
 
-    setCycleData(prev => ({
+    setCycleData((prev) => ({
       ...prev,
-      subjects: [...prev.subjects, newSubject]
+      subjects: [...prev.subjects, newSubject],
     }));
   };
 
   const removeSubject = (id: string) => {
-    setCycleData(prev => ({
+    setCycleData((prev) => ({
       ...prev,
-      subjects: prev.subjects.filter(s => s.id !== id),
-      currentSubjectIndex: Math.min(prev.currentSubjectIndex, Math.max(0, prev.subjects.length - 2))
+      subjects: prev.subjects.filter((s) => s.id !== id),
+      currentSubjectIndex: Math.min(
+        prev.currentSubjectIndex,
+        Math.max(0, prev.subjects.length - 2),
+      ),
     }));
   };
 
@@ -183,14 +215,14 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
     if (isStudying) {
       const minutesStudied = Math.floor(elapsedSeconds / 60);
       if (minutesStudied > 0 && currentSubject) {
-        setCycleData(prev => ({
+        setCycleData((prev) => ({
           ...prev,
-          subjects: prev.subjects.map(s =>
+          subjects: prev.subjects.map((s) =>
             s.id === currentSubject.id
               ? { ...s, completedMinutes: s.completedMinutes + minutesStudied }
-              : s
+              : s,
           ),
-          lastStudyDate: new Date().toISOString()
+          lastStudyDate: new Date().toISOString(),
         }));
       }
       setElapsedSeconds(0);
@@ -201,20 +233,20 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
   const nextSubject = () => {
     if (isStudying && elapsedSeconds > 0 && currentSubject) {
       const minutesStudied = Math.floor(elapsedSeconds / 60);
-      setCycleData(prev => ({
+      setCycleData((prev) => ({
         ...prev,
-        subjects: prev.subjects.map(s =>
+        subjects: prev.subjects.map((s) =>
           s.id === currentSubject.id
             ? { ...s, completedMinutes: s.completedMinutes + minutesStudied }
-            : s
-        )
+            : s,
+        ),
       }));
     }
 
     setIsStudying(false);
     setElapsedSeconds(0);
 
-    setCycleData(prev => {
+    setCycleData((prev) => {
       const nextIndex = (prev.currentSubjectIndex + 1) % prev.subjects.length;
       const completedCycle = nextIndex === 0;
 
@@ -222,22 +254,22 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
         ...prev,
         currentSubjectIndex: nextIndex,
         cycleNumber: completedCycle ? prev.cycleNumber + 1 : prev.cycleNumber,
-        totalCyclesCompleted: completedCycle ? prev.totalCyclesCompleted + 1 : prev.totalCyclesCompleted,
+        totalCyclesCompleted: completedCycle
+          ? prev.totalCyclesCompleted + 1
+          : prev.totalCyclesCompleted,
         subjects: completedCycle
-          ? prev.subjects.map(s => ({ ...s, completedMinutes: 0 }))
-          : prev.subjects
+          ? prev.subjects.map((s) => ({ ...s, completedMinutes: 0 }))
+          : prev.subjects,
       };
     });
   };
 
   const markSubjectComplete = (id: string) => {
-    setCycleData(prev => ({
+    setCycleData((prev) => ({
       ...prev,
-      subjects: prev.subjects.map(s =>
-        s.id === id
-          ? { ...s, completedMinutes: s.targetHours * 60 }
-          : s
-      )
+      subjects: prev.subjects.map((s) =>
+        s.id === id ? { ...s, completedMinutes: s.targetHours * 60 } : s,
+      ),
     }));
 
     if (currentSubject?.id === id) {
@@ -253,9 +285,7 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
       )}
 
       {/* STREAK */}
-      {progress.streakDays >= 3 && (
-        <StreakAlert streak={progress.streakDays} />
-      )}
+      {progress.streakDays >= 3 && <StreakAlert streak={progress.streakDays} />}
 
       {/* HEADER */}
       <div className="bg-white border border-kitchen-border rounded-xl p-8 shadow-sm">
@@ -263,7 +293,9 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
           <div>
             <div className="flex items-center gap-3 mb-2">
               <RefreshCw size={24} className="text-kitchen-text-secondary" />
-              <h1 className="text-2xl font-mono font-bold text-kitchen-text-primary">Ciclo_de_Estudos.exe</h1>
+              <h1 className="text-2xl font-mono font-bold text-kitchen-text-primary">
+                Ciclo_de_Estudos.exe
+              </h1>
             </div>
             <p className="text-kitchen-text-secondary font-mono text-sm">
               Método: Alexandre Meirelles // Modo: Rotativo
@@ -277,12 +309,20 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
             )}
 
             <div className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2">
-              <div className="text-xs font-mono text-gray-500 uppercase tracking-widest">Ciclo_Atual</div>
-              <div className="text-xl font-mono font-bold text-gray-800">#{cycleData.cycleNumber}</div>
+              <div className="text-xs font-mono text-gray-500 uppercase tracking-widest">
+                Ciclo_Atual
+              </div>
+              <div className="text-xl font-mono font-bold text-gray-800">
+                #{cycleData.cycleNumber}
+              </div>
             </div>
             <div className="bg-gray-50 border border-gray-200 rounded-lg px-4 py-2">
-              <div className="text-xs font-mono text-gray-500 uppercase tracking-widest">Concluídos</div>
-              <div className="text-xl font-mono font-bold text-gray-800">{cycleData.totalCyclesCompleted}</div>
+              <div className="text-xs font-mono text-gray-500 uppercase tracking-widest">
+                Concluídos
+              </div>
+              <div className="text-xl font-mono font-bold text-gray-800">
+                {cycleData.totalCyclesCompleted}
+              </div>
             </div>
 
             {/* Config Button */}
@@ -309,14 +349,18 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
                 </label>
                 <select
                   value={schedulerConfig.dailyAvailableHours}
-                  onChange={(e) => setSchedulerConfig(prev => ({
-                    ...prev,
-                    dailyAvailableHours: Number(e.target.value)
-                  }))}
+                  onChange={(e) =>
+                    setSchedulerConfig((prev) => ({
+                      ...prev,
+                      dailyAvailableHours: Number(e.target.value),
+                    }))
+                  }
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg font-mono text-sm"
                 >
-                  {[2, 3, 4, 5, 6, 8, 10].map(h => (
-                    <option key={h} value={h}>{h} horas</option>
+                  {[2, 3, 4, 5, 6, 8, 10].map((h) => (
+                    <option key={h} value={h}>
+                      {h} horas
+                    </option>
                   ))}
                 </select>
               </div>
@@ -328,10 +372,12 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
                 <input
                   type="date"
                   value={schedulerConfig.examDate}
-                  onChange={(e) => setSchedulerConfig(prev => ({
-                    ...prev,
-                    examDate: e.target.value
-                  }))}
+                  onChange={(e) =>
+                    setSchedulerConfig((prev) => ({
+                      ...prev,
+                      examDate: e.target.value,
+                    }))
+                  }
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg font-mono text-sm"
                 />
               </div>
@@ -343,10 +389,12 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
                 <input
                   type="time"
                   value={schedulerConfig.preferredStartTime}
-                  onChange={(e) => setSchedulerConfig(prev => ({
-                    ...prev,
-                    preferredStartTime: e.target.value
-                  }))}
+                  onChange={(e) =>
+                    setSchedulerConfig((prev) => ({
+                      ...prev,
+                      preferredStartTime: e.target.value,
+                    }))
+                  }
                   className="w-full px-3 py-2 border border-gray-200 rounded-lg font-mono text-sm"
                 />
               </div>
@@ -365,13 +413,22 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
                   <div className="flex items-center gap-2">
                     <Clock size={14} className="text-gray-400" />
                     <span className="text-gray-600">
-                      <strong>{(countdown.daysRemaining * schedulerConfig.dailyAvailableHours).toFixed(0)}</strong>h totais disponíveis
+                      <strong>
+                        {(
+                          countdown.daysRemaining *
+                          schedulerConfig.dailyAvailableHours
+                        ).toFixed(0)}
+                      </strong>
+                      h totais disponíveis
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Target size={14} className="text-gray-400" />
                     <span className="text-gray-600">
-                      Meta: <strong>{schedulerConfig.dailyAvailableHours}h/dia</strong>
+                      Meta:{" "}
+                      <strong>
+                        {schedulerConfig.dailyAvailableHours}h/dia
+                      </strong>
                     </span>
                   </div>
                 </div>
@@ -399,19 +456,32 @@ export const StudyCycle: React.FC<StudyCycleProps> = ({ editalData }) => {
           <div className="mt-4">
             <div className="flex justify-between text-xs font-mono text-gray-500 mb-2 uppercase tracking-wide">
               <span>Meta Diária ({schedulerConfig.dailyAvailableHours}h)</span>
-              <span className={goalProgress.status === 'behind' ? 'text-amber-600' : goalProgress.status === 'critical' ? 'text-red-600' : ''}>
+              <span
+                className={
+                  goalProgress.status === "behind"
+                    ? "text-amber-600"
+                    : goalProgress.status === "critical"
+                      ? "text-red-600"
+                      : ""
+                }
+              >
                 {goalProgress.dailyPercentage.toFixed(0)}%
               </span>
             </div>
             <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden border border-gray-200">
               <div
                 className={`h-full rounded-full transition-all duration-500 ${
-                  goalProgress.status === 'critical' ? 'bg-red-500' :
-                  goalProgress.status === 'behind' ? 'bg-amber-500' :
-                  goalProgress.status === 'ahead' ? 'bg-emerald-500' :
-                  'bg-blue-500'
+                  goalProgress.status === "critical"
+                    ? "bg-red-500"
+                    : goalProgress.status === "behind"
+                      ? "bg-amber-500"
+                      : goalProgress.status === "ahead"
+                        ? "bg-emerald-500"
+                        : "bg-blue-500"
                 }`}
-                style={{ width: `${Math.min(100, goalProgress.dailyPercentage)}%` }}
+                style={{
+                  width: `${Math.min(100, goalProgress.dailyPercentage)}%`,
+                }}
               />
             </div>
           </div>
@@ -475,9 +545,9 @@ function getHoursFromWeight(peso: string): number {
   return 1;
 }
 
-function getPriorityFromWeight(peso: string): 'alta' | 'media' | 'baixa' {
+function getPriorityFromWeight(peso: string): "alta" | "media" | "baixa" {
   const pesoNum = parseInt(peso) || 1;
-  if (pesoNum >= 3) return 'alta';
-  if (pesoNum === 2) return 'media';
-  return 'baixa';
+  if (pesoNum >= 3) return "alta";
+  if (pesoNum === 2) return "media";
+  return "baixa";
 }

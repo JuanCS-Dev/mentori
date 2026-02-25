@@ -1,0 +1,43 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ['--maxkb=1000'] # Aumentando para 1MB por causa do logo
+
+  # Python: Ruff (Linting + Formatting)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.9
+    hooks:
+      - id: ruff
+        args: [ --fix ]
+      - id: ruff-format
+
+  # Python: Mypy (Types)
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        files: ^indexer/
+        args: [--ignore-missing-imports]
+        additional_dependencies: [types-requests, types-beautifulsoup4]
+
+  # Frontend: Prettier
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        files: \.(js|ts|jsx|tsx|css|html|json|md)$
+
+  # Frontend: ESLint (Usando local para consistência)
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint
+        entry: npm run lint
+        language: system
+        files: \.(js|ts|jsx|tsx)$
+        pass_filenames: false

@@ -1,8 +1,8 @@
-import React from 'react';
-import { Check, Zap, Crown, Sparkles } from 'lucide-react';
+import React from "react";
+import { Check, Zap, Crown, Sparkles } from "lucide-react";
 
 interface PricingProps {
-  onSelectPlan: (plan: 'monthly' | 'yearly') => void;
+  onSelectPlan: (plan: "monthly" | "yearly") => void;
 }
 
 export const Pricing: React.FC<PricingProps> = ({ onSelectPlan }) => {
@@ -15,11 +15,11 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPlan }) => {
             INVESTIMENTO
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
-            Quanto Custa Sua{' '}
-            <span className="text-purple-600">Aprovacao?</span>
+            Quanto Custa Sua <span className="text-purple-600">Aprovacao?</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Menos que um cafe por dia para ter a melhor tecnologia de estudos do Brasil.
+            Menos que um cafe por dia para ter a melhor tecnologia de estudos do
+            Brasil.
           </p>
         </div>
 
@@ -43,19 +43,17 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPlan }) => {
                 <span className="text-5xl font-black text-slate-900">47</span>
                 <span className="text-slate-500">/mes</span>
               </div>
-              <p className="text-sm text-slate-500 mt-1">
-                Menos de R$1,57/dia
-              </p>
+              <p className="text-sm text-slate-500 mt-1">Menos de R$1,57/dia</p>
             </div>
 
             <ul className="space-y-3 mb-8">
               {[
-                'Acesso completo a plataforma',
-                '+700 questoes reais comentadas',
-                'Mentor IA 24/7',
-                'Spaced Repetition ilimitado',
-                'Analytics de performance',
-                'Suporte por email'
+                "Acesso completo a plataforma",
+                "+700 questoes reais comentadas",
+                "Mentor IA 24/7",
+                "Spaced Repetition ilimitado",
+                "Analytics de performance",
+                "Suporte por email",
               ].map((feature, i) => (
                 <li key={i} className="flex items-center gap-3 text-slate-700">
                   <Check size={18} className="text-green-500 shrink-0" />
@@ -65,7 +63,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPlan }) => {
             </ul>
 
             <button
-              onClick={() => onSelectPlan('monthly')}
+              onClick={() => onSelectPlan("monthly")}
               className="w-full py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors"
             >
               Comecar 7 Dias Gratis
@@ -105,12 +103,12 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPlan }) => {
 
             <ul className="space-y-3 mb-8">
               {[
-                'Tudo do plano mensal',
-                'Economia de R$216/ano',
-                'Prioridade no suporte',
-                'Acesso antecipado a novidades',
-                'Garantia estendida 30 dias',
-                'Materiais exclusivos'
+                "Tudo do plano mensal",
+                "Economia de R$216/ano",
+                "Prioridade no suporte",
+                "Acesso antecipado a novidades",
+                "Garantia estendida 30 dias",
+                "Materiais exclusivos",
               ].map((feature, i) => (
                 <li key={i} className="flex items-center gap-3 text-white/90">
                   <Check size={18} className="text-yellow-400 shrink-0" />
@@ -120,7 +118,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPlan }) => {
             </ul>
 
             <button
-              onClick={() => onSelectPlan('yearly')}
+              onClick={() => onSelectPlan("yearly")}
               className="w-full py-4 bg-white text-purple-700 font-bold rounded-xl hover:bg-purple-50 transition-colors"
             >
               Garantir Desconto Anual
@@ -135,8 +133,12 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPlan }) => {
               <Check size={20} className="text-green-600" />
             </div>
             <div className="text-left">
-              <div className="font-bold text-green-900">Garantia Incondicional</div>
-              <div className="text-sm text-green-700">7 dias para testar. Nao gostou? Devolvemos 100%.</div>
+              <div className="font-bold text-green-900">
+                Garantia Incondicional
+              </div>
+              <div className="text-sm text-green-700">
+                7 dias para testar. Nao gostou? Devolvemos 100%.
+              </div>
             </div>
           </div>
         </div>

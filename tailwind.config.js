@@ -10,40 +10,39 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['"Space Mono"', '"Roboto Mono"', 'monospace'],
+        sans: ['"Space Grotesk"', "Inter", "system-ui", "sans-serif"],
+        mono: ['"JetBrains Mono"', '"Space Mono"', "monospace"],
       },
       colors: {
-        kitchen: {
-          bg: '#f8f9fa',
-          card: '#ffffff',
-          border: '#e2e8f0', // slate-200
-          dark: '#1e1e1e', // sidebar bg
+        cyber: {
+          bg: "#09090B",
+          surface: "#121216",
+          border: "#27272A",
+          accent: "#00F0FF",
           text: {
-            primary: '#202124',
-            secondary: '#5f6368',
-            code: '#d4d4d4', // light gray for dark bg
+            primary: "#FAFAFA",
+            secondary: "#A1A1AA",
+            muted: "#52525B",
           },
-          accent: {
-            yellow: '#fef7e0',
-            yellowText: '#b06000',
-            green: '#e6f4ea',
-            greenText: '#137333',
-            red: '#fce8e6',
-            redText: '#c5221f',
-            blue: '#e8f0fe',
-            blueText: '#1967d2',
-          }
-        }
+          status: {
+            success: "#22C55E",
+            error: "#EF4444",
+            warning: "#F59E0B",
+            info: "#00F0FF",
+          },
+        },
       },
       boxShadow: {
-        'kitchen': '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
-        'kitchen-hover': '0 1px 3px 0 rgba(60,64,67,0.3), 0 4px 8px 3px rgba(60,64,67,0.15)',
+        cyber:
+          "0 0 0 1px rgba(255,255,255,0.05), 0 8px 16px -4px rgba(0,0,0,0.5)",
+        "cyber-glow": "0 0 15px rgba(0,240,255,0.15)",
       },
       borderRadius: {
-        'kitchen': '12px',
-      }
+        tactical: "4px",
+        "nested-outer": "12px",
+        "nested-inner": "8px",
+      },
     },
   },
   plugins: [],
-}
+};

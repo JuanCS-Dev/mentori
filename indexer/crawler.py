@@ -11,14 +11,11 @@ Uso:
     python crawler.py scan pf_25        # Escaneia arquivos de um concurso
 """
 
-import os
-import sys
 import re
-import json
-import requests
+import sys
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Optional
+
+import requests
 from bs4 import BeautifulSoup
 
 # Configuração
@@ -34,22 +31,18 @@ CONCURSOS = {
     "pf_18": {"nome": "Polícia Federal", "ano": 2018, "cargos": ["agente", "delegado", "escrivao"]},
     "pf_14": {"nome": "Polícia Federal", "ano": 2014, "cargos": ["agente", "delegado"]},
     "pf_12": {"nome": "Polícia Federal", "ano": 2012, "cargos": ["agente", "delegado"]},
-
     # ===== POLÍCIA RODOVIÁRIA FEDERAL =====
     "prf_21": {"nome": "PRF", "ano": 2021, "cargos": ["policial"]},
     "prf_18": {"nome": "PRF", "ano": 2018, "cargos": ["policial"]},
     "prf_13": {"nome": "PRF", "ano": 2013, "cargos": ["policial"]},
-
     # ===== DEPEN (Penitenciária Federal) =====
     "depen_21": {"nome": "DEPEN", "ano": 2021, "cargos": ["agente", "especialista"]},
     "depen_20": {"nome": "DEPEN", "ano": 2020, "cargos": ["agente"]},
     "depen_15": {"nome": "DEPEN", "ano": 2015, "cargos": ["agente"]},
-
     # ===== POLÍCIA CIVIL DF =====
     "pc_df_24_adm": {"nome": "PCDF", "ano": 2024, "cargos": ["agente", "escrivao"]},
     "pcdf_21": {"nome": "PCDF", "ano": 2021, "cargos": ["agente", "escrivao", "delegado"]},
     "pcdf_20": {"nome": "PCDF", "ano": 2020, "cargos": ["agente", "escrivao"]},
-
     # ===== POLÍCIA CIVIL ESTADOS =====
     "pc_pe_23": {"nome": "PCPE", "ano": 2023, "cargos": ["agente", "escrivao", "delegado"]},
     "pc_pa_21": {"nome": "PCPA", "ano": 2021, "cargos": ["investigador", "escrivao"]},
@@ -58,31 +51,28 @@ CONCURSOS = {
     "pc_al_21": {"nome": "PCAL", "ano": 2021, "cargos": ["agente", "escrivao"]},
     "pc_se_21": {"nome": "PCSE", "ano": 2021, "cargos": ["agente", "delegado"]},
     "pc_ba_21": {"nome": "PCBA", "ano": 2021, "cargos": ["investigador", "escrivao"]},
-
     # ===== POLÍCIA MILITAR =====
     "pm_df_18": {"nome": "PMDF", "ano": 2018, "cargos": ["soldado", "oficial"]},
     "cbm_df_16": {"nome": "Bombeiros DF", "ano": 2016, "cargos": ["soldado", "oficial"]},
-
     # ===== POLÍCIA PENAL =====
     "pp_mg_21": {"nome": "PP-MG", "ano": 2021, "cargos": ["agente"]},
     "pp_ce_21": {"nome": "PP-CE", "ano": 2021, "cargos": ["policial_penal"]},
-
     # ===== ABIN =====
     "abin_18": {"nome": "ABIN", "ano": 2018, "cargos": ["oficial", "agente"]},
 }
 
 # Padrões de arquivos de prova no CDN
 PROVA_PATTERNS = [
-    r".*_CB\d?_?\d*\.PDF$",           # Caderno de prova (ex: 021_PCDF_CB2_01.PDF)
-    r".*CARGO.*\.PDF$",                # Por cargo (ex: CARGO_2_AGENTE.PDF)
-    r".*PROVA.*\.PDF$",                # Prova explícita
-    r".*CADERNO.*\.PDF$",              # Caderno
-    r"\d{3}_[A-Z]+_\d+\.PDF$",         # Padrão numérico
+    r".*_CB\d?_?\d*\.PDF$",  # Caderno de prova (ex: 021_PCDF_CB2_01.PDF)
+    r".*CARGO.*\.PDF$",  # Por cargo (ex: CARGO_2_AGENTE.PDF)
+    r".*PROVA.*\.PDF$",  # Prova explícita
+    r".*CADERNO.*\.PDF$",  # Caderno
+    r"\d{3}_[A-Z]+_\d+\.PDF$",  # Padrão numérico
 ]
 
 GABARITO_PATTERNS = [
-    r".*GAB.*\.PDF$",                  # Gabarito
-    r".*GABARITO.*\.PDF$",             # Gabarito explícito
+    r".*GAB.*\.PDF$",  # Gabarito
+    r".*GABARITO.*\.PDF$",  # Gabarito explícito
 ]
 
 
@@ -104,21 +94,17 @@ def scan_concurso(codigo: str) -> dict:
             return {"provas": [], "gabaritos": [], "outros": []}
 
         # Parse HTML para encontrar links
-        soup = BeautifulSoup(response.text, 'html.parser')
-        links = soup.find_all('a', href=True)
+        soup = BeautifulSoup(response.text, "html.parser")
+        links = soup.find_all("a", href=True)
 
-        arquivos = {
-            "provas": [],
-            "gabaritos": [],
-            "outros": []
-        }
+        arquivos: dict[str, list[dict[str, str]]] = {"provas": [], "gabaritos": [], "outros": []}
 
         for link in links:
-            href = link['href']
-            if not href.endswith('.PDF') and not href.endswith('.pdf'):
+            href = link["href"]
+            if not href.endswith(".PDF") and not href.endswith(".pdf"):
                 continue
 
-            filename = href.split('/')[-1].upper()
+            filename = href.split("/")[-1].upper()
             full_url = f"{CDN_BASE}/{codigo}/arquivos/{filename}"
 
             # Classificar arquivo
@@ -144,8 +130,7 @@ def try_known_urls(codigo: str) -> dict:
     """
     Tenta URLs conhecidas baseadas em padrões comuns do CEBRASPE.
     """
-    info = CONCURSOS.get(codigo, {})
-    ano = info.get("ano", 2024)
+    # info = CONCURSOS.get(codigo, {}) # Unused
 
     # Padrões comuns de URL
     patterns = [
@@ -158,7 +143,7 @@ def try_known_urls(codigo: str) -> dict:
         f"{CDN_BASE}/{codigo}/arquivos/GAB_DEFINITIVO_{{num:03d}}_{codigo.upper()}_001_01.PDF",
     ]
 
-    arquivos = {"provas": [], "gabaritos": [], "outros": []}
+    arquivos: dict[str, list[dict[str, str]]] = {"provas": [], "gabaritos": [], "outros": []}
 
     # Testar URLs com números sequenciais
     print(f"🔎 Testando URLs conhecidas para {codigo}...")
@@ -169,10 +154,10 @@ def try_known_urls(codigo: str) -> dict:
             try:
                 resp = requests.head(url, timeout=5)
                 if resp.status_code == 200:
-                    filename = url.split('/')[-1]
+                    filename = url.split("/")[-1]
                     arquivos["provas"].append({"nome": filename, "url": url})
                     print(f"  ✅ {filename}")
-            except:
+            except requests.RequestException:
                 pass
 
     # Testar gabaritos
@@ -181,10 +166,10 @@ def try_known_urls(codigo: str) -> dict:
         try:
             resp = requests.head(url, timeout=5)
             if resp.status_code == 200:
-                filename = url.split('/')[-1]
+                filename = url.split("/")[-1]
                 arquivos["gabaritos"].append({"nome": filename, "url": url})
                 print(f"  ✅ {filename} (gabarito)")
-        except:
+        except requests.RequestException:
             pass
 
     return arquivos
@@ -195,7 +180,7 @@ def download_file(url: str, dest: Path) -> bool:
     try:
         response = requests.get(url, timeout=60, stream=True)
         if response.status_code == 200:
-            with open(dest, 'wb') as f:
+            with open(dest, "wb") as f:
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
             return True

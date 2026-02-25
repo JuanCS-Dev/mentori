@@ -22,23 +22,25 @@
 
 ### Dados Basicos
 
-| Campo | Valor |
-|-------|-------|
-| **Nome do Produto** | Mentori - Estudos com IA |
-| **Nome Completo** | Mentori - Plataforma de Estudos Inteligente para Concursos Publicos |
-| **Categoria** | Educacao > Concursos Publicos |
-| **Tipo** | Assinatura (Recorrente) |
-| **Preco Mensal** | R$ 47,00 |
-| **Preco Anual** | R$ 397,00 (30% desconto) |
-| **Garantia** | 7 dias incondicional |
-| **Suporte** | juan@vertice-maximus.com |
+| Campo               | Valor                                                               |
+| ------------------- | ------------------------------------------------------------------- |
+| **Nome do Produto** | Mentori - Estudos com IA                                            |
+| **Nome Completo**   | Mentori - Plataforma de Estudos Inteligente para Concursos Publicos |
+| **Categoria**       | Educacao > Concursos Publicos                                       |
+| **Tipo**            | Assinatura (Recorrente)                                             |
+| **Preco Mensal**    | R$ 47,00                                                            |
+| **Preco Anual**     | R$ 397,00 (30% desconto)                                            |
+| **Garantia**        | 7 dias incondicional                                                |
+| **Suporte**         | juan@vertice-maximus.com                                            |
 
 ### Descricao Curta (ate 150 caracteres)
+
 ```
 Estude 3x mais rapido com IA. Plano personalizado, 700+ questoes reais e mentor 24/7.
 ```
 
 ### Descricao Completa
+
 ```
 O Mentori e a primeira plataforma de estudos para concursos que usa Inteligencia Artificial de verdade.
 
@@ -65,6 +67,7 @@ Comece hoje e transforme sua preparacao!
 ```
 
 ### Palavras-chave (SEO)
+
 ```
 concursos publicos, estudar para concurso, plano de estudos, questoes de concurso,
 CEBRASPE, FGV, edital, revisao espacada, IA para estudos, mentor virtual,
@@ -73,12 +76,12 @@ preparatorio concurso, como passar em concurso, aprovacao concurso
 
 ### Imagens Necessarias
 
-| Tipo | Dimensoes | Uso |
-|------|-----------|-----|
-| Logo | 500x500px | Icone do produto |
-| Banner | 1920x1080px | Capa nas plataformas |
-| Thumbnail | 800x600px | Miniaturas |
-| Screenshots | 1280x720px | Demonstracao do app |
+| Tipo        | Dimensoes   | Uso                  |
+| ----------- | ----------- | -------------------- |
+| Logo        | 500x500px   | Icone do produto     |
+| Banner      | 1920x1080px | Capa nas plataformas |
+| Thumbnail   | 800x600px   | Miniaturas           |
+| Screenshots | 1280x720px  | Demonstracao do app  |
 
 ---
 
@@ -153,6 +156,7 @@ VITE_MENTOR_CHAT_URL=https://us-central1-seu-projeto.cloudfunctions.net/mentorCh
 ### 2.5 URL Final
 
 Apos deploy, sua URL sera algo como:
+
 - Temporaria: `https://amazing-name-123456.netlify.app`
 - Personalizada: `https://mentori.app`
 
@@ -178,6 +182,7 @@ Apos deploy, sua URL sera algo como:
 1. No dashboard, clique em **Produtos** > **Criar produto**
 
 2. **Informacoes Basicas:**
+
    ```
    Nome: Mentori - Estudos com IA
 
@@ -186,10 +191,12 @@ Apos deploy, sua URL sera algo como:
    ```
 
 3. **Tipo de Produto:**
+
    - Selecione: **Assinatura**
    - Periodo: **Mensal**
 
 4. **Preco:**
+
    ```
    Valor mensal: R$ 47,00
    Moeda: BRL
@@ -206,6 +213,7 @@ Apos deploy, sua URL sera algo como:
 1. Va em **Entrega do produto**
 2. Selecione: **Area de membros externa**
 3. Configure:
+
    ```
    URL de acesso: https://mentori.app (ou sua URL do Netlify)
 
@@ -219,12 +227,14 @@ Apos deploy, sua URL sera algo como:
 1. Va em **Checkout** > **Personalizar**
 
 2. **Campos do formulario:**
+
    - [x] Nome completo (obrigatorio)
    - [x] E-mail (obrigatorio)
    - [x] CPF (obrigatorio)
    - [ ] Telefone (opcional)
 
 3. **Bump de pedido (opcional):**
+
    ```
    Produto bump: Acesso Anual com 30% OFF
    Preco bump: R$ 350,00 (ao inves de R$ 564/ano)
@@ -256,6 +266,7 @@ Para integracao avancada:
 1. Va em **E-mails** > **Templates**
 
 2. **E-mail de boas-vindas:**
+
    ```
    Assunto: Bem-vindo ao Mentori! Seu acesso esta liberado
 
@@ -290,13 +301,14 @@ Para integracao avancada:
 
 ### 3.8 Taxas Kiwify
 
-| Tipo | Taxa |
-|------|------|
-| Por venda | 8,99% + R$ 2,49 |
-| Saque | Gratis (PIX) |
-| Minimo saque | R$ 20,00 |
+| Tipo         | Taxa            |
+| ------------ | --------------- |
+| Por venda    | 8,99% + R$ 2,49 |
+| Saque        | Gratis (PIX)    |
+| Minimo saque | R$ 20,00        |
 
 **Exemplo:** Venda de R$ 47,00
+
 - Taxa: R$ 4,23 + R$ 2,49 = R$ 6,72
 - Voce recebe: R$ 40,28
 
@@ -324,12 +336,14 @@ Para integracao avancada:
 1. No dashboard, clique em **Produtos** > **Criar produto**
 
 2. **Categoria:**
+
    ```
    Categoria principal: Educacao
    Subcategoria: Concursos Publicos
    ```
 
 3. **Informacoes do produto:**
+
    ```
    Nome: Mentori - Estudos com IA para Concursos
 
@@ -339,6 +353,7 @@ Para integracao avancada:
    ```
 
 4. **Tipo de cobranca:**
+
    - Selecione: **Assinatura**
 
 5. **Configurar plano:**
@@ -354,6 +369,7 @@ Para integracao avancada:
 1. Va em **Produto** > **Entrega**
 2. Selecione: **Site/Ferramenta externa**
 3. Configure:
+
    ```
    URL do produto: https://mentori.app
 
@@ -367,10 +383,12 @@ Para integracao avancada:
 1. Va em **Checkout** > **Configuracoes**
 
 2. **Aparencia:**
+
    - Cor principal: #3B82F6 (azul)
    - Logo: Upload do logo Mentori
 
 3. **Campos:**
+
    - [x] Nome (obrigatorio)
    - [x] E-mail (obrigatorio)
    - [x] Documento (obrigatorio)
@@ -387,6 +405,7 @@ Para integracao avancada:
 
 1. Va em **Produto** > **Garantia**
 2. Configure:
+
    ```
    Tipo: Garantia incondicional
    Prazo: 7 dias
@@ -410,6 +429,7 @@ Para integracao avancada:
 1. Va em **Ferramentas** > **Webhooks**
 2. Clique em **Adicionar webhook**
 3. Configure:
+
    ```
    URL: https://sua-api.com/webhooks/hotmart
 
@@ -441,13 +461,14 @@ Para integracao avancada:
 
 ### 4.10 Taxas Hotmart
 
-| Tipo | Taxa |
-|------|------|
-| Por venda | 9,90% + R$ 1,00 |
-| Saque | Gratis |
-| Minimo saque | R$ 20,00 |
+| Tipo         | Taxa            |
+| ------------ | --------------- |
+| Por venda    | 9,90% + R$ 1,00 |
+| Saque        | Gratis          |
+| Minimo saque | R$ 20,00        |
 
 **Exemplo:** Venda de R$ 47,00
+
 - Taxa: R$ 4,65 + R$ 1,00 = R$ 5,65
 - Voce recebe: R$ 41,35
 
@@ -456,17 +477,20 @@ Para integracao avancada:
 ## 5. TEXTOS DE COPY PRONTOS
 
 ### 5.1 Titulo Principal (Headline)
+
 ```
 Estude 3x Mais Rapido com Inteligencia Artificial
 ```
 
 ### 5.2 Subtitulo
+
 ```
 A primeira plataforma de estudos para concursos que usa IA de verdade
 para criar seu plano personalizado e garantir sua aprovacao.
 ```
 
 ### 5.3 Bullet Points (Beneficios)
+
 ```
 - Analise automatica do edital em segundos
 - Plano de estudos baseado em neurociencia
@@ -479,6 +503,7 @@ para criar seu plano personalizado e garantir sua aprovacao.
 ```
 
 ### 5.4 Prova Social
+
 ```
 "Ja sao mais de X concurseiros usando o Mentori para otimizar seus estudos"
 
@@ -488,6 +513,7 @@ para criar seu plano personalizado e garantir sua aprovacao.
 ```
 
 ### 5.5 Urgencia/Escassez
+
 ```
 "Preco promocional de lancamento: R$ 47/mes (em breve R$ 97)"
 
@@ -497,6 +523,7 @@ para criar seu plano personalizado e garantir sua aprovacao.
 ```
 
 ### 5.6 CTA (Call to Action)
+
 ```
 Principal: "COMECAR AGORA"
 Secundario: "Testar por 7 dias"
@@ -504,6 +531,7 @@ Checkout: "GARANTIR MINHA VAGA"
 ```
 
 ### 5.7 E-mail de Carrinho Abandonado
+
 ```
 Assunto: Voce esqueceu algo importante...
 
@@ -525,6 +553,7 @@ Equipe Mentori
 ```
 
 ### 5.8 FAQ para Checkout
+
 ```
 P: Como funciona a garantia?
 R: Voce tem 7 dias para testar. Se nao gostar, basta solicitar o reembolso
@@ -598,22 +627,22 @@ R: Nos usamos IA de verdade para personalizar 100% da sua experiencia.
 
 ## LINKS UTEIS
 
-| Plataforma | URL |
-|------------|-----|
-| Kiwify Dashboard | https://dashboard.kiwify.com.br |
-| Hotmart Dashboard | https://app.hotmart.com |
-| Netlify Dashboard | https://app.netlify.com |
-| Suporte Kiwify | https://ajuda.kiwify.com.br |
-| Suporte Hotmart | https://help.hotmart.com |
+| Plataforma        | URL                             |
+| ----------------- | ------------------------------- |
+| Kiwify Dashboard  | https://dashboard.kiwify.com.br |
+| Hotmart Dashboard | https://app.hotmart.com         |
+| Netlify Dashboard | https://app.netlify.com         |
+| Suporte Kiwify    | https://ajuda.kiwify.com.br     |
+| Suporte Hotmart   | https://help.hotmart.com        |
 
 ---
 
 ## COMPARATIVO DE TAXAS
 
 | Plataforma | Taxa por Venda (R$ 47) | Voce Recebe |
-|------------|------------------------|-------------|
-| Kiwify | R$ 6,72 (14,3%) | R$ 40,28 |
-| Hotmart | R$ 5,65 (12,0%) | R$ 41,35 |
+| ---------- | ---------------------- | ----------- |
+| Kiwify     | R$ 6,72 (14,3%)        | R$ 40,28    |
+| Hotmart    | R$ 5,65 (12,0%)        | R$ 41,35    |
 
 **Recomendacao:** Comece com Hotmart (taxa menor) e adicione Kiwify para alcance extra.
 
@@ -621,17 +650,17 @@ R: Nos usamos IA de verdade para personalizar 100% da sua experiencia.
 
 ## PROJECAO DE RECEITA
 
-| Assinantes | MRR | Apos Taxas (~13%) | Lucro Anual |
-|------------|-----|-------------------|-------------|
-| 10 | R$ 470 | R$ 409 | R$ 4.908 |
-| 50 | R$ 2.350 | R$ 2.045 | R$ 24.540 |
-| 100 | R$ 4.700 | R$ 4.089 | R$ 49.068 |
-| 300 | R$ 14.100 | R$ 12.267 | R$ 147.204 |
-| 500 | R$ 23.500 | R$ 20.445 | R$ 245.340 |
+| Assinantes | MRR       | Apos Taxas (~13%) | Lucro Anual |
+| ---------- | --------- | ----------------- | ----------- |
+| 10         | R$ 470    | R$ 409            | R$ 4.908    |
+| 50         | R$ 2.350  | R$ 2.045          | R$ 24.540   |
+| 100        | R$ 4.700  | R$ 4.089          | R$ 49.068   |
+| 300        | R$ 14.100 | R$ 12.267         | R$ 147.204  |
+| 500        | R$ 23.500 | R$ 20.445         | R$ 245.340  |
 
 **Meta Mac Studio (R$ 25.000):** ~300 assinantes por 2 meses OU ~100 assinantes por 6 meses
 
 ---
 
-*Documento criado em: Dezembro 2025*
-*Versao: 1.0*
+_Documento criado em: Dezembro 2025_
+_Versao: 1.0_

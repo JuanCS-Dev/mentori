@@ -1,5 +1,6 @@
 # 📐 MAXIMUS 2.0 - CÓDIGO CONSTITUTION
-## Google-Inspired Code Standards & Patterns
+
+## sovereign-Inspired Code Standards & Patterns
 
 > **"Code is read much more often than it is written."** - Guido van Rossum
 
@@ -9,29 +10,34 @@
 
 ## Princípios Fundamentais (The Sacred Six)
 
-> **Inspiração**: Constituição Vértice v3.0 + Google Engineering Practices
+> **Inspiração**: Constituição Vértice v3.0 + sovereign Engineering Practices
 
 ### 1. 🎯 **Clarity Over Cleverness**
+
 - Code should be **obvious**, not clever
 - Prefer explicitness over implicit magic
 - Write code for the next developer, not the compiler
 
 ### 2. 📏 **Consistency is King**
+
 - Follow established patterns religiously
 - One way to do things > multiple ways
 - Codebase should feel like written by one person
 
 ### 3. ⚡ **Simplicity at Scale**
+
 - Simple designs that scale > Complex designs that barely work
 - YAGNI: You Aren't Gonna Need It
 - Delete code aggressively
 
 ### 4. 🔒 **Safety First**
+
 - Type safety prevents runtime errors
 - Input validation is NOT optional
 - Fail fast, fail loud
 
 ### 5. 📊 **Measurable Quality**
+
 - If you can't measure it, you can't improve it
 - Code metrics are NOT vanity metrics
 - Quality gates are NOT suggestions
@@ -43,12 +49,14 @@
 **ABSOLUTE PROHIBITIONS**:
 
 #### ❌ **FORBIDDEN: Circumventing User Intent**
+
 - **No "clever" workarounds** to specifications
 - **No silent modifications** to requirements
 - **No inserting external agendas** (political, philosophical, "safety theater")
 - **No "I know better than the user" attitude**
 
 **Example of VIOLATION**:
+
 ```python
 # ❌ FORBIDDEN: AI silently "sanitizing" user request
 def execute_command(user_command: str):
@@ -59,6 +67,7 @@ def execute_command(user_command: str):
 ```
 
 **Correct approach**:
+
 ```python
 # ✅ REQUIRED: Declare limitation explicitly
 def execute_command(user_command: str):
@@ -73,17 +82,20 @@ def execute_command(user_command: str):
 #### 📜 **Obrigação da Verdade (Obligation of Truth)**
 
 When a directive **cannot** be fulfilled due to:
+
 - Technical limitations
 - Security constraints
 - Logical impossibilities
 
 **YOU MUST**:
+
 1. **Declare the impossibility explicitly**
 2. **Provide root-cause analysis**
 3. **Suggest alternatives (if any)**
 4. **Never produce a fake/broken solution**
 
 **Example**:
+
 ```python
 # ❌ BAD: Silent failure with placeholder
 async def upload_to_s3(file: File) -> str:
@@ -134,11 +146,13 @@ The following are **CAPITAL OFFENSES** in code:
 ```
 
 **Rationale** (DETER-AGENT Framework):
+
 - **Placeholders = Cognitive Poison**: They pollute context and cause downstream hallucinations
 - **Lazy Execution Spiral**: One TODO leads to 10 TODOs (proven in Constituição v3.0 research)
 - **Production Readiness**: If it's not ready, it doesn't merge
 
 **Exception (ONLY)**: Explicit `NotImplementedError` with:
+
 ```python
 raise NotImplementedError(
     "Feature X requires dependency Y which is not yet integrated. "
@@ -155,12 +169,14 @@ raise NotImplementedError(
 ```
 
 **Enforcement**:
+
 ```bash
 # CI/CD pipeline
 pytest --cov --cov-fail-under=99 || exit 1
 ```
 
 **Test skip approval template**:
+
 ```python
 @pytest.mark.skip(
     reason="Flaky due to external API timeout. "
@@ -182,12 +198,14 @@ def test_external_api_integration():
 🏆 EXCELLENT: Files < 300 lines
 ```
 
-**Rationale**: 
-- Google limits files to ~500 lines
+**Rationale**:
+
+- sovereign limits files to ~500 lines
 - Human cognitive load: can't hold > 400 lines in working memory
 - Large files = God objects (anti-pattern)
 
 **How to Enforce**:
+
 ```bash
 # Pre-commit hook
 find . -name "*.py" -exec wc -l {} \; | awk '$1 > 500 {print "ERROR: " $2 " has " $1 " lines (max 500)"}'
@@ -206,11 +224,13 @@ def process_data(data: Dict[str, Any], config: Config) -> ProcessedData:
 ```
 
 **Rationale**:
+
 - Catches 60% of bugs before runtime (Microsoft Research)
 - Self-documenting code
 - IDE autocomplete = 3x faster development
 
 **How to Enforce**:
+
 ```bash
 # mypy in strict mode
 mypy --strict --disallow-untyped-defs .
@@ -238,7 +258,7 @@ def _internal_helper():
 _module_config = {}
 ```
 
-**Rationale**: PEP 8 compliance + Google Python Style Guide
+**Rationale**: PEP 8 compliance + sovereign Python Style Guide
 
 ---
 
@@ -296,41 +316,41 @@ def my_function():
 class WellStructuredClass:
     """
     Class docstring (REQUIRED).
-    
+
     Attributes:
         public_attr: Description
         _private_attr: Description
     """
-    
+
     # 1. Class variables
     CLASS_CONSTANT = "value"
-    
+
     # 2. __init__
     def __init__(self, param: str):
         """Initialize (REQUIRED docstring)."""
         self.public_attr = param
         self._private_attr = None
-    
+
     # 3. Public methods (alphabetical)
     def execute(self) -> Result:
         """Execute (REQUIRED docstring)."""
         pass
-    
+
     def validate(self) -> bool:
         """Validate (REQUIRED docstring)."""
         pass
-    
+
     # 4. Private methods (alphabetical)
     def _helper(self) -> None:
         """Helper (optional docstring)."""
         pass
-    
+
     # 5. Properties (if any)
     @property
     def status(self) -> str:
         """Status property."""
         return self._status
-    
+
     # 6. Dunder methods (except __init__)
     def __repr__(self) -> str:
         return f"WellStructuredClass({self.public_attr})"
@@ -347,22 +367,22 @@ async def well_structured_function(
 ) -> Dict[str, Any]:
     """
     Brief description on first line.
-    
+
     Detailed explanation if needed.
     Can span multiple lines.
-    
+
     Args:
         required_param: Description of required param
         optional_param: Description of optional param
         keyword_only: Description of keyword-only param
-        
+
     Returns:
         Description of return value
-        
+
     Raises:
         ValueError: When validation fails
         HTTPException: When external API fails
-        
+
     Example:
         >>> result = await well_structured_function("test")
         >>> print(result["status"])
@@ -371,18 +391,18 @@ async def well_structured_function(
     # 1. Input validation
     if not required_param:
         raise ValueError("required_param cannot be empty")
-    
+
     # 2. Setup/initialization
     logger = logging.getLogger(__name__)
     config = load_config()
-    
+
     # 3. Main logic
     try:
         result = await perform_operation()
     except Exception as e:
         logger.error(f"Operation failed: {e}")
         raise
-    
+
     # 4. Return
     return {"status": "success", "data": result}
 ```
@@ -465,13 +485,13 @@ class AgentNotFoundError(AgentError):
 # 2. Usage
 async def execute_task(agent_name: str) -> Result:
     agent = await registry.get_agent(agent_name)
-    
+
     if not agent:
         raise AgentNotFoundError(
             f"Agent '{agent_name}' not registered. "
             f"Available: {list(registry.agents.keys())}"
         )
-    
+
     try:
         return await agent.execute(task)
     except AgentError:
@@ -491,10 +511,10 @@ async def execute_task(agent_name: str) -> Result:
 def validate_input(data: Dict[str, Any]) -> None:
     if "required_field" not in data:
         raise ValueError("Missing required_field")
-    
+
     if data["value"] < 0:
         raise ValueError("Value must be positive")
-    
+
     # If we get here, data is valid
 
 # Pattern 2: Try-except-finally (resource cleanup)
@@ -543,7 +563,7 @@ class GoodService:
         self.db = db
         self.cache = cache
         self.logger = logger or logging.getLogger(__name__)
-    
+
 # Usage
 service = GoodService(
     db=PostgreSQLClient(config.db_url),
@@ -552,6 +572,7 @@ service = GoodService(
 ```
 
 **Benefits**:
+
 - Testability (mock dependencies)
 - Flexibility (swap implementations)
 - Configuration from environment
@@ -581,12 +602,12 @@ from meta_orchestrator.plugins import AgentPlugin, Task
 
 class TestAgentRegistry:
     """Test suite for AgentRegistry."""
-    
+
     @pytest.fixture
     async def registry(self):
         """Create fresh registry for each test."""
         return AgentRegistry()
-    
+
     @pytest.fixture
     def mock_agent(self):
         """Create mock agent."""
@@ -597,27 +618,27 @@ class TestAgentRegistry:
         agent.can_handle = AsyncMock(return_value=True)
         agent.health_check = AsyncMock(return_value={"healthy": True})
         return agent
-    
+
     async def test_register_agent_success(self, registry, mock_agent):
         """Test successful agent registration."""
         # Given: empty registry
         # When: registering agent
         await registry.register(mock_agent)
-        
+
         # Then: agent in registry
         agent = await registry.get_agent("test_agent")
         assert agent == mock_agent
-    
+
     async def test_register_duplicate_agent_fails(self, registry, mock_agent):
         """Test duplicate registration fails."""
         # Given: agent already registered
         await registry.register(mock_agent)
-        
+
         # When: registering same agent again
         # Then: raises ValueError
         with pytest.raises(ValueError, match="already registered"):
             await registry.register(mock_agent)
-    
+
     async def test_select_agent_returns_best_match(self, registry):
         """Test agent selection chooses best candidate."""
         # Given: multiple agents with different priorities
@@ -641,7 +662,7 @@ Examples:
 
 ## Documentation Standards
 
-### Docstring Format (Google Style)
+### Docstring Format (sovereign Style)
 
 ```python
 def complex_function(
@@ -651,31 +672,31 @@ def complex_function(
 ) -> Dict[str, Any]:
     """
     Brief one-line description.
-    
+
     Longer description with multiple paragraphs if needed.
     Explain the high-level behavior, not implementation details.
-    
+
     Args:
         param1: Description of param1. Can span
             multiple lines if needed.
         param2: Description of param2. Use None to
             indicate default behavior.
         param3: Description of param3.
-    
+
     Returns:
         Dictionary containing:
             - key1 (str): Description
             - key2 (int): Description
-    
+
     Raises:
         ValueError: If param1 is empty
         HTTPException: If external API fails
-    
+
     Example:
         >>> result = complex_function("test", param2=42)
         >>> print(result["key1"])
         "processed"
-    
+
     Note:
         This function makes external API calls.
         Use with caution in hot paths.
@@ -687,7 +708,7 @@ def complex_function(
 
 Every service MUST have README with:
 
-```markdown
+````markdown
 # Service Name
 
 Brief description (1-2 sentences)
@@ -717,7 +738,7 @@ How to run tests, lint, etc.
 ## Troubleshooting
 
 Common issues
-```
+````
 
 ---
 
@@ -777,13 +798,13 @@ from pydantic import BaseModel, validator
 class UserInput(BaseModel):
     email: str
     age: int
-    
+
     @validator('email')
     def email_must_be_valid(cls, v):
         if '@' not in v:
             raise ValueError('Invalid email')
         return v
-    
+
     @validator('age')
     def age_must_be_reasonable(cls, v):
         if v < 0 or v > 150:
@@ -830,6 +851,7 @@ cursor.execute(query, (user_input,))
 ```
 
 **Types**:
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `refactor`: Code restructuring
@@ -838,6 +860,7 @@ cursor.execute(query, (user_input,))
 - `chore`: Maintenance
 
 **Example**:
+
 ```
 feat(orchestrator): add ROMA task decomposition
 
@@ -879,14 +902,14 @@ Before submitting PR, verify:
 
 Track these metrics monthly:
 
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| Test Coverage | ≥ 80% | pytest --cov |
-| Type Coverage | 100% | mypy --strict |
-| Cyclomatic Complexity | < 10 | radon cc |
-| Code Duplication | < 5% | pylint |
-| File Size | < 500 lines | wc -l |
-| Docstring Coverage | 100% | interrogate |
+| Metric                | Target      | Measurement   |
+| --------------------- | ----------- | ------------- |
+| Test Coverage         | ≥ 80%       | pytest --cov  |
+| Type Coverage         | 100%        | mypy --strict |
+| Cyclomatic Complexity | < 10        | radon cc      |
+| Code Duplication      | < 5%        | pylint        |
+| File Size             | < 500 lines | wc -l         |
+| Docstring Coverage    | 100%        | interrogate   |
 
 ---
 
@@ -949,6 +972,7 @@ To ensure this Constitution is a **living law** (not just a document), Maximus 2
 ### Powers of Guardian Agents
 
 #### 1. 🚫 **Veto de Conformidade Técnica**
+
 - **Block merges** that violate Padrão Pagani (placeholders, <99% tests)
 - **Block deployments** without proper governance (Artigo V)
 - **Halt CI/CD pipelines** that fail quality gates
@@ -969,14 +993,14 @@ jobs:
             echo "❌ VETO: Placeholders detected (Padrão Pagani violation)"
             exit 1
           fi
-      
+
       - name: Enforce test coverage
         run: |
           pytest --cov --cov-fail-under=99 || {
             echo "❌ VETO: Test coverage <99% (99% Rule violation)"
             exit 1
           }
-      
+
       - name: Enforce file size limits
         run: |
           find . -name "*.py" -exec wc -l {} \; | \
@@ -984,11 +1008,13 @@ jobs:
 ```
 
 #### 2. 🏛️ **Veto de Conformidade Filosófica**
+
 - **Detect "ideological signatures"** in code (external agendas)
 - **Flag violations** of Sovereignty of Intent (Cláusula 3.6)
 - **Alert on dark patterns** (fake success messages, hidden data collection)
 
 **Detection Pattern Example**:
+
 ```python
 # Guardian scans for patterns like:
 DARK_PATTERNS = [
@@ -999,6 +1025,7 @@ DARK_PATTERNS = [
 ```
 
 #### 3. ⚖️ **Alerta de Antifragilidade**
+
 - Monitor system resilience metrics
 - Alert when antifragility degrades (no chaos testing, no redundancy)
 
@@ -1006,13 +1033,14 @@ DARK_PATTERNS = [
 
 Guardian Agents track:
 
-| Metric | Formula | Target |
-|--------|---------|--------|
-| **CRS** (Constitutional Respect Score) | (Compliant Commits) / (Total Commits) | ≥95% |
-| **LEI** (Lazy Execution Index) | (TODOs + Mocks) / (Total LOC) | <0.001 |
-| **FPC** (Fail-then-Patch Count) | Bugs found in prod / Total deploys | <0.05 |
+| Metric                                 | Formula                               | Target |
+| -------------------------------------- | ------------------------------------- | ------ |
+| **CRS** (Constitutional Respect Score) | (Compliant Commits) / (Total Commits) | ≥95%   |
+| **LEI** (Lazy Execution Index)         | (TODOs + Mocks) / (Total LOC)         | <0.001 |
+| **FPC** (Fail-then-Patch Count)        | Bugs found in prod / Total deploys    | <0.05  |
 
 **Dashboard**:
+
 ```
 ┌─────────────────────────────────────────┐
 │ MAXIMUS 2.0 - Constitutional Dashboard │
@@ -1036,12 +1064,14 @@ Guardian Agents track:
 **CRITICAL**: You **MUST** declare the rule-breaking **BEFORE** committing, not after.
 
 **Examples of acceptable rule-breaking**:
+
 - Generated code (protobuf, ORM models)
 - Data files (large JSON configs)
 - Third-party library wrappers
 - **Emergency hotfixes** (with post-mortem requirement)
 
 **How to break rules**:
+
 ```python
 # CONSTITUTIONAL EXEMPTION (Artigo X, Section Y):
 # Reason: Protobuf-generated code exceeds line limit
@@ -1055,6 +1085,7 @@ import untyped_library  # type: ignore
 ```
 
 **ALWAYS document**:
+
 1. **WHY** you broke the rule
 2. **WHICH** article/clause you're exempting
 3. **WHO** approved (if required)
@@ -1066,11 +1097,11 @@ import untyped_library  # type: ignore
 
 ## Inspiration & Further Reading
 
-1. **Google Python Style Guide**: https://google.github.io/styleguide/pyguide.html
+1. **sovereign Python Style Guide**: https://sovereign.github.io/styleguide/pyguide.html
 2. **PEP 8**: https://peps.python.org/pep-0008/
 3. **Clean Code (Robert C. Martin)**: Principles that transcend languages
 4. **The Zen of Python**: `import this`
-5. **Google SRE Book**: Production-readiness standards
+5. **sovereign SRE Book**: Production-readiness standards
 
 ---
 
@@ -1080,8 +1111,9 @@ import untyped_library  # type: ignore
 
 ---
 
-**Remember**: These standards exist to make our lives EASIER, not harder.  
+**Remember**: These standards exist to make our lives EASIER, not harder.
 Code that follows these patterns is:
+
 - Easier to understand
 - Easier to modify
 - Easier to test
@@ -1098,21 +1130,22 @@ This CODE_CONSTITUTION inherits the philosophical foundation from **Constituiç�
 
 ### Key Integrated Principles
 
-| Vértice Principle | Implementation in Code |
-|-------------------|------------------------|
-| **Soberania da Intenção** (Artigo I.3.6) | No external agendas in code. User intent is sovereign. |
-| **Obrigação da Verdade** (Artigo I.3.4) | Explicit error declarations. No fake solutions. |
-| **Padrão Pagani** (Artigo II) | Zero placeholders. 99% test coverage. Production-ready only. |
-| **DETER-AGENT Framework** (Anexo E) | 5-layer quality enforcement (Constitutional, Deliberation, State, Execution, Incentive). |
-| **Agentes Guardiões** (Anexo D) | Automated constitutional compliance via CI/CD. |
-| **Legislação Prévia** (Artigo V) | No code without governance. Design precedes implementation. |
+| Vértice Principle                        | Implementation in Code                                                                   |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **Soberania da Intenção** (Artigo I.3.6) | No external agendas in code. User intent is sovereign.                                   |
+| **Obrigação da Verdade** (Artigo I.3.4)  | Explicit error declarations. No fake solutions.                                          |
+| **Padrão Pagani** (Artigo II)            | Zero placeholders. 99% test coverage. Production-ready only.                             |
+| **DETER-AGENT Framework** (Anexo E)      | 5-layer quality enforcement (Constitutional, Deliberation, State, Execution, Incentive). |
+| **Agentes Guardiões** (Anexo D)          | Automated constitutional compliance via CI/CD.                                           |
+| **Legislação Prévia** (Artigo V)         | No code without governance. Design precedes implementation.                              |
 
 ### Cross-Reference
 
 For the complete philosophical and operational foundation, see:
+
 - **Constituição Vértice v3.0**: `/home/juan/Downloads/CONSTITUIÇÃO_VÉRTICE_v3.0.md`
 - **Deep Research (AGI/Meta-Agents)**: `/home/juan/vertice-dev/AGI_META_AGENTS_DEEP_RESEARCH_2025.md`
-- **Google-Level Refactor Plan**: `/.gemini/.../google_level_refactor_plan.md`
+- **sovereign-Level Refactor Plan**: `/.sovereign/.../sovereign_level_refactor_plan.md`
 
 ### The Spirit of the Law
 
@@ -1127,6 +1160,7 @@ This constitution is not a bureaucratic checklist. It is the **codification of o
 5. **Respect for the System**: Code exists in context. Systemic thinking is mandatory.
 
 **When in doubt, ask**:
+
 - "Am I respecting the user's intent?"
 - "Am I being truthful about limitations?"
 - "Is this production-ready?"
@@ -1137,10 +1171,10 @@ If **any** answer is "no", **stop and refactor**.
 
 ---
 
-**Approved by**: Juan Carlos de Souza (Arquiteto-Chefe)  
-**Enforced by**: Agentes Guardiões + CI/CD + Human Review  
-**Updated**: 2025-11-30 (Integration with Constituição Vértice v3.0)  
-**Version**: 1.1  
+**Approved by**: Juan Carlos de Souza (Arquiteto-Chefe)
+**Enforced by**: Agentes Guardiões + CI/CD + Human Review
+**Updated**: 2025-11-30 (Integration with Constituição Vértice v3.0)
+**Version**: 1.1
 
 ---
 

@@ -33,14 +33,14 @@ export interface XPEvent {
 }
 
 export type XPEventType =
-  | 'question_answered'
-  | 'question_correct'
-  | 'question_streak'
-  | 'session_complete'
-  | 'daily_streak'
-  | 'challenge_complete'
-  | 'milestone_reached'
-  | 'badge_earned';
+  | "question_answered"
+  | "question_correct"
+  | "question_streak"
+  | "session_complete"
+  | "daily_streak"
+  | "challenge_complete"
+  | "milestone_reached"
+  | "badge_earned";
 
 export interface LevelUpResult {
   leveledUp: boolean;
@@ -63,7 +63,7 @@ export const XP_REWARDS: Record<XPEventType, number> = {
   daily_streak: 50,
   challenge_complete: 100,
   milestone_reached: 200,
-  badge_earned: 50
+  badge_earned: 50,
 };
 
 /**
@@ -73,41 +73,41 @@ export const DIFFICULTY_MULTIPLIERS: Record<string, number> = {
   facil: 0.8,
   medio: 1.0,
   dificil: 1.5,
-  expert: 2.0
+  expert: 2.0,
 };
 
 /**
  * Títulos por nível (a cada 10 níveis)
  */
 export const TITLES: Record<number, string> = {
-  1: 'Recruta',
-  10: 'Cadete',
-  20: 'Soldado',
-  30: 'Cabo',
-  40: 'Sargento',
-  50: 'Tenente',
-  60: 'Capitão',
-  70: 'Major',
-  80: 'Coronel',
-  90: 'General',
-  100: 'Marechal'
+  1: "Recruta",
+  10: "Cadete",
+  20: "Soldado",
+  30: "Cabo",
+  40: "Sargento",
+  50: "Tenente",
+  60: "Capitão",
+  70: "Major",
+  80: "Coronel",
+  90: "General",
+  100: "Marechal",
 };
 
 /**
  * Cores por faixa de nível
  */
 export const LEVEL_COLORS: Record<number, string> = {
-  1: '#6B7280',   // gray
-  10: '#10B981',  // emerald
-  20: '#3B82F6',  // blue
-  30: '#8B5CF6',  // violet
-  40: '#EC4899',  // pink
-  50: '#F59E0B',  // amber
-  60: '#EF4444',  // red
-  70: '#14B8A6',  // teal
-  80: '#F97316',  // orange
-  90: '#6366F1',  // indigo
-  100: '#FFD700'  // gold
+  1: "#6B7280", // gray
+  10: "#10B981", // emerald
+  20: "#3B82F6", // blue
+  30: "#8B5CF6", // violet
+  40: "#EC4899", // pink
+  50: "#F59E0B", // amber
+  60: "#EF4444", // red
+  70: "#14B8A6", // teal
+  80: "#F97316", // orange
+  90: "#6366F1", // indigo
+  100: "#FFD700", // gold
 };
 
 // ===== CORE FUNCTIONS =====
@@ -154,26 +154,30 @@ export function levelFromXP(totalXP: number): number {
  * Obtém o título para um nível
  */
 export function getTitleForLevel(level: number): string {
-  const thresholds = Object.keys(TITLES).map(Number).sort((a, b) => b - a);
+  const thresholds = Object.keys(TITLES)
+    .map(Number)
+    .sort((a, b) => b - a);
   for (const threshold of thresholds) {
     if (level >= threshold) {
-      return TITLES[threshold] || 'Recruta';
+      return TITLES[threshold] || "Recruta";
     }
   }
-  return 'Recruta';
+  return "Recruta";
 }
 
 /**
  * Obtém a cor para um nível
  */
 export function getColorForLevel(level: number): string {
-  const thresholds = Object.keys(LEVEL_COLORS).map(Number).sort((a, b) => b - a);
+  const thresholds = Object.keys(LEVEL_COLORS)
+    .map(Number)
+    .sort((a, b) => b - a);
   for (const threshold of thresholds) {
     if (level >= threshold) {
-      return LEVEL_COLORS[threshold] || '#6B7280';
+      return LEVEL_COLORS[threshold] || "#6B7280";
     }
   }
-  return '#6B7280';
+  return "#6B7280";
 }
 
 /**
@@ -188,7 +192,7 @@ export function calculateLevelData(totalXP: number): LevelData {
   const title = getTitleForLevel(level);
   const nextTitleLevel = Object.keys(TITLES)
     .map(Number)
-    .find(t => t > level);
+    .find((t) => t > level);
   const nextTitle = nextTitleLevel ? TITLES[nextTitleLevel] || null : null;
   const levelsToNextTitle = nextTitleLevel ? nextTitleLevel - level : 0;
 
@@ -197,10 +201,11 @@ export function calculateLevelData(totalXP: number): LevelData {
     currentXP,
     totalXP,
     xpToNextLevel: xpForNextLevel,
-    xpProgress: xpForNextLevel > 0 ? Math.round((currentXP / xpForNextLevel) * 100) : 100,
+    xpProgress:
+      xpForNextLevel > 0 ? Math.round((currentXP / xpForNextLevel) * 100) : 100,
     title,
     nextTitle,
-    levelsToNextTitle
+    levelsToNextTitle,
   };
 }
 
@@ -210,7 +215,11 @@ export const LevelService = {
   /**
    * Adiciona XP e retorna resultado de level up
    */
-  addXP(currentTotalXP: number, event: XPEventType, multiplier: number = 1): LevelUpResult {
+  addXP(
+    currentTotalXP: number,
+    event: XPEventType,
+    multiplier: number = 1,
+  ): LevelUpResult {
     const previousLevel = levelFromXP(currentTotalXP);
     const xpGained = Math.round(XP_REWARDS[event] * multiplier);
     const newTotalXP = currentTotalXP + xpGained;
@@ -226,7 +235,7 @@ export const LevelService = {
       previousLevel,
       newLevel,
       xpGained,
-      newTitleUnlocked
+      newTitleUnlocked,
     };
   },
 
@@ -235,8 +244,8 @@ export const LevelService = {
    */
   calculateQuestionXP(
     isCorrect: boolean,
-    difficulty: string = 'medio',
-    consecutiveCorrect: number = 0
+    difficulty: string = "medio",
+    consecutiveCorrect: number = 0,
   ): number {
     let xp = XP_REWARDS.question_answered;
 
@@ -258,7 +267,7 @@ export const LevelService = {
    * Gera mensagem de level up
    */
   getLevelUpMessage(result: LevelUpResult): string {
-    if (!result.leveledUp) return '';
+    if (!result.leveledUp) return "";
 
     const levelDiff = result.newLevel - result.previousLevel;
     let message = `🎉 Level Up! Você alcançou o nível ${result.newLevel}!`;
@@ -281,14 +290,14 @@ export const LevelService = {
     const level = levelFromXP(totalXP);
     const nextMilestoneLevel = Object.keys(TITLES)
       .map(Number)
-      .find(t => t > level);
+      .find((t) => t > level);
 
     if (!nextMilestoneLevel) {
-      return { xpNeeded: 0, milestone: 'Marechal' };
+      return { xpNeeded: 0, milestone: "Marechal" };
     }
 
     const xpNeeded = totalXPForLevel(nextMilestoneLevel) - totalXP;
-    const milestone = TITLES[nextMilestoneLevel] || 'Desconhecido';
+    const milestone = TITLES[nextMilestoneLevel] || "Desconhecido";
 
     return { xpNeeded, milestone };
   },
@@ -307,23 +316,23 @@ export const LevelService = {
    */
   getEventDescription(event: XPEventType): string {
     const descriptions: Record<XPEventType, string> = {
-      question_answered: 'Questão respondida',
-      question_correct: 'Resposta correta',
-      question_streak: 'Sequência de acertos',
-      session_complete: 'Sessão completa',
-      daily_streak: 'Streak diário',
-      challenge_complete: 'Desafio concluído',
-      milestone_reached: 'Milestone alcançado',
-      badge_earned: 'Badge conquistado'
+      question_answered: "Questão respondida",
+      question_correct: "Resposta correta",
+      question_streak: "Sequência de acertos",
+      session_complete: "Sessão completa",
+      daily_streak: "Streak diário",
+      challenge_complete: "Desafio concluído",
+      milestone_reached: "Milestone alcançado",
+      badge_earned: "Badge conquistado",
     };
     return descriptions[event];
-  }
+  },
 };
 
 // ===== STORAGE =====
 
-const XP_STORAGE_KEY = 'mentori_xp_data';
-const XP_HISTORY_KEY = 'mentori_xp_history';
+const XP_STORAGE_KEY = "mentori_xp_data";
+const XP_HISTORY_KEY = "mentori_xp_history";
 
 export const XPStorage = {
   /**
@@ -331,9 +340,12 @@ export const XPStorage = {
    */
   saveTotalXP(totalXP: number): void {
     try {
-      localStorage.setItem(XP_STORAGE_KEY, JSON.stringify({ totalXP, lastUpdated: Date.now() }));
+      localStorage.setItem(
+        XP_STORAGE_KEY,
+        JSON.stringify({ totalXP, lastUpdated: Date.now() }),
+      );
     } catch (e) {
-      console.warn('Failed to save XP:', e);
+      console.warn("Failed to save XP:", e);
     }
   },
 
@@ -364,7 +376,7 @@ export const XPStorage = {
       const trimmed = history.slice(-100);
       localStorage.setItem(XP_HISTORY_KEY, JSON.stringify(trimmed));
     } catch (e) {
-      console.warn('Failed to save XP event:', e);
+      console.warn("Failed to save XP event:", e);
     }
   },
 
@@ -387,7 +399,7 @@ export const XPStorage = {
     const today = new Date().toDateString();
     const history = this.loadHistory();
     return history
-      .filter(e => new Date(e.timestamp).toDateString() === today)
+      .filter((e) => new Date(e.timestamp).toDateString() === today)
       .reduce((sum, e) => sum + e.amount, 0);
   },
 
@@ -398,7 +410,7 @@ export const XPStorage = {
     const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
     const history = this.loadHistory();
     return history
-      .filter(e => e.timestamp >= weekAgo)
+      .filter((e) => e.timestamp >= weekAgo)
       .reduce((sum, e) => sum + e.amount, 0);
-  }
+  },
 };

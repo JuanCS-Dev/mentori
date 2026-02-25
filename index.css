@@ -1,59 +1,85 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --kitchen-bg: #f8f9fa;
-  --kitchen-text: #202124;
+  --cyber-bg: #09090b;
+  --cyber-surface: #121216;
+  --cyber-accent: #00f0ff;
+  --cyber-text: #fafafa;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--kitchen-bg);
-  color: var(--kitchen-text);
+  font-family: "Space Grotesk", sans-serif;
+  background-color: var(--cyber-bg);
+  color: var(--cyber-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbar for Kitchen Style */
+/* Custom Scrollbar - Cyber Style */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--cyber-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #dadce0;
-  border-radius: 4px;
+  background: #27272a;
+  border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #bdc1c6;
+  background: var(--cyber-accent);
 }
 
-/* Utility classes for specific Kitchen UI elements */
-.kitchen-header {
-  font-family: 'Space Mono', monospace;
-  letter-spacing: -0.02em;
+/* Tactical UI Components */
+.tactical-card {
+  @apply bg-cyber-surface border border-cyber-border rounded-tactical shadow-cyber transition-all duration-300 relative overflow-hidden;
 }
 
-.kitchen-card {
-  @apply bg-kitchen-card border border-kitchen-border rounded-kitchen shadow-sm transition-all duration-200;
+.tactical-card::after {
+  content: "";
+  @apply absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 transition-opacity duration-300;
 }
 
-.kitchen-card:hover {
-  @apply shadow-kitchen-hover transform -translate-y-0.5;
+.tactical-card:hover::after {
+  @apply opacity-100;
 }
 
-.kitchen-badge {
-  @apply px-2 py-0.5 text-xs font-medium rounded-md uppercase tracking-wide;
+.tactical-card:hover {
+  @apply border-zinc-700 shadow-cyber-glow;
 }
 
-.kitchen-input {
-  @apply w-full bg-transparent border border-gray-600 rounded-md px-3 py-2 text-sm text-gray-200 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 placeholder-gray-500;
+.tactical-btn-primary {
+  @apply bg-cyber-accent text-black font-bold uppercase tracking-wider px-6 py-2 rounded-tactical hover:opacity-90 active:scale-95 transition-all shadow-[0_0_10px_rgba(0,240,255,0.3)];
+}
+
+.tactical-input {
+  @apply w-full bg-black/50 border border-zinc-800 rounded-tactical px-4 py-3 text-sm text-white focus:outline-none focus:border-cyber-accent focus:ring-1 focus:ring-cyber-accent/30 placeholder-zinc-600 transition-all;
+}
+
+/* Micro-animations using @starting-style (Modern CSS 2025/2026) */
+.animate-tactical-entry {
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  opacity: 1;
+  transform: translateY(0);
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.glow-text {
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.mono-label {
+  @apply font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500;
 }

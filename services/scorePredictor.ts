@@ -18,13 +18,13 @@
 
 export interface DisciplinePerformance {
   disciplina: string;
-  peso: number;          // Peso no edital (1-5)
+  peso: number; // Peso no edital (1-5)
   totalQuestions: number;
   correctAnswers: number;
-  accuracy: number;      // 0-100%
-  elo: number;           // Rating atual
+  accuracy: number; // 0-100%
+  elo: number; // Rating atual
   avgTimeSeconds: number;
-  consistency: number;   // 0-1 (desvio padrão normalizado)
+  consistency: number; // 0-1 (desvio padrão normalizado)
 }
 
 export interface ScorePrediction {
@@ -55,13 +55,13 @@ export interface DisciplineScoreBreakdown {
   disciplina: string;
   peso: number;
   predictedAccuracy: number; // 0-100%
-  contribution: number;       // Pontos que essa disciplina contribui
-  status: 'strong' | 'average' | 'weak' | 'critical';
+  contribution: number; // Pontos que essa disciplina contribui
+  status: "strong" | "average" | "weak" | "critical";
 }
 
 export interface FocusRecommendation {
   disciplina: string;
-  priority: 'critical' | 'high' | 'medium' | 'low';
+  priority: "critical" | "high" | "medium" | "low";
   potentialGain: number; // Pontos potenciais a ganhar
   reason: string;
 }
@@ -89,19 +89,28 @@ export const ScorePredictor = {
   predictScore(
     performances: DisciplinePerformance[],
     cutoffScore: number = DEFAULT_CUTOFF,
-    totalQuestions: number = 120
+    totalQuestions: number = 120,
   ): ScorePrediction {
     const timestamp = new Date().toISOString();
 
     // Verificar se há dados suficientes
-    const totalAnswered = performances.reduce((sum, p) => sum + p.totalQuestions, 0);
+    const totalAnswered = performances.reduce(
+      (sum, p) => sum + p.totalQuestions,
+      0,
+    );
 
-    if (totalAnswered < MIN_QUESTIONS_FOR_PREDICTION || performances.length === 0) {
+    if (
+      totalAnswered < MIN_QUESTIONS_FOR_PREDICTION ||
+      performances.length === 0
+    ) {
       return this.createLowConfidencePrediction(timestamp, totalAnswered);
     }
 
     // Calcular breakdown por disciplina
-    const disciplineBreakdown = this.calculateDisciplineBreakdown(performances, totalQuestions);
+    const disciplineBreakdown = this.calculateDisciplineBreakdown(
+      performances,
+      totalQuestions,
+    );
 
     // Calcular nota ponderada
     const totalWeight = performances.reduce((sum, p) => sum + p.peso, 0);
@@ -123,35 +132,38 @@ export const ScorePredictor = {
     const predictedScore = Math.round(weightedScore);
 
     // Intervalo de confiança (95%)
-    const stdDev = Math.sqrt(varianceSum + this.sampleSizeAdjustment(totalAnswered));
+    const stdDev = Math.sqrt(
+      varianceSum + this.sampleSizeAdjustment(totalAnswered),
+    );
     const marginOfError = 1.96 * stdDev; // Z-score para 95%
 
     const confidenceInterval = {
       lower: Math.max(0, Math.round(predictedScore - marginOfError)),
-      upper: Math.min(100, Math.round(predictedScore + marginOfError))
+      upper: Math.min(100, Math.round(predictedScore + marginOfError)),
     };
 
     // Probabilidade de aprovação
     const approvalProbability = this.calculateApprovalProbability(
       predictedScore,
       stdDev,
-      cutoffScore
+      cutoffScore,
     );
 
     // Pontos fortes e fracos
-    const { strengths, weaknesses } = this.identifyStrengthsWeaknesses(performances);
+    const { strengths, weaknesses } =
+      this.identifyStrengthsWeaknesses(performances);
 
     // Recomendações de foco
     const focusRecommendations = this.generateFocusRecommendations(
       performances,
-      disciplineBreakdown
+      disciplineBreakdown,
     );
 
     // Confiança da predição
     const predictionConfidence = this.calculatePredictionConfidence(
       totalAnswered,
       performances.length,
-      performances
+      performances,
     );
 
     return {
@@ -163,7 +175,7 @@ export const ScorePredictor = {
       focusRecommendations,
       disciplineBreakdown,
       predictionConfidence,
-      timestamp
+      timestamp,
     };
   },
 
@@ -188,27 +200,28 @@ export const ScorePredictor = {
    */
   calculateDisciplineBreakdown(
     performances: DisciplinePerformance[],
-    totalQuestions: number
+    totalQuestions: number,
   ): DisciplineScoreBreakdown[] {
     const totalWeight = performances.reduce((sum, p) => sum + p.peso, 0);
 
-    return performances.map(perf => {
+    return performances.map((perf) => {
       const predictedAccuracy = this.eloToAccuracy(perf.elo);
       const normalizedWeight = perf.peso / totalWeight;
-      const contribution = (predictedAccuracy / 100) * normalizedWeight * totalQuestions;
+      const contribution =
+        (predictedAccuracy / 100) * normalizedWeight * totalQuestions;
 
-      let status: DisciplineScoreBreakdown['status'];
-      if (perf.elo >= 1400) status = 'strong';
-      else if (perf.elo >= 1200) status = 'average';
-      else if (perf.elo >= 1000) status = 'weak';
-      else status = 'critical';
+      let status: DisciplineScoreBreakdown["status"];
+      if (perf.elo >= 1400) status = "strong";
+      else if (perf.elo >= 1200) status = "average";
+      else if (perf.elo >= 1000) status = "weak";
+      else status = "critical";
 
       return {
         disciplina: perf.disciplina,
         peso: perf.peso,
         predictedAccuracy: Math.round(predictedAccuracy),
         contribution: Math.round(contribution * 10) / 10,
-        status
+        status,
       };
     });
   },
@@ -223,12 +236,12 @@ export const ScorePredictor = {
     const sorted = [...performances].sort((a, b) => b.elo - a.elo);
 
     const strengths = sorted
-      .filter(p => p.elo >= 1200 && p.totalQuestions >= 5)
+      .filter((p) => p.elo >= 1200 && p.totalQuestions >= 5)
       .slice(0, 3)
-      .map(p => p.disciplina);
+      .map((p) => p.disciplina);
 
     const weaknesses = sorted
-      .filter(p => p.elo < 1200 && p.peso >= 2) // Prioriza matérias com peso alto
+      .filter((p) => p.elo < 1200 && p.peso >= 2) // Prioriza matérias com peso alto
       .sort((a, b) => {
         // Ordenar por impacto (elo baixo + peso alto)
         const impactA = (1200 - a.elo) * a.peso;
@@ -236,7 +249,7 @@ export const ScorePredictor = {
         return impactB - impactA;
       })
       .slice(0, 3)
-      .map(p => p.disciplina);
+      .map((p) => p.disciplina);
 
     return { strengths, weaknesses };
   },
@@ -246,28 +259,31 @@ export const ScorePredictor = {
    */
   generateFocusRecommendations(
     performances: DisciplinePerformance[],
-    _breakdown: DisciplineScoreBreakdown[]
+    _breakdown: DisciplineScoreBreakdown[],
   ): FocusRecommendation[] {
     return performances
-      .map(perf => {
+      .map((perf) => {
         const currentAccuracy = this.eloToAccuracy(perf.elo);
-        const potentialAccuracy = this.eloToAccuracy(Math.min(perf.elo + 200, EXPERT_ELO));
-        const potentialGain = (potentialAccuracy - currentAccuracy) * (perf.peso / 5);
+        const potentialAccuracy = this.eloToAccuracy(
+          Math.min(perf.elo + 200, EXPERT_ELO),
+        );
+        const potentialGain =
+          (potentialAccuracy - currentAccuracy) * (perf.peso / 5);
 
-        let priority: FocusRecommendation['priority'];
+        let priority: FocusRecommendation["priority"];
         let reason: string;
 
         if (perf.elo < 900) {
-          priority = 'critical';
+          priority = "critical";
           reason = `Elo crítico (${perf.elo}). Fundamentos precisam de revisão urgente.`;
         } else if (perf.elo < 1100 && perf.peso >= 3) {
-          priority = 'high';
+          priority = "high";
           reason = `Matéria de peso ${perf.peso} com performance abaixo. Alto impacto na nota.`;
         } else if (perf.elo < 1200) {
-          priority = 'medium';
+          priority = "medium";
           reason = `Próximo do nível de aprovação. Pequeno esforço = grande ganho.`;
         } else {
-          priority = 'low';
+          priority = "low";
           reason = `Performance boa. Foco em manutenção e detalhes.`;
         }
 
@@ -275,7 +291,7 @@ export const ScorePredictor = {
           disciplina: perf.disciplina,
           priority,
           potentialGain: Math.round(potentialGain * 10) / 10,
-          reason
+          reason,
         };
       })
       .sort((a, b) => {
@@ -294,7 +310,7 @@ export const ScorePredictor = {
   calculateApprovalProbability(
     predictedScore: number,
     stdDev: number,
-    cutoffScore: number
+    cutoffScore: number,
   ): number {
     // Z-score
     const z = (predictedScore - cutoffScore) / Math.max(stdDev, 1);
@@ -310,7 +326,11 @@ export const ScorePredictor = {
     const sign = z < 0 ? -1 : 1;
     const absZ = Math.abs(z);
     const t = 1 / (1 + p * absZ);
-    const y = 1 - ((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t * Math.exp(-absZ * absZ);
+    const y =
+      1 -
+      ((((a5 * t + a4) * t + a3) * t + a2) * t + a1) *
+        t *
+        Math.exp(-absZ * absZ);
 
     const probability = 0.5 * (1 + sign * y);
 
@@ -335,7 +355,7 @@ export const ScorePredictor = {
   calculatePredictionConfidence(
     totalQuestions: number,
     disciplineCount: number,
-    performances: DisciplinePerformance[]
+    performances: DisciplinePerformance[],
   ): number {
     let confidence = 0;
 
@@ -351,9 +371,11 @@ export const ScorePredictor = {
     else if (disciplineCount >= 3) confidence += 10;
 
     // Fator 3: Consistência média (30% do peso)
-    const avgConsistency = performances.length > 0
-      ? performances.reduce((sum, p) => sum + p.consistency, 0) / performances.length
-      : 0;
+    const avgConsistency =
+      performances.length > 0
+        ? performances.reduce((sum, p) => sum + p.consistency, 0) /
+          performances.length
+        : 0;
     confidence += Math.round(avgConsistency * 30);
 
     return Math.min(100, confidence);
@@ -362,22 +384,29 @@ export const ScorePredictor = {
   /**
    * Cria predição de baixa confiança quando há poucos dados
    */
-  createLowConfidencePrediction(timestamp: string, totalAnswered: number): ScorePrediction {
+  createLowConfidencePrediction(
+    timestamp: string,
+    totalAnswered: number,
+  ): ScorePrediction {
     return {
       predictedScore: 50,
       confidenceInterval: { lower: 30, upper: 70 },
       approvalProbability: 30,
       strengths: [],
       weaknesses: [],
-      focusRecommendations: [{
-        disciplina: 'Todas',
-        priority: 'critical',
-        potentialGain: 0,
-        reason: `Responda mais ${MIN_QUESTIONS_FOR_PREDICTION - totalAnswered} questões para obter uma predição confiável.`
-      }],
+      focusRecommendations: [
+        {
+          disciplina: "Todas",
+          priority: "critical",
+          potentialGain: 0,
+          reason: `Responda mais ${
+            MIN_QUESTIONS_FOR_PREDICTION - totalAnswered
+          } questões para obter uma predição confiável.`,
+        },
+      ],
       disciplineBreakdown: [],
       predictionConfidence: 10,
-      timestamp
+      timestamp,
     };
   },
 
@@ -385,15 +414,21 @@ export const ScorePredictor = {
    * Formata a predição para exibição no dashboard
    */
   formatPredictionSummary(prediction: ScorePrediction): string {
-    const { predictedScore, approvalProbability, predictionConfidence } = prediction;
+    const { predictedScore, approvalProbability, predictionConfidence } =
+      prediction;
 
     if (predictionConfidence < 30) {
       return `📊 Dados insuficientes. Continue praticando!`;
     }
 
-    const emoji = approvalProbability >= 70 ? '🎯' :
-                  approvalProbability >= 50 ? '📈' :
-                  approvalProbability >= 30 ? '⚠️' : '🚨';
+    const emoji =
+      approvalProbability >= 70
+        ? "🎯"
+        : approvalProbability >= 50
+          ? "📈"
+          : approvalProbability >= 30
+            ? "⚠️"
+            : "🚨";
 
     return `${emoji} Nota estimada: ${predictedScore}/100 (${approvalProbability}% chance de aprovação)`;
   },
@@ -406,38 +441,52 @@ export const ScorePredictor = {
 
     // Insight sobre aprovação
     if (prediction.approvalProbability >= 80) {
-      insights.push('🏆 Excelente! Você está no caminho da aprovação.');
+      insights.push("🏆 Excelente! Você está no caminho da aprovação.");
     } else if (prediction.approvalProbability >= 60) {
-      insights.push('📈 Bom progresso! Foque nas matérias fracas para garantir a vaga.');
+      insights.push(
+        "📈 Bom progresso! Foque nas matérias fracas para garantir a vaga.",
+      );
     } else if (prediction.approvalProbability >= 40) {
-      insights.push('⚡ Acelere os estudos. Há margem para crescimento significativo.');
+      insights.push(
+        "⚡ Acelere os estudos. Há margem para crescimento significativo.",
+      );
     } else {
-      insights.push('🎯 Foco total! Priorize as recomendações abaixo.');
+      insights.push("🎯 Foco total! Priorize as recomendações abaixo.");
     }
 
     // Insights sobre disciplinas
-    const critical = prediction.disciplineBreakdown.filter(d => d.status === 'critical');
+    const critical = prediction.disciplineBreakdown.filter(
+      (d) => d.status === "critical",
+    );
     if (critical.length > 0) {
-      insights.push(`🚨 Atenção urgente: ${critical.map(d => d.disciplina).join(', ')}`);
+      insights.push(
+        `🚨 Atenção urgente: ${critical.map((d) => d.disciplina).join(", ")}`,
+      );
     }
 
-    const strong = prediction.disciplineBreakdown.filter(d => d.status === 'strong');
+    const strong = prediction.disciplineBreakdown.filter(
+      (d) => d.status === "strong",
+    );
     if (strong.length > 0) {
-      insights.push(`💪 Seus pontos fortes: ${strong.map(d => d.disciplina).join(', ')}`);
+      insights.push(
+        `💪 Seus pontos fortes: ${strong.map((d) => d.disciplina).join(", ")}`,
+      );
     }
 
     // Insight sobre confiança
     if (prediction.predictionConfidence < 50) {
-      insights.push('📝 Responda mais questões para aumentar a precisão da predição.');
+      insights.push(
+        "📝 Responda mais questões para aumentar a precisão da predição.",
+      );
     }
 
     return insights;
-  }
+  },
 };
 
 // ===== STORAGE =====
 
-const PREDICTION_HISTORY_KEY = 'mentori_score_predictions';
+const PREDICTION_HISTORY_KEY = "mentori_score_predictions";
 
 export const PredictionStorage = {
   /**
@@ -451,7 +500,7 @@ export const PredictionStorage = {
       const trimmed = history.slice(-30);
       localStorage.setItem(PREDICTION_HISTORY_KEY, JSON.stringify(trimmed));
     } catch (e) {
-      console.warn('Failed to save prediction:', e);
+      console.warn("Failed to save prediction:", e);
     }
   },
 
@@ -479,9 +528,9 @@ export const PredictionStorage = {
    * Evolução do score ao longo do tempo
    */
   getScoreEvolution(): { date: string; score: number }[] {
-    return this.loadHistory().map(p => ({
-      date: p.timestamp.split('T')[0]!,
-      score: p.predictedScore
+    return this.loadHistory().map((p) => ({
+      date: p.timestamp.split("T")[0]!,
+      score: p.predictedScore,
     }));
-  }
+  },
 };

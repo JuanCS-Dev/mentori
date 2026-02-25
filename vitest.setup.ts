@@ -1,5 +1,5 @@
-import '@testing-library/jest-dom/vitest';
-import { vi, beforeEach } from 'vitest';
+import "@testing-library/jest-dom/vitest";
+import { vi, beforeEach } from "vitest";
 
 // Mock localStorage
 const localStorageMock = {
@@ -8,11 +8,11 @@ const localStorageMock = {
   removeItem: vi.fn(),
   clear: vi.fn(),
   length: 0,
-  key: vi.fn()
+  key: vi.fn(),
 };
 
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock
+Object.defineProperty(window, "localStorage", {
+  value: localStorageMock,
 });
 
 // Mock fetch

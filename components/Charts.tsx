@@ -5,7 +5,7 @@
  * Used for analytics and progress visualization.
  */
 
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 
 // ===== TYPES =====
 
@@ -37,14 +37,15 @@ export const LineChart: React.FC<LineChartProps> = ({
   height = 200,
   showGrid = true,
   showDots = true,
-  color = '#8B5CF6',
+  color = "#8B5CF6",
   fillGradient = true,
-  className = ''
+  className = "",
 }) => {
   const { points, minValue, maxValue, range } = useMemo(() => {
-    if (data.length === 0) return { points: '', minValue: 0, maxValue: 100, range: 100 };
+    if (data.length === 0)
+      return { points: "", minValue: 0, maxValue: 100, range: 100 };
 
-    const values = data.map(d => d.value);
+    const values = data.map((d) => d.value);
     const min = Math.min(...values);
     const max = Math.max(...values);
     const r = max - min || 1;
@@ -59,18 +60,23 @@ export const LineChart: React.FC<LineChartProps> = ({
     const width = 100;
     const h = height - 40; // Leave room for labels
 
-    const pts = data.map((d, i) => {
-      const x = (i / (data.length - 1 || 1)) * width;
-      const y = h - ((d.value - minV) / rangeV) * h;
-      return `${x.toFixed(2)},${y.toFixed(2)}`;
-    }).join(' ');
+    const pts = data
+      .map((d, i) => {
+        const x = (i / (data.length - 1 || 1)) * width;
+        const y = h - ((d.value - minV) / rangeV) * h;
+        return `${x.toFixed(2)},${y.toFixed(2)}`;
+      })
+      .join(" ");
 
     return { points: pts, minValue: minV, maxValue: maxV, range: rangeV };
   }, [data, height]);
 
   if (data.length === 0) {
     return (
-      <div className={`flex items-center justify-center ${className}`} style={{ height }}>
+      <div
+        className={`flex items-center justify-center ${className}`}
+        style={{ height }}
+      >
         <p className="text-gray-500 text-sm">Sem dados</p>
       </div>
     );
@@ -100,7 +106,7 @@ export const LineChart: React.FC<LineChartProps> = ({
         {/* Grid lines */}
         {showGrid && (
           <g className="text-gray-700">
-            {[0, 25, 50, 75, 100].map(pct => (
+            {[0, 25, 50, 75, 100].map((pct) => (
               <line
                 key={pct}
                 x1="0"
@@ -117,10 +123,7 @@ export const LineChart: React.FC<LineChartProps> = ({
 
         {/* Fill area */}
         {fillGradient && (
-          <polygon
-            points={fillPoints}
-            fill={`url(#${gradientId})`}
-          />
+          <polygon points={fillPoints} fill={`url(#${gradientId})`} />
         )}
 
         {/* Line */}
@@ -134,20 +137,21 @@ export const LineChart: React.FC<LineChartProps> = ({
         />
 
         {/* Dots */}
-        {showDots && data.map((d, i) => {
-          const x = (i / (data.length - 1 || 1)) * 100;
-          const y = h - ((d.value - minValue) / range) * h;
-          return (
-            <circle
-              key={i}
-              cx={x}
-              cy={y}
-              r="1.5"
-              fill={color}
-              className="hover:r-3 transition-all"
-            />
-          );
-        })}
+        {showDots &&
+          data.map((d, i) => {
+            const x = (i / (data.length - 1 || 1)) * 100;
+            const y = h - ((d.value - minValue) / range) * h;
+            return (
+              <circle
+                key={i}
+                cx={x}
+                cy={y}
+                r="1.5"
+                fill={color}
+                className="hover:r-3 transition-all"
+              />
+            );
+          })}
       </svg>
 
       {/* Y-axis labels */}
@@ -180,9 +184,9 @@ export const BarChart: React.FC<BarChartProps> = ({
   height = 200,
   showLabels = true,
   horizontal = false,
-  className = ''
+  className = "",
 }) => {
-  const maxValue = Math.max(...data.map(d => d.value), 1);
+  const maxValue = Math.max(...data.map((d) => d.value), 1);
 
   if (horizontal) {
     return (
@@ -200,7 +204,7 @@ export const BarChart: React.FC<BarChartProps> = ({
                 className="h-full rounded-full transition-all duration-500"
                 style={{
                   width: `${(item.value / maxValue) * 100}%`,
-                  backgroundColor: item.color || '#8B5CF6'
+                  backgroundColor: item.color || "#8B5CF6",
                 }}
               />
             </div>
@@ -213,16 +217,13 @@ export const BarChart: React.FC<BarChartProps> = ({
   return (
     <div className={`flex items-end gap-1 ${className}`} style={{ height }}>
       {data.map((item, index) => (
-        <div
-          key={index}
-          className="flex-1 flex flex-col items-center gap-1"
-        >
+        <div key={index} className="flex-1 flex flex-col items-center gap-1">
           <div
             className="w-full rounded-t transition-all duration-500"
             style={{
               height: `${(item.value / maxValue) * (height - 24)}px`,
-              backgroundColor: item.color || '#8B5CF6',
-              minHeight: 4
+              backgroundColor: item.color || "#8B5CF6",
+              minHeight: 4,
             }}
           />
           {showLabels && (
@@ -253,14 +254,14 @@ interface HeatmapProps {
 export const Heatmap: React.FC<HeatmapProps> = ({
   data,
   columns = 7,
-  className = ''
+  className = "",
 }) => {
   const getColor = (value: number): string => {
-    if (value >= 80) return '#10B981'; // emerald-500
-    if (value >= 60) return '#3B82F6'; // blue-500
-    if (value >= 40) return '#F59E0B'; // amber-500
-    if (value >= 20) return '#F97316'; // orange-500
-    return '#EF4444'; // red-500
+    if (value >= 80) return "#10B981"; // emerald-500
+    if (value >= 60) return "#3B82F6"; // blue-500
+    if (value >= 40) return "#F59E0B"; // amber-500
+    if (value >= 20) return "#F97316"; // orange-500
+    return "#EF4444"; // red-500
   };
 
   return (
@@ -304,11 +305,11 @@ export const DonutChart: React.FC<DonutChartProps> = ({
   value,
   size = 120,
   strokeWidth = 10,
-  color = '#8B5CF6',
-  bgColor = '#374151',
+  color = "#8B5CF6",
+  bgColor = "#374151",
   showLabel = true,
   label,
-  className = ''
+  className = "",
 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -316,12 +317,10 @@ export const DonutChart: React.FC<DonutChartProps> = ({
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className={`relative inline-flex items-center justify-center ${className}`}>
-      <svg
-        width={size}
-        height={size}
-        className="transform -rotate-90"
-      >
+    <div
+      className={`relative inline-flex items-center justify-center ${className}`}
+    >
+      <svg width={size} height={size} className="transform -rotate-90">
         {/* Background circle */}
         <circle
           cx={size / 2}
@@ -347,7 +346,9 @@ export const DonutChart: React.FC<DonutChartProps> = ({
       </svg>
       {showLabel && (
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-2xl font-bold text-white">{Math.round(value)}</span>
+          <span className="text-2xl font-bold text-white">
+            {Math.round(value)}
+          </span>
           {label && <span className="text-xs text-gray-400">{label}</span>}
         </div>
       )}
@@ -369,8 +370,8 @@ export const Sparkline: React.FC<SparklineProps> = ({
   data,
   width = 80,
   height = 24,
-  color = '#8B5CF6',
-  showTrend = true
+  color = "#8B5CF6",
+  showTrend = true,
 }) => {
   if (data.length < 2) return null;
 
@@ -378,14 +379,16 @@ export const Sparkline: React.FC<SparklineProps> = ({
   const max = Math.max(...data);
   const range = max - min || 1;
 
-  const points = data.map((v, i) => {
-    const x = (i / (data.length - 1)) * width;
-    const y = height - ((v - min) / range) * height;
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  }).join(' ');
+  const points = data
+    .map((v, i) => {
+      const x = (i / (data.length - 1)) * width;
+      const y = height - ((v - min) / range) * height;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    })
+    .join(" ");
 
   const trend = data[data.length - 1]! - data[0]!;
-  const trendColor = trend > 0 ? '#10B981' : trend < 0 ? '#EF4444' : '#6B7280';
+  const trendColor = trend > 0 ? "#10B981" : trend < 0 ? "#EF4444" : "#6B7280";
 
   return (
     <div className="inline-flex items-center gap-1">
@@ -401,7 +404,7 @@ export const Sparkline: React.FC<SparklineProps> = ({
       </svg>
       {showTrend && (
         <span className="text-xs font-medium" style={{ color: trendColor }}>
-          {trend > 0 ? '↑' : trend < 0 ? '↓' : '→'}
+          {trend > 0 ? "↑" : trend < 0 ? "↓" : "→"}
         </span>
       )}
     </div>
@@ -412,7 +415,7 @@ export const Sparkline: React.FC<SparklineProps> = ({
 
 interface KnowledgeMapData {
   disciplina: string;
-  accuracy: number;  // 0-100
+  accuracy: number; // 0-100
   elo: number;
   questions: number;
 }
@@ -426,19 +429,30 @@ interface KnowledgeMapProps {
 export const KnowledgeMap: React.FC<KnowledgeMapProps> = ({
   data,
   onSelect,
-  className = ''
+  className = "",
 }) => {
-  const getStatusColor = (elo: number, accuracy: number): { bg: string; text: string; status: string } => {
+  const getStatusColor = (
+    elo: number,
+    accuracy: number,
+  ): { bg: string; text: string; status: string } => {
     if (elo >= 1400 && accuracy >= 75) {
-      return { bg: 'bg-emerald-500/20', text: 'text-emerald-400', status: 'Expert' };
+      return {
+        bg: "bg-emerald-500/20",
+        text: "text-emerald-400",
+        status: "Expert",
+      };
     }
     if (elo >= 1200 && accuracy >= 60) {
-      return { bg: 'bg-blue-500/20', text: 'text-blue-400', status: 'Bom' };
+      return { bg: "bg-blue-500/20", text: "text-blue-400", status: "Bom" };
     }
     if (elo >= 1000 && accuracy >= 40) {
-      return { bg: 'bg-amber-500/20', text: 'text-amber-400', status: 'Regular' };
+      return {
+        bg: "bg-amber-500/20",
+        text: "text-amber-400",
+        status: "Regular",
+      };
     }
-    return { bg: 'bg-red-500/20', text: 'text-red-400', status: 'Fraco' };
+    return { bg: "bg-red-500/20", text: "text-red-400", status: "Fraco" };
   };
 
   const sorted = [...data].sort((a, b) => a.elo - b.elo);
@@ -453,10 +467,14 @@ export const KnowledgeMap: React.FC<KnowledgeMapProps> = ({
             onClick={() => onSelect?.(item.disciplina)}
             className={`w-full ${bg} rounded-lg p-3 flex items-center gap-3 hover:opacity-80 transition-opacity`}
           >
-            <div className={`w-2 h-8 rounded-full ${text.replace('text', 'bg')}`} />
+            <div
+              className={`w-2 h-8 rounded-full ${text.replace("text", "bg")}`}
+            />
             <div className="flex-1 text-left">
               <div className="flex items-center gap-2">
-                <span className="text-white font-medium truncate">{item.disciplina}</span>
+                <span className="text-white font-medium truncate">
+                  {item.disciplina}
+                </span>
                 <span className={`text-xs ${text}`}>{status}</span>
               </div>
               <div className="flex items-center gap-3 text-xs text-gray-500">

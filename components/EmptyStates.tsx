@@ -4,7 +4,7 @@
  * UX para quando não há dados a exibir
  */
 
-import React from 'react';
+import React from "react";
 import {
   FileQuestion,
   BookOpen,
@@ -14,8 +14,8 @@ import {
   Search,
   Inbox,
   Frown,
-  Sparkles
-} from 'lucide-react';
+  Sparkles,
+} from "lucide-react";
 
 // ===== BASE EMPTY STATE =====
 
@@ -35,9 +35,11 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   title,
   description,
   action,
-  className = ''
+  className = "",
 }) => (
-  <div className={`flex flex-col items-center justify-center py-12 px-4 text-center ${className}`}>
+  <div
+    className={`flex flex-col items-center justify-center py-12 px-4 text-center ${className}`}
+  >
     {icon && (
       <div className="w-16 h-16 rounded-full bg-gray-800 flex items-center justify-center mb-4">
         {icon}
@@ -65,7 +67,9 @@ export const NoQuestions: React.FC<{ onLoad?: () => void }> = ({ onLoad }) => (
     icon={<FileQuestion size={28} className="text-gray-500" />}
     title="Nenhuma questão encontrada"
     description="Não encontramos questões com os filtros selecionados. Tente ajustar os filtros ou carregar mais questões."
-    action={onLoad ? { label: 'Carregar Questões', onClick: onLoad } : undefined}
+    action={
+      onLoad ? { label: "Carregar Questões", onClick: onLoad } : undefined
+    }
   />
 );
 
@@ -74,25 +78,31 @@ export const NoProgress: React.FC<{ onStart?: () => void }> = ({ onStart }) => (
     icon={<TrendingUp size={28} className="text-gray-500" />}
     title="Sem dados de progresso"
     description="Comece a resolver questões para ver seu progresso aqui. Cada questão respondida ajuda a construir sua análise."
-    action={onStart ? { label: 'Começar Agora', onClick: onStart } : undefined}
+    action={onStart ? { label: "Começar Agora", onClick: onStart } : undefined}
   />
 );
 
-export const NoBadges: React.FC<{ onExplore?: () => void }> = ({ onExplore }) => (
+export const NoBadges: React.FC<{ onExplore?: () => void }> = ({
+  onExplore,
+}) => (
   <EmptyState
     icon={<Award size={28} className="text-gray-500" />}
     title="Nenhuma conquista ainda"
     description="Continue estudando para desbloquear badges. Responda questões, mantenha seu streak e alcance milestones!"
-    action={onExplore ? { label: 'Ver Conquistas', onClick: onExplore } : undefined}
+    action={
+      onExplore ? { label: "Ver Conquistas", onClick: onExplore } : undefined
+    }
   />
 );
 
-export const NoStudyPlan: React.FC<{ onCreate?: () => void }> = ({ onCreate }) => (
+export const NoStudyPlan: React.FC<{ onCreate?: () => void }> = ({
+  onCreate,
+}) => (
   <EmptyState
     icon={<Calendar size={28} className="text-gray-500" />}
     title="Sem plano de estudos"
     description="Configure seu plano de estudos para ter um cronograma personalizado baseado no edital e suas metas."
-    action={onCreate ? { label: 'Criar Plano', onClick: onCreate } : undefined}
+    action={onCreate ? { label: "Criar Plano", onClick: onCreate } : undefined}
   />
 );
 
@@ -101,19 +111,25 @@ export const NoEdital: React.FC<{ onUpload?: () => void }> = ({ onUpload }) => (
     icon={<BookOpen size={28} className="text-gray-500" />}
     title="Nenhum edital carregado"
     description="Carregue um edital para ter acesso a análises personalizadas, plano de estudos verticalizado e mais."
-    action={onUpload ? { label: 'Carregar Edital', onClick: onUpload } : undefined}
+    action={
+      onUpload ? { label: "Carregar Edital", onClick: onUpload } : undefined
+    }
   />
 );
 
-export const NoSearchResults: React.FC<{ query?: string; onClear?: () => void }> = ({
-  query,
-  onClear
-}) => (
+export const NoSearchResults: React.FC<{
+  query?: string;
+  onClear?: () => void;
+}> = ({ query, onClear }) => (
   <EmptyState
     icon={<Search size={28} className="text-gray-500" />}
     title="Nenhum resultado"
-    description={query ? `Não encontramos resultados para "${query}". Tente usar termos diferentes.` : 'Sua busca não retornou resultados.'}
-    action={onClear ? { label: 'Limpar Busca', onClick: onClear } : undefined}
+    description={
+      query
+        ? `Não encontramos resultados para "${query}". Tente usar termos diferentes.`
+        : "Sua busca não retornou resultados."
+    }
+    action={onClear ? { label: "Limpar Busca", onClick: onClear } : undefined}
   />
 );
 
@@ -130,12 +146,12 @@ export const NoHistory: React.FC<{ onStart?: () => void }> = ({ onStart }) => (
     icon={<Inbox size={28} className="text-gray-500" />}
     title="Histórico vazio"
     description="Seu histórico de estudos aparecerá aqui. Comece uma sessão para registrar suas atividades."
-    action={onStart ? { label: 'Iniciar Sessão', onClick: onStart } : undefined}
+    action={onStart ? { label: "Iniciar Sessão", onClick: onStart } : undefined}
   />
 );
 
 export const GenericEmpty: React.FC<{ message?: string }> = ({
-  message = 'Nada para exibir'
+  message = "Nada para exibir",
 }) => (
   <EmptyState
     icon={<Frown size={28} className="text-gray-500" />}
@@ -152,9 +168,9 @@ interface ErrorStateProps {
 }
 
 export const ErrorState: React.FC<ErrorStateProps> = ({
-  title = 'Erro ao carregar',
-  message = 'Ocorreu um erro inesperado. Por favor, tente novamente.',
-  onRetry
+  title = "Erro ao carregar",
+  message = "Ocorreu um erro inesperado. Por favor, tente novamente.",
+  onRetry,
 }) => (
   <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
     <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mb-4">
@@ -182,17 +198,16 @@ interface ComingSoonProps {
 
 export const ComingSoon: React.FC<ComingSoonProps> = ({
   feature,
-  description
+  description,
 }) => (
   <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
     <div className="w-16 h-16 rounded-full bg-violet-500/10 flex items-center justify-center mb-4">
       <Sparkles size={28} className="text-violet-500" />
     </div>
-    <h3 className="text-lg font-bold text-gray-300 mb-2">
-      {feature}
-    </h3>
+    <h3 className="text-lg font-bold text-gray-300 mb-2">{feature}</h3>
     <p className="text-sm text-gray-500 max-w-sm">
-      {description || 'Esta funcionalidade estará disponível em breve. Fique ligado!'}
+      {description ||
+        "Esta funcionalidade estará disponível em breve. Fique ligado!"}
     </p>
     <div className="mt-4 px-3 py-1 bg-violet-500/10 text-violet-400 text-xs font-medium rounded-full">
       Em desenvolvimento
@@ -212,5 +227,5 @@ export default {
   NoHistory,
   GenericEmpty,
   ErrorState,
-  ComingSoon
+  ComingSoon,
 };

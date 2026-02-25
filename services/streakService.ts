@@ -13,12 +13,12 @@
 export interface StreakData {
   currentStreak: number;
   longestStreak: number;
-  lastStudyDate: string | null;  // ISO date (YYYY-MM-DD)
+  lastStudyDate: string | null; // ISO date (YYYY-MM-DD)
   freezesAvailable: number;
   freezeUsedThisWeek: boolean;
-  weekStart: string;  // ISO date of current week start
+  weekStart: string; // ISO date of current week start
   totalStudyDays: number;
-  milestones: number[];  // Achieved milestone thresholds
+  milestones: number[]; // Achieved milestone thresholds
 }
 
 export interface StreakUpdate {
@@ -35,20 +35,20 @@ export interface StreakUpdate {
 export const STREAK_MILESTONES = [3, 7, 14, 30, 60, 100, 200, 365];
 
 export const MILESTONE_REWARDS = {
-  3: { xp: 50, title: '3 Dias!' },
-  7: { xp: 100, title: 'Semana Completa!' },
-  14: { xp: 200, title: '2 Semanas!' },
-  30: { xp: 500, title: 'Mês de Foco!' },
-  60: { xp: 1000, title: '2 Meses!' },
-  100: { xp: 2000, title: 'Centenário!' },
-  200: { xp: 5000, title: 'Imparável!' },
-  365: { xp: 10000, title: 'Um Ano!' }
+  3: { xp: 50, title: "3 Dias!" },
+  7: { xp: 100, title: "Semana Completa!" },
+  14: { xp: 200, title: "2 Semanas!" },
+  30: { xp: 500, title: "Mês de Foco!" },
+  60: { xp: 1000, title: "2 Meses!" },
+  100: { xp: 2000, title: "Centenário!" },
+  200: { xp: 5000, title: "Imparável!" },
+  365: { xp: 10000, title: "Um Ano!" },
 };
 
 // ===== HELPERS =====
 
 function getDateString(date: Date = new Date()): string {
-  return date.toISOString().split('T')[0]!;
+  return date.toISOString().split("T")[0]!;
 }
 
 function getWeekStart(date: Date = new Date()): string {
@@ -81,7 +81,7 @@ export const StreakService = {
       freezeUsedThisWeek: false,
       weekStart: getWeekStart(),
       totalStudyDays: 0,
-      milestones: []
+      milestones: [],
     };
   },
 
@@ -107,7 +107,7 @@ export const StreakService = {
         frozeUsed: false,
         streakBroken: false,
         milestoneReached: null,
-        isNewRecord: false
+        isNewRecord: false,
       };
     }
 
@@ -150,7 +150,10 @@ export const StreakService = {
     // Verificar milestones
     let milestoneReached: number | null = null;
     for (const milestone of STREAK_MILESTONES) {
-      if (data.currentStreak >= milestone && !data.milestones.includes(milestone)) {
+      if (
+        data.currentStreak >= milestone &&
+        !data.milestones.includes(milestone)
+      ) {
         data.milestones.push(milestone);
         milestoneReached = milestone;
         break; // Só um milestone por vez
@@ -163,7 +166,7 @@ export const StreakService = {
       frozeUsed,
       streakBroken,
       milestoneReached,
-      isNewRecord
+      isNewRecord,
     };
   },
 
@@ -208,12 +211,14 @@ export const StreakService = {
   /**
    * Obtém próximo milestone
    */
-  getNextMilestone(currentStreak: number): { threshold: number; daysAway: number } | null {
+  getNextMilestone(
+    currentStreak: number,
+  ): { threshold: number; daysAway: number } | null {
     for (const milestone of STREAK_MILESTONES) {
       if (currentStreak < milestone) {
         return {
           threshold: milestone,
-          daysAway: milestone - currentStreak
+          daysAway: milestone - currentStreak,
         };
       }
     }
@@ -224,7 +229,9 @@ export const StreakService = {
    * Obtém recompensa de milestone
    */
   getMilestoneReward(milestone: number): { xp: number; title: string } | null {
-    return MILESTONE_REWARDS[milestone as keyof typeof MILESTONE_REWARDS] || null;
+    return (
+      MILESTONE_REWARDS[milestone as keyof typeof MILESTONE_REWARDS] || null
+    );
   },
 
   /**
@@ -232,16 +239,16 @@ export const StreakService = {
    */
   formatStreakMessage(data: StreakData): string {
     if (data.currentStreak === 0) {
-      return 'Comece seu streak hoje!';
+      return "Comece seu streak hoje!";
     }
 
-    const emoji = data.currentStreak >= 30 ? '🔥' :
-                  data.currentStreak >= 7 ? '⚡' : '✨';
+    const emoji =
+      data.currentStreak >= 30 ? "🔥" : data.currentStreak >= 7 ? "⚡" : "✨";
 
     let message = `${emoji} ${data.currentStreak} dias de streak!`;
 
     if (data.currentStreak === data.longestStreak) {
-      message += ' (Recorde!)';
+      message += " (Recorde!)";
     }
 
     const next = this.getNextMilestone(data.currentStreak);
@@ -273,14 +280,14 @@ export const StreakService = {
       milestonesAchieved: data.milestones.length,
       nextMilestone: next?.threshold || null,
       freezeAvailable: data.freezesAvailable > 0,
-      atRisk: this.isAtRisk(data)
+      atRisk: this.isAtRisk(data),
     };
-  }
+  },
 };
 
 // ===== STORAGE =====
 
-const STREAK_STORAGE_KEY = 'mentori_streak';
+const STREAK_STORAGE_KEY = "mentori_streak";
 
 export const StreakStorage = {
   /**
@@ -290,7 +297,7 @@ export const StreakStorage = {
     try {
       localStorage.setItem(STREAK_STORAGE_KEY, JSON.stringify(data));
     } catch (e) {
-      console.warn('Failed to save streak:', e);
+      console.warn("Failed to save streak:", e);
     }
   },
 
@@ -314,5 +321,5 @@ export const StreakStorage = {
    */
   reset(): void {
     localStorage.removeItem(STREAK_STORAGE_KEY);
-  }
+  },
 };

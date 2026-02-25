@@ -15,24 +15,24 @@
  * - Performance por disciplina (Elo)
  */
 
-import { EditalJSON } from '../types';
+import { EditalJSON } from "../types";
 
 // ===== TYPES =====
 
 export interface DisciplineConfig {
   id: string;
   name: string;
-  weight: number;        // Peso do edital (1-5)
+  weight: number; // Peso do edital (1-5)
   hoursPerCycle: number; // Horas alvo por ciclo
   color: string;
-  priority: 'critical' | 'high' | 'medium' | 'low';
-  performance?: number;  // Elo rating (0-2000)
-  lastStudied?: string;  // ISO date
-  totalMinutes: number;  // Total já estudado
+  priority: "critical" | "high" | "medium" | "low";
+  performance?: number; // Elo rating (0-2000)
+  lastStudied?: string; // ISO date
+  totalMinutes: number; // Total já estudado
 }
 
 export interface DailySchedule {
-  date: string;          // ISO date (YYYY-MM-DD)
+  date: string; // ISO date (YYYY-MM-DD)
   blocks: StudyBlock[];
   totalMinutes: number;
   isRestDay: boolean;
@@ -41,10 +41,10 @@ export interface DailySchedule {
 export interface StudyBlock {
   disciplineId: string;
   disciplineName: string;
-  startTime: string;     // HH:MM
-  endTime: string;       // HH:MM
+  startTime: string; // HH:MM
+  endTime: string; // HH:MM
   durationMinutes: number;
-  type: 'theory' | 'questions' | 'review' | 'simulado';
+  type: "theory" | "questions" | "review" | "simulado";
   color: string;
   completed: boolean;
   actualMinutes?: number;
@@ -53,7 +53,7 @@ export interface StudyBlock {
 export interface StudyGoals {
   dailyHours: number;
   weeklyHours: number;
-  targetDate: string;    // Prova date
+  targetDate: string; // Prova date
   daysRemaining: number;
   totalHoursRemaining: number;
   disciplines: DisciplineConfig[];
@@ -66,15 +66,15 @@ export interface GoalProgress {
   weeklyTarget: number;
   weeklyActual: number;
   weeklyPercentage: number;
-  deviationPercent: number;  // Negative = behind, Positive = ahead
-  status: 'on_track' | 'ahead' | 'behind' | 'critical';
+  deviationPercent: number; // Negative = behind, Positive = ahead
+  status: "on_track" | "ahead" | "behind" | "critical";
   alertMessage?: string;
 }
 
 export interface SchedulerConfig {
   dailyAvailableHours: number;
   examDate: string;
-  restDays: number[];    // 0=Sunday, 6=Saturday
+  restDays: number[]; // 0=Sunday, 6=Saturday
   preferredStartTime: string; // HH:MM
   blockDurationMinutes: number; // Default 50 (Pomodoro-like)
   breakDurationMinutes: number; // Default 10
@@ -83,18 +83,25 @@ export interface SchedulerConfig {
 // ===== CONSTANTS =====
 
 const COLORS = [
-  '#3B82F6', '#10B981', '#8B5CF6', '#F59E0B',
-  '#EF4444', '#06B6D4', '#6366F1', '#EC4899',
-  '#14B8A6', '#F97316'
+  "#3B82F6",
+  "#10B981",
+  "#8B5CF6",
+  "#F59E0B",
+  "#EF4444",
+  "#06B6D4",
+  "#6366F1",
+  "#EC4899",
+  "#14B8A6",
+  "#F97316",
 ];
 
 const DEFAULT_CONFIG: SchedulerConfig = {
   dailyAvailableHours: 4,
-  examDate: '',
+  examDate: "",
   restDays: [0], // Sunday only
-  preferredStartTime: '08:00',
+  preferredStartTime: "08:00",
   blockDurationMinutes: 50,
-  breakDurationMinutes: 10
+  breakDurationMinutes: 10,
 };
 
 // ===== MAIN SERVICE =====
@@ -116,9 +123,9 @@ export const StudyScheduler = {
         name: disc.disciplina,
         weight,
         hoursPerCycle: this.calculateHoursFromWeight(weight),
-        color: COLORS[index % COLORS.length] || '#6B7280',
+        color: COLORS[index % COLORS.length] || "#6B7280",
         priority: this.getPriorityFromWeight(weight),
-        totalMinutes: 0
+        totalMinutes: 0,
       };
     });
   },
@@ -137,11 +144,13 @@ export const StudyScheduler = {
   /**
    * Determina prioridade baseada no peso
    */
-  getPriorityFromWeight(weight: number): 'critical' | 'high' | 'medium' | 'low' {
-    if (weight >= 4) return 'critical';
-    if (weight === 3) return 'high';
-    if (weight === 2) return 'medium';
-    return 'low';
+  getPriorityFromWeight(
+    weight: number,
+  ): "critical" | "high" | "medium" | "low" {
+    if (weight >= 4) return "critical";
+    if (weight === 3) return "high";
+    if (weight === 2) return "medium";
+    return "low";
   },
 
   /**
@@ -151,9 +160,9 @@ export const StudyScheduler = {
     disciplines: DisciplineConfig[],
     config: SchedulerConfig,
     date: Date = new Date(),
-    performanceData?: Record<string, number> // disciplineId -> Elo
+    performanceData?: Record<string, number>, // disciplineId -> Elo
   ): DailySchedule {
-    const dateStr = date.toISOString().split('T')[0] || '';
+    const dateStr = date.toISOString().split("T")[0] || "";
     const dayOfWeek = date.getDay();
 
     // Check if rest day
@@ -162,7 +171,7 @@ export const StudyScheduler = {
         date: dateStr,
         blocks: [],
         totalMinutes: 0,
-        isRestDay: true
+        isRestDay: true,
       };
     }
 
@@ -173,21 +182,24 @@ export const StudyScheduler = {
     const distribution = this.calculateDistribution(
       disciplines,
       totalAvailableMinutes,
-      performanceData
+      performanceData,
     );
 
     // Gerar blocos de estudo
     let currentTime = this.parseTime(config.preferredStartTime);
 
     for (const item of distribution) {
-      const discipline = disciplines.find(d => d.id === item.disciplineId);
+      const discipline = disciplines.find((d) => d.id === item.disciplineId);
       if (!discipline) continue;
 
       // Dividir em blocos de duração configurada
       let remainingMinutes = item.minutes;
 
       while (remainingMinutes > 0) {
-        const blockDuration = Math.min(remainingMinutes, config.blockDurationMinutes);
+        const blockDuration = Math.min(
+          remainingMinutes,
+          config.blockDurationMinutes,
+        );
 
         blocks.push({
           disciplineId: discipline.id,
@@ -197,7 +209,7 @@ export const StudyScheduler = {
           durationMinutes: blockDuration,
           type: this.determineBlockType(discipline, blocks.length),
           color: discipline.color,
-          completed: false
+          completed: false,
         });
 
         currentTime += blockDuration + config.breakDurationMinutes;
@@ -209,7 +221,7 @@ export const StudyScheduler = {
       date: dateStr,
       blocks,
       totalMinutes: blocks.reduce((sum, b) => sum + b.durationMinutes, 0),
-      isRestDay: false
+      isRestDay: false,
     };
   },
 
@@ -220,18 +232,18 @@ export const StudyScheduler = {
   calculateDistribution(
     disciplines: DisciplineConfig[],
     totalMinutes: number,
-    performanceData?: Record<string, number>
+    performanceData?: Record<string, number>,
   ): { disciplineId: string; minutes: number }[] {
     if (disciplines.length === 0) return [];
 
     // Calcular score de cada disciplina
-    const scores = disciplines.map(d => {
+    const scores = disciplines.map((d) => {
       let score = d.weight; // Base: peso do edital
 
       // Ajuste por performance (Elo baixo = mais tempo)
       if (performanceData && performanceData[d.id]) {
         const elo = performanceData[d.id];
-        if (elo && elo < 1000) score *= 1.3;       // Fraco: +30%
+        if (elo && elo < 1000) score *= 1.3; // Fraco: +30%
         else if (elo && elo < 1200) score *= 1.15; // Regular: +15%
         // Bom/Expert: mantém base
       }
@@ -239,7 +251,7 @@ export const StudyScheduler = {
       // Ajuste por tempo desde último estudo
       if (d.lastStudied) {
         const daysSince = this.daysSince(d.lastStudied);
-        if (daysSince > 7) score *= 1.2;      // Mais de 1 semana: +20%
+        if (daysSince > 7) score *= 1.2; // Mais de 1 semana: +20%
         else if (daysSince > 3) score *= 1.1; // Mais de 3 dias: +10%
       }
 
@@ -249,9 +261,9 @@ export const StudyScheduler = {
     // Normalizar e distribuir
     const totalScore = scores.reduce((sum, s) => sum + s.score, 0);
 
-    return scores.map(s => ({
+    return scores.map((s) => ({
       disciplineId: s.disciplineId,
-      minutes: Math.round((s.score / totalScore) * totalMinutes)
+      minutes: Math.round((s.score / totalScore) * totalMinutes),
     }));
   },
 
@@ -261,13 +273,13 @@ export const StudyScheduler = {
    */
   determineBlockType(
     _discipline: DisciplineConfig,
-    blockIndex: number
-  ): 'theory' | 'questions' | 'review' | 'simulado' {
+    blockIndex: number,
+  ): "theory" | "questions" | "review" | "simulado" {
     // Primeiro bloco: teoria
     // Segundo bloco: questões
     // Terceiro+: alterna
-    const pattern = ['theory', 'questions', 'review'] as const;
-    return pattern[blockIndex % pattern.length] || 'theory';
+    const pattern = ["theory", "questions", "review"] as const;
+    return pattern[blockIndex % pattern.length] || "theory";
   },
 
   /**
@@ -276,7 +288,7 @@ export const StudyScheduler = {
   calculateGoalProgress(
     config: SchedulerConfig,
     disciplines: DisciplineConfig[],
-    weeklyMinutesStudied: number
+    weeklyMinutesStudied: number,
   ): GoalProgress {
     const dailyTarget = config.dailyAvailableHours * 60;
     const weeklyTarget = dailyTarget * (7 - config.restDays.length);
@@ -287,23 +299,31 @@ export const StudyScheduler = {
       return sum + (d.totalMinutes % dailyTarget);
     }, 0);
 
-    const dailyPercentage = dailyTarget > 0 ? (todayMinutes / dailyTarget) * 100 : 0;
-    const weeklyPercentage = weeklyTarget > 0 ? (weeklyMinutesStudied / weeklyTarget) * 100 : 0;
+    const dailyPercentage =
+      dailyTarget > 0 ? (todayMinutes / dailyTarget) * 100 : 0;
+    const weeklyPercentage =
+      weeklyTarget > 0 ? (weeklyMinutesStudied / weeklyTarget) * 100 : 0;
 
     const deviationPercent = weeklyPercentage - 100;
 
-    let status: GoalProgress['status'] = 'on_track';
+    let status: GoalProgress["status"] = "on_track";
     let alertMessage: string | undefined;
 
     if (deviationPercent < -30) {
-      status = 'critical';
-      alertMessage = `Atenção: ${Math.abs(deviationPercent).toFixed(0)}% abaixo da meta semanal. Intensifique os estudos!`;
+      status = "critical";
+      alertMessage = `Atenção: ${Math.abs(deviationPercent).toFixed(
+        0,
+      )}% abaixo da meta semanal. Intensifique os estudos!`;
     } else if (deviationPercent < -15) {
-      status = 'behind';
-      alertMessage = `Você está ${Math.abs(deviationPercent).toFixed(0)}% abaixo da meta. Foco!`;
+      status = "behind";
+      alertMessage = `Você está ${Math.abs(deviationPercent).toFixed(
+        0,
+      )}% abaixo da meta. Foco!`;
     } else if (deviationPercent > 10) {
-      status = 'ahead';
-      alertMessage = `Excelente! ${deviationPercent.toFixed(0)}% acima da meta. Mantenha o ritmo!`;
+      status = "ahead";
+      alertMessage = `Excelente! ${deviationPercent.toFixed(
+        0,
+      )}% acima da meta. Mantenha o ritmo!`;
     }
 
     return {
@@ -315,7 +335,7 @@ export const StudyScheduler = {
       weeklyPercentage,
       deviationPercent,
       status,
-      alertMessage
+      alertMessage,
     };
   },
 
@@ -331,13 +351,16 @@ export const StudyScheduler = {
     const exam = new Date(examDate);
     const now = new Date();
     const diffMs = exam.getTime() - now.getTime();
-    const daysRemaining = Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
+    const daysRemaining = Math.max(
+      0,
+      Math.ceil(diffMs / (1000 * 60 * 60 * 24)),
+    );
 
     return {
       daysRemaining,
       weeksRemaining: Math.floor(daysRemaining / 7),
       monthsRemaining: Math.floor(daysRemaining / 30),
-      isUrgent: daysRemaining <= 30
+      isUrgent: daysRemaining <= 30,
     };
   },
 
@@ -346,7 +369,7 @@ export const StudyScheduler = {
    */
   suggestNextBlock(
     disciplines: DisciplineConfig[],
-    performanceData?: Record<string, number>
+    performanceData?: Record<string, number>,
   ): DisciplineConfig | null {
     if (disciplines.length === 0) return null;
 
@@ -355,7 +378,7 @@ export const StudyScheduler = {
     // 2. Elo baixo (< 1200)
     // 3. Peso alto
 
-    const scored = disciplines.map(d => {
+    const scored = disciplines.map((d) => {
       let score = d.weight * 10; // Base
 
       // Tempo desde último estudo
@@ -383,26 +406,30 @@ export const StudyScheduler = {
    */
   formatDailyStatus(schedule: DailySchedule): string {
     if (schedule.isRestDay) {
-      return '🌙 Dia de descanso. Aproveite para revisar mentalmente.';
+      return "🌙 Dia de descanso. Aproveite para revisar mentalmente.";
     }
 
     const totalHours = (schedule.totalMinutes / 60).toFixed(1);
-    const disciplines = [...new Set(schedule.blocks.map(b => b.disciplineName))];
+    const disciplines = [
+      ...new Set(schedule.blocks.map((b) => b.disciplineName)),
+    ];
 
-    return `📚 Hoje: ${totalHours}h - ${disciplines.join(', ')}`;
+    return `📚 Hoje: ${totalHours}h - ${disciplines.join(", ")}`;
   },
 
   // ===== HELPERS =====
 
   parseTime(time: string): number {
-    const [hours, minutes] = time.split(':').map(Number);
+    const [hours, minutes] = time.split(":").map(Number);
     return (hours || 0) * 60 + (minutes || 0);
   },
 
   formatTime(totalMinutes: number): string {
     const hours = Math.floor(totalMinutes / 60) % 24;
     const minutes = totalMinutes % 60;
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
   },
 
   daysSince(isoDate: string): number {
@@ -410,28 +437,30 @@ export const StudyScheduler = {
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
     return Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  }
+  },
 };
 
 // ===== STORAGE =====
 
-const STORAGE_KEY = 'mentori_study_schedule';
-const GOALS_KEY = 'mentori_study_goals';
-const CONFIG_KEY = 'mentori_scheduler_config';
+const STORAGE_KEY = "mentori_study_schedule";
+const GOALS_KEY = "mentori_study_goals";
+const CONFIG_KEY = "mentori_scheduler_config";
 
 export const SchedulerStorage = {
   saveConfig(config: SchedulerConfig): void {
     try {
       localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
     } catch (e) {
-      console.warn('Failed to save scheduler config:', e);
+      console.warn("Failed to save scheduler config:", e);
     }
   },
 
   loadConfig(): SchedulerConfig {
     try {
       const stored = localStorage.getItem(CONFIG_KEY);
-      return stored ? { ...DEFAULT_CONFIG, ...JSON.parse(stored) } : DEFAULT_CONFIG;
+      return stored
+        ? { ...DEFAULT_CONFIG, ...JSON.parse(stored) }
+        : DEFAULT_CONFIG;
     } catch {
       return DEFAULT_CONFIG;
     }
@@ -443,7 +472,7 @@ export const SchedulerStorage = {
       schedules[schedule.date] = schedule;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(schedules));
     } catch (e) {
-      console.warn('Failed to save schedule:', e);
+      console.warn("Failed to save schedule:", e);
     }
   },
 
@@ -457,7 +486,7 @@ export const SchedulerStorage = {
   },
 
   loadTodaySchedule(): DailySchedule | null {
-    const today = new Date().toISOString().split('T')[0] || '';
+    const today = new Date().toISOString().split("T")[0] || "";
     const schedules = this.loadSchedules();
     return schedules[today] || null;
   },
@@ -466,7 +495,7 @@ export const SchedulerStorage = {
     try {
       localStorage.setItem(GOALS_KEY, JSON.stringify(disciplines));
     } catch (e) {
-      console.warn('Failed to save disciplines:', e);
+      console.warn("Failed to save disciplines:", e);
     }
   },
 
@@ -477,5 +506,5 @@ export const SchedulerStorage = {
     } catch {
       return [];
     }
-  }
+  },
 };

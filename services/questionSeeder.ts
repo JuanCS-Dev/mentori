@@ -10,18 +10,18 @@
  * - Estatísticas de importação
  */
 
-import { QuestionsDB, ConcursoQuestion } from './database';
+import { QuestionsDB, ConcursoQuestion } from "./database";
 
 /**
  * Gera hash único para uma questão (para deduplicação)
  * Baseado em: enunciado + alternativas (ignora metadata)
  */
 function generateQuestionHash(q: ConcursoQuestion): string {
-  const content = `${q.enunciado}|${q.alternativas.join('|')}`;
+  const content = `${q.enunciado}|${q.alternativas.join("|")}`;
   // Simple hash function (djb2)
   let hash = 5381;
   for (let i = 0; i < content.length; i++) {
-    hash = ((hash << 5) + hash) + content.charCodeAt(i);
+    hash = (hash << 5) + hash + content.charCodeAt(i);
     hash = hash & hash; // Convert to 32bit integer
   }
   return Math.abs(hash).toString(36);
@@ -36,7 +36,7 @@ const importedHashes = new Set<string>();
  */
 function validateQuestion(q: unknown, index: number): ConcursoQuestion | null {
   // Type guard básico
-  if (!q || typeof q !== 'object') {
+  if (!q || typeof q !== "object") {
     console.warn(`[Seeder] Questão ${index}: não é um objeto válido`);
     return null;
   }
@@ -44,32 +44,53 @@ function validateQuestion(q: unknown, index: number): ConcursoQuestion | null {
   const question = q as Record<string, unknown>;
 
   // Campos obrigatórios
-  const requiredFields = ['id', 'banca', 'ano', 'disciplina', 'enunciado', 'alternativas', 'gabarito'];
+  const requiredFields = [
+    "id",
+    "banca",
+    "ano",
+    "disciplina",
+    "enunciado",
+    "alternativas",
+    "gabarito",
+  ];
 
   for (const field of requiredFields) {
-    if (!(field in question) || question[field] === undefined || question[field] === null) {
-      console.warn(`[Seeder] Questão ${index}: campo obrigatório ausente: ${field}`);
+    if (
+      !(field in question) ||
+      question[field] === undefined ||
+      question[field] === null
+    ) {
+      console.warn(
+        `[Seeder] Questão ${index}: campo obrigatório ausente: ${field}`,
+      );
       return null;
     }
   }
 
   // Validações de tipo
-  if (typeof question.id !== 'string' || question.id.length === 0) {
+  if (typeof question.id !== "string" || question.id.length === 0) {
     console.warn(`[Seeder] Questão ${index}: id inválido`);
     return null;
   }
 
-  if (typeof question.ano !== 'number' || question.ano < 2000 || question.ano > 2030) {
+  if (
+    typeof question.ano !== "number" ||
+    question.ano < 2000 ||
+    question.ano > 2030
+  ) {
     console.warn(`[Seeder] Questão ${index}: ano inválido: ${question.ano}`);
     return null;
   }
 
-  if (!Array.isArray(question.alternativas) || question.alternativas.length < 2) {
+  if (
+    !Array.isArray(question.alternativas) ||
+    question.alternativas.length < 2
+  ) {
     console.warn(`[Seeder] Questão ${index}: alternativas inválidas`);
     return null;
   }
 
-  if (typeof question.gabarito !== 'number' || question.gabarito < 0) {
+  if (typeof question.gabarito !== "number" || question.gabarito < 0) {
     console.warn(`[Seeder] Questão ${index}: gabarito inválido`);
     return null;
   }
@@ -78,9 +99,9 @@ function validateQuestion(q: unknown, index: number): ConcursoQuestion | null {
   return {
     id: question.id as string,
     banca: question.banca as string,
-    concurso: (question.concurso as string) || '',
+    concurso: (question.concurso as string) || "",
     ano: question.ano as number,
-    cargo: (question.cargo as string) || '',
+    cargo: (question.cargo as string) || "",
     numero: (question.numero as number) || index,
     disciplina: question.disciplina as string,
     texto_id: question.texto_id as string | undefined,
@@ -89,7 +110,9 @@ function validateQuestion(q: unknown, index: number): ConcursoQuestion | null {
     enunciado: question.enunciado as string,
     alternativas: question.alternativas as string[],
     gabarito: question.gabarito as number,
-    tipo: (question.tipo as 'certo_errado' | 'multipla_escolha') || 'multipla_escolha',
+    tipo:
+      (question.tipo as "certo_errado" | "multipla_escolha") ||
+      "multipla_escolha",
     anulada: (question.anulada as boolean) || false,
   };
 }
@@ -98,16 +121,19 @@ function validateQuestion(q: unknown, index: number): ConcursoQuestion | null {
  * Valida um array de questões e retorna apenas as válidas
  * Também realiza deduplicação por hash
  */
-function validateQuestions(data: unknown): { questions: ConcursoQuestion[]; stats: ImportStats } {
+function validateQuestions(data: unknown): {
+  questions: ConcursoQuestion[];
+  stats: ImportStats;
+} {
   const stats: ImportStats = {
     total: 0,
     valid: 0,
     invalid: 0,
-    duplicates: 0
+    duplicates: 0,
   };
 
   if (!Array.isArray(data)) {
-    console.warn('[Seeder] Dados não são um array');
+    console.warn("[Seeder] Dados não são um array");
     return { questions: [], stats };
   }
 
@@ -154,16 +180,16 @@ interface ImportStats {
 // Gerados pelo indexador Python (indexer/parser.py)
 const DATA_FILES = [
   // === CEBRASPE ===
-  '/data/pf_21_agente.json',      // PF 2021 - 120 questões
-  '/data/prf_21_prova.json',      // PRF 2021 - 65 questões
-  '/data/prf_18.json',            // PRF 2018 - 120 questões
-  '/data/pcdf_24_cb2.json',       // PC-DF 2024 - 110 questões
-  '/data/pcdf_20_agente.json',    // PC-DF 2020 - 50 questões
-  '/data/depen_15.json',          // DEPEN 2015 - 120 questões
-  '/data/petrobras_23_nm.json',   // Petrobras 2023 - 40 questões
+  "/data/pf_21_agente.json", // PF 2021 - 120 questões
+  "/data/prf_21_prova.json", // PRF 2021 - 65 questões
+  "/data/prf_18.json", // PRF 2018 - 120 questões
+  "/data/pcdf_24_cb2.json", // PC-DF 2024 - 110 questões
+  "/data/pcdf_20_agente.json", // PC-DF 2020 - 50 questões
+  "/data/depen_15.json", // DEPEN 2015 - 120 questões
+  "/data/petrobras_23_nm.json", // Petrobras 2023 - 40 questões
 
   // === FGV ===
-  '/data/pmsp_24_soldado.json',   // PM-SP 2024 - 60 questões
+  "/data/pmsp_24_soldado.json", // PM-SP 2024 - 60 questões
 
   // Total: 685 questões reais (CEBRASPE + FGV)
 ];
@@ -179,9 +205,16 @@ export async function needsSeeding(): Promise<boolean> {
 /**
  * Importa todos os JSONs de questões para o IndexedDB
  */
-export async function seedDatabase(onProgress?: (loaded: number, total: number) => void): Promise<number> {
+export async function seedDatabase(
+  onProgress?: (loaded: number, total: number) => void,
+): Promise<number> {
   let totalImported = 0;
-  let totalStats: ImportStats = { total: 0, valid: 0, invalid: 0, duplicates: 0 };
+  const totalStats: ImportStats = {
+    total: 0,
+    valid: 0,
+    invalid: 0,
+    duplicates: 0,
+  };
 
   // Limpar cache de hashes para nova importação
   importedHashes.clear();
@@ -191,7 +224,7 @@ export async function seedDatabase(onProgress?: (loaded: number, total: number) 
     if (!file) continue;
 
     try {
-      console.log(`[Seeder] Carregando ${file}...`);
+      console.warn(`[Seeder] Carregando ${file}...`);
 
       const response = await fetch(file);
       if (!response.ok) {
@@ -219,7 +252,7 @@ export async function seedDatabase(onProgress?: (loaded: number, total: number) 
       const imported = await QuestionsDB.bulkImport(questions);
       totalImported += imported;
 
-      console.log(`[Seeder] Importadas ${imported} questões de ${file}`);
+      console.warn(`[Seeder] Importadas ${imported} questões de ${file}`);
 
       if (onProgress) {
         onProgress(i + 1, DATA_FILES.length);
@@ -229,12 +262,12 @@ export async function seedDatabase(onProgress?: (loaded: number, total: number) 
     }
   }
 
-  console.log(`[Seeder] === RESUMO ===`);
-  console.log(`[Seeder] Total processado: ${totalStats.total}`);
-  console.log(`[Seeder] Válidas: ${totalStats.valid}`);
-  console.log(`[Seeder] Inválidas: ${totalStats.invalid}`);
-  console.log(`[Seeder] Duplicadas: ${totalStats.duplicates}`);
-  console.log(`[Seeder] Importadas: ${totalImported}`);
+  console.warn(`[Seeder] === RESUMO ===`);
+  console.warn(`[Seeder] Total processado: ${totalStats.total}`);
+  console.warn(`[Seeder] Válidas: ${totalStats.valid}`);
+  console.warn(`[Seeder] Inválidas: ${totalStats.invalid}`);
+  console.warn(`[Seeder] Duplicadas: ${totalStats.duplicates}`);
+  console.warn(`[Seeder] Importadas: ${totalImported}`);
 
   return totalImported;
 }
@@ -243,7 +276,7 @@ export async function seedDatabase(onProgress?: (loaded: number, total: number) 
  * Força reimportação do banco
  */
 export async function reseedDatabase(): Promise<number> {
-  console.log('[Seeder] Limpando banco existente...');
+  console.warn("[Seeder] Limpando banco existente...");
   await QuestionsDB.clear();
   return seedDatabase();
 }
@@ -259,12 +292,12 @@ export async function initializeQuestionBank(): Promise<{
   const needs = await needsSeeding();
 
   if (needs) {
-    console.log('[Seeder] Banco vazio, iniciando seed...');
+    console.warn("[Seeder] Banco vazio, iniciando seed...");
     const count = await seedDatabase();
     return { wasSeeded: true, questionCount: count };
   }
 
   const count = await QuestionsDB.count();
-  console.log(`[Seeder] Banco já populado com ${count} questões`);
+  console.warn(`[Seeder] Banco já populado com ${count} questões`);
   return { wasSeeded: false, questionCount: count };
 }

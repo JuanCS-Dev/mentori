@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   CheckCircle,
   AlertTriangle,
@@ -16,15 +16,20 @@ import {
   FileText,
   RotateCcw,
   Brain,
-  Flame
-} from 'lucide-react';
-import { QuestionAutopsy, QuestionExplanation } from '../types';
-import { useMentor } from '../contexts/MentorContext';
+  Flame,
+} from "lucide-react";
+import { QuestionAutopsy, QuestionExplanation } from "../types";
+import { useMentor } from "../contexts/MentorContext";
 
 // Types for review badge
-export type ReviewBadgeType = 'due' | 'learning' | 'mature' | 'struggling' | null;
+export type ReviewBadgeType =
+  | "due"
+  | "learning"
+  | "mature"
+  | "struggling"
+  | null;
 
-type QuestionSource = 'ai' | 'enem' | 'concurso';
+type QuestionSource = "ai" | "enem" | "concurso";
 
 export interface DisplayQuestion {
   id: string;
@@ -38,12 +43,12 @@ export interface DisplayQuestion {
   year?: number;
   source?: string;
   explanation?: string;
-  role?: string;        // Cargo (ex: "Agente de Polícia Federal")
-  concurso?: string;    // Nome do concurso (ex: "Polícia Federal")
+  role?: string; // Cargo (ex: "Agente de Polícia Federal")
+  concurso?: string; // Nome do concurso (ex: "Polícia Federal")
   // Estrutura CEBRASPE para textos de apoio
-  contextId?: string;   // Código do texto (ex: "CB1A1")
+  contextId?: string; // Código do texto (ex: "CB1A1")
   contextText?: string; // Conteúdo do texto de apoio
-  command?: string;     // Frase introdutória (ex: "Julgue os itens a seguir...")
+  command?: string; // Frase introdutória (ex: "Julgue os itens a seguir...")
   // AI-generated explanation
   aiExplanation?: QuestionExplanation;
 }
@@ -77,18 +82,17 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   onOptionSelect,
   onAutopsy,
   onNextQuestion,
-  onGenerate
+  onGenerate,
 }) => {
   return (
     <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm animate-in fade-in zoom-in-95 duration-500">
-
       {/* Header */}
       <div className="bg-white px-8 py-6 border-b border-slate-100 flex justify-between items-center">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2 px-3 py-1 bg-slate-50 rounded-lg border border-slate-100/50">
             <Terminal size={12} className="text-slate-400" />
             <span className="font-mono text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-              {questionSource === 'ai' ? 'GENERATION_MODE' : 'DATABASE_FETCH'}
+              {questionSource === "ai" ? "GENERATION_MODE" : "DATABASE_FETCH"}
             </span>
           </div>
 
@@ -96,9 +100,11 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           {reviewBadge && <ReviewBadge type={reviewBadge} />}
 
           <span className="font-mono text-[10px] text-slate-400 uppercase tracking-widest pl-2 border-l border-slate-100">
-            {questionSource === 'ai'
+            {questionSource === "ai"
               ? `BANCA: ${question.bank}`
-              : `${question.bank || 'CONCURSO'} ${question.year || ''} ${question.role ? `- ${question.role}` : ''}`}
+              : `${question.bank || "CONCURSO"} ${question.year || ""} ${
+                  question.role ? `- ${question.role}` : ""
+                }`}
           </span>
         </div>
 
@@ -118,7 +124,9 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             <div className="flex items-center gap-2 mb-3">
               <FileText size={14} className="text-slate-400" />
               <span className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                {question.contextId ? `TEXTO ${question.contextId}` : 'TEXTO DE APOIO'}
+                {question.contextId
+                  ? `TEXTO ${question.contextId}`
+                  : "TEXTO DE APOIO"}
               </span>
             </div>
             <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
@@ -143,12 +151,18 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             const isSelected = selectedOption === idx;
             const isCorrect = idx === question.correctAnswer;
 
-            let containerClass = "w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-start gap-5 font-sans group relative overflow-hidden ";
+            let containerClass =
+              "w-full text-left p-4 rounded-xl border-2 transition-all duration-300 flex items-start gap-5 font-sans group relative overflow-hidden ";
 
             if (showAnswer) {
-              if (isCorrect) containerClass += "bg-emerald-50/50 border-emerald-500/50 text-emerald-900";
-              else if (isSelected && !isCorrect) containerClass += "bg-red-50/50 border-red-500/50 text-red-900";
-              else containerClass += "bg-white border-slate-100 text-slate-300 pointer-events-none grayscale opacity-60";
+              if (isCorrect)
+                containerClass +=
+                  "bg-emerald-50/50 border-emerald-500/50 text-emerald-900";
+              else if (isSelected && !isCorrect)
+                containerClass += "bg-red-50/50 border-red-500/50 text-red-900";
+              else
+                containerClass +=
+                  "bg-white border-slate-100 text-slate-300 pointer-events-none grayscale opacity-60";
             } else {
               containerClass += isSelected
                 ? "bg-slate-900 border-slate-900 text-white shadow-lg shadow-slate-200 scale-[1.01]"
@@ -166,19 +180,28 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                   <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent pointer-events-none" />
                 )}
 
-                <div className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg font-mono text-sm font-bold transition-all duration-300 ${showAnswer && isCorrect
-                    ? 'bg-emerald-200 text-emerald-800'
-                    : isSelected
-                      ? 'bg-white/20 text-white backdrop-blur-sm'
-                      : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
-                  }`}>
+                <div
+                  className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg font-mono text-sm font-bold transition-all duration-300 ${
+                    showAnswer && isCorrect
+                      ? "bg-emerald-200 text-emerald-800"
+                      : isSelected
+                        ? "bg-white/20 text-white backdrop-blur-sm"
+                        : "bg-slate-100 text-slate-500 group-hover:bg-slate-200"
+                  }`}
+                >
                   {String.fromCharCode(65 + idx)}
                 </div>
-                <span className={`mt-1 text-[15px] leading-relaxed ${isSelected ? 'font-medium' : 'font-normal'}`}>
-                  {opt.replace(/^[A-E]\)\s*/i, '')}
+                <span
+                  className={`mt-1 text-[15px] leading-relaxed ${
+                    isSelected ? "font-medium" : "font-normal"
+                  }`}
+                >
+                  {opt.replace(/^[A-E]\)\s*/i, "")}
                 </span>
 
-                {isSelected && !showAnswer && <ArrowRight className="ml-auto opacity-50 w-4 h-4 animate-pulse" />}
+                {isSelected && !showAnswer && (
+                  <ArrowRight className="ml-auto opacity-50 w-4 h-4 animate-pulse" />
+                )}
               </button>
             );
           })}
@@ -225,7 +248,7 @@ const FeedbackSection: React.FC<FeedbackSectionProps> = ({
   realQuestionsCount,
   onAutopsy,
   onNextQuestion,
-  onGenerate
+  onGenerate,
 }) => {
   const { askAboutQuestion, isStreaming } = useMentor();
 
@@ -234,13 +257,14 @@ const FeedbackSection: React.FC<FeedbackSectionProps> = ({
       question.statement,
       question.options,
       question.correctAnswer,
-      selectedOption !== null && selectedOption !== question.correctAnswer ? selectedOption : undefined
+      selectedOption !== null && selectedOption !== question.correctAnswer
+        ? selectedOption
+        : undefined,
     );
   };
 
   return (
     <div className="bg-slate-50 border-t border-slate-100 p-8 animate-in slide-in-from-bottom-4 duration-500">
-
       {/* Action Buttons Row */}
       <div className="mb-8 flex justify-center gap-4">
         {/* Autopsy Button - only if wrong */}
@@ -251,7 +275,11 @@ const FeedbackSection: React.FC<FeedbackSectionProps> = ({
             className="group bg-white border border-red-100 text-red-600 pl-4 pr-5 py-2.5 rounded-full font-mono text-xs font-bold shadow-sm hover:shadow-md hover:border-red-200 flex items-center gap-3 transition-all active:scale-95"
           >
             <div className="bg-red-50 p-1.5 rounded-full group-hover:bg-red-100 transition-colors">
-              {analyzingError ? <Loader2 className="animate-spin" size={14} /> : <Stethoscope size={14} />}
+              {analyzingError ? (
+                <Loader2 className="animate-spin" size={14} />
+              ) : (
+                <Stethoscope size={14} />
+              )}
             </div>
             AUTOPSIA.exe
           </button>
@@ -264,7 +292,11 @@ const FeedbackSection: React.FC<FeedbackSectionProps> = ({
           className="group bg-white border border-blue-100 text-blue-600 pl-4 pr-5 py-2.5 rounded-full font-mono text-xs font-bold shadow-sm hover:shadow-md hover:border-blue-200 flex items-center gap-3 transition-all active:scale-95"
         >
           <div className="bg-blue-50 p-1.5 rounded-full group-hover:bg-blue-100 transition-colors">
-            {isStreaming ? <Loader2 className="animate-spin" size={14} /> : <MessageSquare size={14} />}
+            {isStreaming ? (
+              <Loader2 className="animate-spin" size={14} />
+            ) : (
+              <MessageSquare size={14} />
+            )}
           </div>
           EXPLIQUE_MENTOR
         </button>
@@ -280,20 +312,36 @@ const FeedbackSection: React.FC<FeedbackSectionProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-4">
               <div>
-                <p className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Diagnóstico</p>
-                <p className="font-medium text-slate-800 text-sm leading-relaxed">{errorAutopsy.diagnostico_erro}</p>
+                <p className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
+                  Diagnóstico
+                </p>
+                <p className="font-medium text-slate-800 text-sm leading-relaxed">
+                  {errorAutopsy.diagnostico_erro}
+                </p>
               </div>
               <div>
-                <p className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Explicação Técnica</p>
-                <p className="text-sm text-slate-600 leading-relaxed font-mono bg-slate-50 p-4 rounded-xl border border-slate-100/50">{errorAutopsy.explicacao_tecnica}</p>
+                <p className="font-mono text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
+                  Explicação Técnica
+                </p>
+                <p className="text-sm text-slate-600 leading-relaxed font-mono bg-slate-50 p-4 rounded-xl border border-slate-100/50">
+                  {errorAutopsy.explicacao_tecnica}
+                </p>
               </div>
             </div>
             <div>
-              <p className="font-mono text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-3">Vacina Cognitiva</p>
+              <p className="font-mono text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-3">
+                Vacina Cognitiva
+              </p>
               <div className="bg-emerald-50/50 p-6 rounded-2xl border border-emerald-100/50 text-emerald-900 text-sm italic font-medium leading-loose relative">
-                <span className="absolute top-4 left-4 text-emerald-200 text-4xl font-serif">"</span>
-                <span className="relative z-10 px-4 block">{errorAutopsy.vacina_mental}</span>
-                <span className="absolute bottom-[-10px] right-4 text-emerald-200 text-4xl font-serif">"</span>
+                <span className="absolute top-4 left-4 text-emerald-200 text-4xl font-serif">
+                  "
+                </span>
+                <span className="relative z-10 px-4 block">
+                  {errorAutopsy.vacina_mental}
+                </span>
+                <span className="absolute bottom-[-10px] right-4 text-emerald-200 text-4xl font-serif">
+                  "
+                </span>
               </div>
             </div>
           </div>
@@ -337,23 +385,31 @@ const FeedbackSection: React.FC<FeedbackSectionProps> = ({
             )}
 
             {/* Temas relacionados */}
-            {question.aiExplanation.temas_relacionados && question.aiExplanation.temas_relacionados.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
-                {question.aiExplanation.temas_relacionados.map((tema, idx) => (
-                  <span key={idx} className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full">
-                    {tema}
-                  </span>
-                ))}
-              </div>
-            )}
+            {question.aiExplanation.temas_relacionados &&
+              question.aiExplanation.temas_relacionados.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {question.aiExplanation.temas_relacionados.map(
+                    (tema, idx) => (
+                      <span
+                        key={idx}
+                        className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full"
+                      >
+                        {tema}
+                      </span>
+                    ),
+                  )}
+                </div>
+              )}
           </div>
         ) : (
           <p className="text-sm text-slate-700 leading-relaxed pl-1">
-            {questionSource === 'ai' ? question.comment : (question.explanation || "Gabarito oficial processado.")}
+            {questionSource === "ai"
+              ? question.comment
+              : question.explanation || "Gabarito oficial processado."}
           </p>
         )}
 
-        {questionSource === 'ai' && question.trap && (
+        {questionSource === "ai" && question.trap && (
           <div className="mt-4 pt-4 border-t border-slate-50">
             <h4 className="flex items-center gap-2 font-mono font-bold text-amber-600 mb-2 text-[10px] uppercase tracking-widest">
               <AlertTriangle size={12} /> Ponto de Atenção
@@ -379,8 +435,12 @@ const FeedbackSection: React.FC<FeedbackSectionProps> = ({
           onClick={onGenerate}
           className="px-8 py-3 rounded-xl font-mono text-xs font-bold transition-all shadow-lg hover:shadow-xl shadow-slate-200 hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-3 bg-slate-900 text-white hover:bg-black"
         >
-          {questionSource === 'ai' ? <Sparkles size={14} /> : <ArrowRight size={14} />}
-          {questionSource === 'ai' ? 'GERAR_PROXIMA' : 'PROXIMA_QUESTAO'}
+          {questionSource === "ai" ? (
+            <Sparkles size={14} />
+          ) : (
+            <ArrowRight size={14} />
+          )}
+          {questionSource === "ai" ? "GERAR_PROXIMA" : "PROXIMA_QUESTAO"}
         </button>
       </div>
     </div>
@@ -395,18 +455,24 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ questionSource }) => {
   return (
     <div className="text-center py-32 bg-white border border-slate-100 rounded-2xl shadow-sm flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700 cursor-default select-none group">
       <div className="h-20 w-20 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-        {questionSource === 'ai' ? <Sparkles className="h-8 w-8 text-slate-300" /> :
-          questionSource === 'enem' ? <GraduationCap className="h-8 w-8 text-slate-300" /> :
-            <BookOpen className="h-8 w-8 text-slate-300" />}
+        {questionSource === "ai" ? (
+          <Sparkles className="h-8 w-8 text-slate-300" />
+        ) : questionSource === "enem" ? (
+          <GraduationCap className="h-8 w-8 text-slate-300" />
+        ) : (
+          <BookOpen className="h-8 w-8 text-slate-300" />
+        )}
       </div>
       <h3 className="font-mono font-bold text-lg text-slate-800 mb-3 tracking-tight">
-        {questionSource === 'ai' ? 'Módulo Neural em Standby' : 'Aguardando Query'}
+        {questionSource === "ai"
+          ? "Módulo Neural em Standby"
+          : "Aguardando Query"}
       </h3>
       <div className="h-1 w-12 bg-slate-200 rounded-full mb-6"></div>
       <p className="text-slate-400 max-w-sm mx-auto text-sm font-medium leading-relaxed">
-        {questionSource === 'ai'
-          ? 'Defina os parâmetros acima e inicialize o gerador para criar questões inéditas.'
-          : 'Utilize os filtros para acessar o banco de dados de questões reais.'}
+        {questionSource === "ai"
+          ? "Defina os parâmetros acima e inicialize o gerador para criar questões inéditas."
+          : "Utilize os filtros para acessar o banco de dados de questões reais."}
       </p>
     </div>
   );
@@ -422,40 +488,40 @@ interface ReviewBadgeProps {
 const BADGE_CONFIG = {
   due: {
     icon: RotateCcw,
-    label: 'REVISÃO',
-    bgColor: 'bg-purple-50',
-    borderColor: 'border-purple-200',
-    textColor: 'text-purple-600',
-    iconColor: 'text-purple-500',
-    animate: true
+    label: "REVISÃO",
+    bgColor: "bg-purple-50",
+    borderColor: "border-purple-200",
+    textColor: "text-purple-600",
+    iconColor: "text-purple-500",
+    animate: true,
   },
   learning: {
     icon: Brain,
-    label: 'APRENDENDO',
-    bgColor: 'bg-blue-50',
-    borderColor: 'border-blue-200',
-    textColor: 'text-blue-600',
-    iconColor: 'text-blue-500',
-    animate: false
+    label: "APRENDENDO",
+    bgColor: "bg-blue-50",
+    borderColor: "border-blue-200",
+    textColor: "text-blue-600",
+    iconColor: "text-blue-500",
+    animate: false,
   },
   mature: {
     icon: CheckCircle,
-    label: 'DOMINADO',
-    bgColor: 'bg-emerald-50',
-    borderColor: 'border-emerald-200',
-    textColor: 'text-emerald-600',
-    iconColor: 'text-emerald-500',
-    animate: false
+    label: "DOMINADO",
+    bgColor: "bg-emerald-50",
+    borderColor: "border-emerald-200",
+    textColor: "text-emerald-600",
+    iconColor: "text-emerald-500",
+    animate: false,
   },
   struggling: {
     icon: Flame,
-    label: 'DIFÍCIL',
-    bgColor: 'bg-red-50',
-    borderColor: 'border-red-200',
-    textColor: 'text-red-600',
-    iconColor: 'text-red-500',
-    animate: true
-  }
+    label: "DIFÍCIL",
+    bgColor: "bg-red-50",
+    borderColor: "border-red-200",
+    textColor: "text-red-600",
+    iconColor: "text-red-500",
+    animate: true,
+  },
 };
 
 const ReviewBadge: React.FC<ReviewBadgeProps> = ({ type }) => {
@@ -465,9 +531,15 @@ const ReviewBadge: React.FC<ReviewBadgeProps> = ({ type }) => {
   const Icon = config.icon;
 
   return (
-    <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border ${config.bgColor} ${config.borderColor} ${config.animate ? 'animate-pulse' : ''}`}>
+    <div
+      className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border ${
+        config.bgColor
+      } ${config.borderColor} ${config.animate ? "animate-pulse" : ""}`}
+    >
       <Icon size={12} className={config.iconColor} />
-      <span className={`font-mono text-[9px] font-bold uppercase tracking-widest ${config.textColor}`}>
+      <span
+        className={`font-mono text-[9px] font-bold uppercase tracking-widest ${config.textColor}`}
+      >
         {config.label}
       </span>
     </div>

@@ -1,12 +1,12 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  // Google AI Studio (browser)
-  readonly VITE_GEMINI_API_KEY?: string;
+  // Nebius AI Token Factory
+  readonly VITE_NEBIUS_API_KEY?: string;
 
-  // Vertex AI (optional - for server environments)
-  readonly VITE_GOOGLE_CLOUD_PROJECT?: string;
-  readonly VITE_GOOGLE_CLOUD_LOCATION?: string;
+  // Supabase
+  readonly VITE_SUPABASE_URL?: string;
+  readonly VITE_SUPABASE_ANON_KEY?: string;
 }
 
 interface ImportMeta {

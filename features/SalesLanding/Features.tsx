@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Brain,
   Target,
@@ -7,50 +7,57 @@ import {
   BookOpen,
   Trophy,
   Calendar,
-  Shield
-} from 'lucide-react';
+  Shield,
+} from "lucide-react";
 
 const features = [
   {
     icon: Brain,
-    title: 'IA Personalizada',
-    description: 'Planos de estudo unicos baseados no seu perfil cognitivo e disponibilidade.'
+    title: "IA Personalizada",
+    description:
+      "Planos de estudo unicos baseados no seu perfil cognitivo e disponibilidade.",
   },
   {
     icon: Target,
-    title: 'Foco Inteligente',
-    description: 'Sistema identifica suas fraquezas e prioriza o que mais cai na sua prova.'
+    title: "Foco Inteligente",
+    description:
+      "Sistema identifica suas fraquezas e prioriza o que mais cai na sua prova.",
   },
   {
     icon: BarChart3,
-    title: 'Analytics Avancado',
-    description: 'Acompanhe seu progresso com metricas de desempenho em tempo real.'
+    title: "Analytics Avancado",
+    description:
+      "Acompanhe seu progresso com metricas de desempenho em tempo real.",
   },
   {
     icon: Zap,
-    title: 'Spaced Repetition',
-    description: 'Algoritmo cientifico que otimiza o momento ideal de cada revisao.'
+    title: "Spaced Repetition",
+    description:
+      "Algoritmo cientifico que otimiza o momento ideal de cada revisao.",
   },
   {
     icon: BookOpen,
-    title: 'Banco de Questoes',
-    description: '+700 questoes reais CEBRASPE, FGV, CESPE com explicacoes detalhadas.'
+    title: "Banco de Questoes",
+    description:
+      "+700 questoes reais CEBRASPE, FGV, CESPE com explicacoes detalhadas.",
   },
   {
     icon: Trophy,
-    title: 'Gamificacao',
-    description: 'XP, niveis e conquistas para manter sua motivacao em alta.'
+    title: "Gamificacao",
+    description: "XP, niveis e conquistas para manter sua motivacao em alta.",
   },
   {
     icon: Calendar,
-    title: 'Cronograma Adaptativo',
-    description: 'Rotina de estudos que se adapta ao seu dia e energia disponivel.'
+    title: "Cronograma Adaptativo",
+    description:
+      "Rotina de estudos que se adapta ao seu dia e energia disponivel.",
   },
   {
     icon: Shield,
-    title: 'Anti-Burnout',
-    description: 'Sistema detecta sinais de esgotamento e sugere pausas estrategicas.'
-  }
+    title: "Anti-Burnout",
+    description:
+      "Sistema detecta sinais de esgotamento e sugere pausas estrategicas.",
+  },
 ];
 
 export const Features: React.FC = () => {
@@ -68,7 +75,8 @@ export const Features: React.FC = () => {
             <span className="text-blue-600">Em Um So Lugar</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Ferramentas poderosas que trabalham juntas para acelerar sua aprovacao.
+            Ferramentas poderosas que trabalham juntas para acelerar sua
+            aprovacao.
           </p>
         </div>
 
@@ -108,11 +116,11 @@ export const Features: React.FC = () => {
 
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
             <div>
-              <h3 className="text-2xl font-bold mb-2">
-                Integracao Completa
-              </h3>
+              <h3 className="text-2xl font-bold mb-2">Integracao Completa</h3>
               <p className="text-white/80 max-w-xl">
-                Todas as funcionalidades trabalham em sincronia. Seu progresso nas questoes alimenta o sistema de revisao, que atualiza seu plano de estudos, que ajusta as recomendacoes do mentor.
+                Todas as funcionalidades trabalham em sincronia. Seu progresso
+                nas questoes alimenta o sistema de revisao, que atualiza seu
+                plano de estudos, que ajusta as recomendacoes do mentor.
               </p>
             </div>
             <div className="shrink-0 text-center">

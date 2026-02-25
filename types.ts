@@ -1,16 +1,16 @@
 export enum AppView {
-  DASHBOARD = 'DASHBOARD',
-  PROGRESS = 'PROGRESS',
-  EDITAL = 'EDITAL',
-  PROFILE = 'PROFILE',
-  PLAN = 'PLAN',
-  QUESTIONS = 'QUESTIONS',
-  MATERIAL = 'MATERIAL',
-  DISCURSIVE = 'DISCURSIVE',
-  STUDY_CYCLE = 'STUDY_CYCLE',
-  LANDING = 'LANDING',
-  WEEKLY_REPORT = 'WEEKLY_REPORT',
-  SALES_LANDING = 'SALES_LANDING'
+  DASHBOARD = "DASHBOARD",
+  PROGRESS = "PROGRESS",
+  EDITAL = "EDITAL",
+  PROFILE = "PROFILE",
+  PLAN = "PLAN",
+  QUESTIONS = "QUESTIONS",
+  MATERIAL = "MATERIAL",
+  DISCURSIVE = "DISCURSIVE",
+  STUDY_CYCLE = "STUDY_CYCLE",
+  LANDING = "LANDING",
+  WEEKLY_REPORT = "WEEKLY_REPORT",
+  SALES_LANDING = "SALES_LANDING",
 }
 
 // --- EDITAL ---
@@ -24,7 +24,12 @@ export interface EditalJSON {
   };
   cronograma: { evento: string; data: string; critical: boolean }[];
   fases: { nome: string; carater: string; detalhes: string }[];
-  verticalizado: { disciplina: string; peso: string; questoes: string; topicos: string[] }[];
+  verticalizado: {
+    disciplina: string;
+    peso: string;
+    questoes: string;
+    topicos: string[];
+  }[];
   alertas: string[];
 }
 
@@ -53,7 +58,7 @@ export interface NeuroStudyPlanJSON {
     horario: string;
     atividade: string;
     metodo: string;
-    energia_exigida: 'Alta' | 'Média' | 'Baixa';
+    energia_exigida: "Alta" | "Média" | "Baixa";
     motivo: string;
   }[];
   rotina_noturna: string[];
@@ -83,7 +88,7 @@ export interface QuestionAutopsy {
 
 /**
  * Explicação AI-generated para uma questão
- * Gerada pelo GeminiService.generateExplanation()
+ * Gerada pelo NebiusService.generateExplanation()
  */
 export interface QuestionExplanation {
   /** Explicação completa da resposta correta */
@@ -101,7 +106,7 @@ export interface QuestionExplanation {
   /** Temas relacionados para aprofundamento */
   temas_relacionados: string[];
   /** Nível de dificuldade percebido */
-  nivel_dificuldade: 'facil' | 'medio' | 'dificil' | 'expert';
+  nivel_dificuldade: "facil" | "medio" | "dificil" | "expert";
 }
 
 // --- MATERIAL ---
@@ -149,7 +154,7 @@ export interface StudyPlanParams {
 
 // --- MENTOR CHAT ---
 export interface MentorMessage {
-  role: 'user' | 'mentor';
+  role: "user" | "mentor";
   content: string;
   timestamp: number;
 }

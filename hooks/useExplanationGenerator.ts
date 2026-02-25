@@ -5,10 +5,10 @@
  * Runs in background using requestIdleCallback for non-blocking operation.
  */
 
-import { useEffect, useRef, useCallback, useState } from 'react';
-import { QuestionsDB, ConcursoQuestion } from '../services/database';
-import { GeminiService } from '../services/geminiService';
-import { QuestionExplanation } from '../types';
+import { useEffect, useRef, useCallback, useState } from "react";
+import { QuestionsDB, ConcursoQuestion } from "../services/database";
+import { NebiusService } from "../services/nebiusEngine";
+import { QuestionExplanation } from "../types";
 
 interface ExplanationGeneratorState {
   isGenerating: boolean;
@@ -24,13 +24,13 @@ interface ExplanationGeneratorState {
  */
 export function useExplanationGenerator(
   enabled: boolean = true,
-  batchSize: number = 5
+  batchSize: number = 5,
 ): ExplanationGeneratorState {
   const [state, setState] = useState<ExplanationGeneratorState>({
     isGenerating: false,
     questionsProcessed: 0,
     questionsRemaining: 0,
-    lastError: null
+    lastError: null,
   });
 
   const isRunningRef = useRef(false);
@@ -40,55 +40,61 @@ export function useExplanationGenerator(
     if (isRunningRef.current) return;
     isRunningRef.current = true;
 
-    setState(prev => ({ ...prev, isGenerating: true, lastError: null }));
+    setState((prev) => ({ ...prev, isGenerating: true, lastError: null }));
 
     try {
       // Get questions without explanations
-      const questions = await QuestionsDB.getQuestionsWithoutExplanation(batchSize);
+      const questions =
+        await QuestionsDB.getQuestionsWithoutExplanation(batchSize);
 
       if (questions.length === 0) {
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
           isGenerating: false,
-          questionsRemaining: 0
+          questionsRemaining: 0,
         }));
         isRunningRef.current = false;
         return;
       }
 
-      setState(prev => ({ ...prev, questionsRemaining: questions.length }));
+      setState((prev) => ({ ...prev, questionsRemaining: questions.length }));
 
       for (const question of questions) {
         try {
           // Generate explanation using Gemini
-          const explanation = await GeminiService.generateExplanation(
+          const explanation = await NebiusService.generateExplanation(
             question.enunciado,
             question.alternativas,
             question.gabarito,
             question.disciplina,
-            question.banca
+            question.banca,
           );
 
           // Save to database
           await QuestionsDB.updateExplanation(question.id, explanation);
 
           processedCountRef.current++;
-          setState(prev => ({
+          setState((prev) => ({
             ...prev,
             questionsProcessed: processedCountRef.current,
-            questionsRemaining: prev.questionsRemaining - 1
+            questionsRemaining: prev.questionsRemaining - 1,
           }));
         } catch (error) {
-          console.error('[ExplanationGenerator] Failed to generate explanation for question:', question.id, error);
+          console.error(
+            "[ExplanationGenerator] Failed to generate explanation for question:",
+            question.id,
+            error,
+          );
           // Continue with next question
         }
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error('[ExplanationGenerator] Batch processing error:', error);
-      setState(prev => ({ ...prev, lastError: errorMessage }));
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      console.error("[ExplanationGenerator] Batch processing error:", error);
+      setState((prev) => ({ ...prev, lastError: errorMessage }));
     } finally {
-      setState(prev => ({ ...prev, isGenerating: false }));
+      setState((prev) => ({ ...prev, isGenerating: false }));
       isRunningRef.current = false;
     }
   }, [batchSize]);
@@ -98,8 +104,10 @@ export function useExplanationGenerator(
 
     // Run in idle time to avoid blocking UI
     const scheduleGeneration = () => {
-      if ('requestIdleCallback' in window) {
-        (window as Window & { requestIdleCallback: (cb: () => void) => number }).requestIdleCallback(() => {
+      if ("requestIdleCallback" in window) {
+        (
+          window as Window & { requestIdleCallback: (cb: () => void) => number }
+        ).requestIdleCallback(() => {
           generateExplanationsForBatch();
         });
       } else {
@@ -112,11 +120,14 @@ export function useExplanationGenerator(
     const initialTimer = setTimeout(scheduleGeneration, 10000);
 
     // Check for more questions periodically (every 5 minutes)
-    const intervalTimer = setInterval(() => {
-      if (!isRunningRef.current) {
-        scheduleGeneration();
-      }
-    }, 5 * 60 * 1000);
+    const intervalTimer = setInterval(
+      () => {
+        if (!isRunningRef.current) {
+          scheduleGeneration();
+        }
+      },
+      5 * 60 * 1000,
+    );
 
     return () => {
       clearTimeout(initialTimer);
@@ -131,21 +142,21 @@ export function useExplanationGenerator(
  * Manually trigger explanation generation for a specific question
  */
 export async function generateExplanationForQuestion(
-  question: ConcursoQuestion
+  question: ConcursoQuestion,
 ): Promise<QuestionExplanation | null> {
   try {
-    const explanation = await GeminiService.generateExplanation(
+    const explanation = await NebiusService.generateExplanation(
       question.enunciado,
       question.alternativas,
       question.gabarito,
       question.disciplina,
-      question.banca
+      question.banca,
     );
 
     await QuestionsDB.updateExplanation(question.id, explanation);
     return explanation;
   } catch (error) {
-    console.error('[generateExplanationForQuestion] Failed:', error);
+    console.error("[generateExplanationForQuestion] Failed:", error);
     return null;
   }
 }

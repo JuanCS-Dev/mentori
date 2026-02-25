@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Play,
   Pause,
@@ -10,8 +10,8 @@ import {
   X,
   ChevronRight,
   RefreshCw,
-  Zap
-} from 'lucide-react';
+  Zap,
+} from "lucide-react";
 
 interface CycleSubject {
   id: string;
@@ -19,7 +19,7 @@ interface CycleSubject {
   targetHours: number;
   completedMinutes: number;
   color: string;
-  priority: 'alta' | 'media' | 'baixa';
+  priority: "alta" | "media" | "baixa";
 }
 
 // Format time helper
@@ -28,9 +28,13 @@ export const formatTime = (seconds: number): string => {
   const mins = Math.floor((seconds % 3600) / 60);
   const secs = seconds % 60;
   if (hrs > 0) {
-    return `${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    return `${hrs}:${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
   }
-  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  return `${mins.toString().padStart(2, "0")}:${secs
+    .toString()
+    .padStart(2, "0")}`;
 };
 
 interface ActiveStudyAreaProps {
@@ -52,16 +56,19 @@ export const ActiveStudyArea: React.FC<ActiveStudyAreaProps> = ({
   isStudying,
   onToggleStudy,
   onNextSubject,
-  onMarkComplete
+  onMarkComplete,
 }) => {
-  const progress = (subject.completedMinutes / (subject.targetHours * 60)) * 100;
+  const progress =
+    (subject.completedMinutes / (subject.targetHours * 60)) * 100;
 
   return (
     <div className="bg-white border border-kitchen-border rounded-xl p-8 shadow-sm">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className={`w-3 h-3 rounded-full ${subject.color}`} />
-          <h2 className="text-xl font-bold font-mono text-gray-800">Sessão_Atual</h2>
+          <h2 className="text-xl font-bold font-mono text-gray-800">
+            Sessão_Atual
+          </h2>
         </div>
         <span className="text-gray-500 font-mono text-xs uppercase tracking-wider">
           {currentIndex + 1} DE {totalSubjects}
@@ -79,7 +86,10 @@ export const ActiveStudyArea: React.FC<ActiveStudyAreaProps> = ({
 
         <div className="max-w-md mx-auto mb-8">
           <div className="flex justify-between text-xs font-mono text-gray-500 mb-2 uppercase tracking-wide">
-            <span>{Math.floor(subject.completedMinutes / 60)}h {subject.completedMinutes % 60}m concluído</span>
+            <span>
+              {Math.floor(subject.completedMinutes / 60)}h{" "}
+              {subject.completedMinutes % 60}m concluído
+            </span>
             <span>Meta: {subject.targetHours}h</span>
           </div>
           <div className="h-2 bg-gray-100 rounded-full overflow-hidden border border-gray-200">
@@ -95,12 +105,12 @@ export const ActiveStudyArea: React.FC<ActiveStudyAreaProps> = ({
             onClick={onToggleStudy}
             className={`flex items-center gap-2 px-8 py-3 rounded-lg text-sm font-bold font-mono transition-all border ${
               isStudying
-                ? 'bg-white border-amber-500 text-amber-600 hover:bg-amber-50'
-                : 'bg-black text-white hover:bg-gray-800 border-black'
+                ? "bg-white border-amber-500 text-amber-600 hover:bg-amber-50"
+                : "bg-black text-white hover:bg-gray-800 border-black"
             }`}
           >
             {isStudying ? <Pause size={16} /> : <Play size={16} />}
-            {isStudying ? 'PAUSAR' : 'INICIAR'}
+            {isStudying ? "PAUSAR" : "INICIAR"}
           </button>
 
           <button
@@ -139,16 +149,16 @@ export const SubjectList: React.FC<SubjectListProps> = ({
   hasEditalData,
   onAddSubject,
   onRemoveSubject,
-  onImportFromEdital
+  onImportFromEdital,
 }) => {
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newSubjectName, setNewSubjectName] = useState('');
+  const [newSubjectName, setNewSubjectName] = useState("");
   const [newSubjectHours, setNewSubjectHours] = useState(1);
 
   const handleAdd = () => {
     if (!newSubjectName.trim()) return;
     onAddSubject(newSubjectName.trim(), newSubjectHours);
-    setNewSubjectName('');
+    setNewSubjectName("");
     setNewSubjectHours(1);
     setShowAddForm(false);
   };
@@ -158,7 +168,9 @@ export const SubjectList: React.FC<SubjectListProps> = ({
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <BookOpen className="text-gray-400" size={20} />
-          <h2 className="text-lg font-bold font-mono text-gray-800">Disciplinas_do_Ciclo</h2>
+          <h2 className="text-lg font-bold font-mono text-gray-800">
+            Disciplinas_do_Ciclo
+          </h2>
         </div>
         <div className="flex gap-2">
           {hasEditalData && subjects.length === 0 && (
@@ -184,7 +196,9 @@ export const SubjectList: React.FC<SubjectListProps> = ({
         <div className="mb-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
           <div className="flex gap-4 items-end">
             <div className="flex-1">
-              <label className="block text-xs font-mono font-bold text-gray-500 mb-1 uppercase">Nome da Disciplina</label>
+              <label className="block text-xs font-mono font-bold text-gray-500 mb-1 uppercase">
+                Nome da Disciplina
+              </label>
               <input
                 type="text"
                 value={newSubjectName}
@@ -194,7 +208,9 @@ export const SubjectList: React.FC<SubjectListProps> = ({
               />
             </div>
             <div className="w-32">
-              <label className="block text-xs font-mono font-bold text-gray-500 mb-1 uppercase">Horas</label>
+              <label className="block text-xs font-mono font-bold text-gray-500 mb-1 uppercase">
+                Horas
+              </label>
               <input
                 type="number"
                 value={newSubjectHours}
@@ -227,13 +243,14 @@ export const SubjectList: React.FC<SubjectListProps> = ({
           <p className="text-xs mt-1 font-mono">
             {hasEditalData
               ? 'Clique em "Importar_Dados" para buscar do Edital'
-              : 'Adicione disciplinas manualmente'}
+              : "Adicione disciplinas manualmente"}
           </p>
         </div>
       ) : (
         <div className="space-y-3">
           {subjects.map((subject, index) => {
-            const progress = (subject.completedMinutes / (subject.targetHours * 60)) * 100;
+            const progress =
+              (subject.completedMinutes / (subject.targetHours * 60)) * 100;
             const isComplete = progress >= 100;
             const isCurrent = index === currentSubjectIndex;
 
@@ -242,10 +259,10 @@ export const SubjectList: React.FC<SubjectListProps> = ({
                 key={subject.id}
                 className={`p-4 rounded-xl border transition-all ${
                   isCurrent
-                    ? 'border-blue-400 bg-blue-50/50'
+                    ? "border-blue-400 bg-blue-50/50"
                     : isComplete
-                    ? 'border-green-200 bg-green-50/30'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
+                      ? "border-green-200 bg-green-50/30"
+                      : "border-gray-200 bg-white hover:border-gray-300"
                 }`}
               >
                 <div className="flex items-center gap-4">
@@ -253,7 +270,11 @@ export const SubjectList: React.FC<SubjectListProps> = ({
 
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <span className={`font-bold font-mono text-sm ${isCurrent ? 'text-blue-700' : 'text-gray-700'}`}>
+                      <span
+                        className={`font-bold font-mono text-sm ${
+                          isCurrent ? "text-blue-700" : "text-gray-700"
+                        }`}
+                      >
                         {subject.name}
                       </span>
                       {isCurrent && (
@@ -273,7 +294,9 @@ export const SubjectList: React.FC<SubjectListProps> = ({
                         />
                       </div>
                       <span className="text-[10px] font-mono text-gray-400 w-24 text-right">
-                        {Math.floor(subject.completedMinutes / 60)}h{subject.completedMinutes % 60}m / {subject.targetHours}h
+                        {Math.floor(subject.completedMinutes / 60)}h
+                        {subject.completedMinutes % 60}m / {subject.targetHours}
+                        h
                       </span>
                     </div>
                   </div>

@@ -1,24 +1,27 @@
-import React from 'react';
-import { WelcomeCard } from './WelcomeCard';
-import { QuickStats } from './QuickStats';
-import { TodayPlan } from './TodayPlan';
-import { QuickActions } from './QuickActions';
-import { EmbeddedChat } from './EmbeddedChat';
-import { useProgress } from '../../hooks/usePersistence';
-import { NeuroStudyPlanJSON, AppView } from '../../types';
+import React from "react";
+import { WelcomeCard } from "./WelcomeCard";
+import { QuickStats } from "./QuickStats";
+import { TodayPlan } from "./TodayPlan";
+import { QuickActions } from "./QuickActions";
+import { EmbeddedChat } from "./EmbeddedChat";
+import { useProgress } from "../../hooks/usePersistence";
+import { NeuroStudyPlanJSON, AppView } from "../../types";
 
 interface DashboardHubProps {
   studyPlan: NeuroStudyPlanJSON | null;
   onNavigate: (view: AppView) => void;
 }
 
-export const DashboardHub: React.FC<DashboardHubProps> = ({ studyPlan, onNavigate }) => {
+export const DashboardHub: React.FC<DashboardHubProps> = ({
+  studyPlan,
+  onNavigate,
+}) => {
   const { progress, getAccuracy, getLevelData } = useProgress();
   const accuracy = getAccuracy();
   const levelData = getLevelData();
 
   const handleStartBlock = (blockIndex: number) => {
-    console.log('Starting block:', blockIndex);
+    console.warn("Starting block:", blockIndex);
     onNavigate(AppView.STUDY_CYCLE);
   };
 
@@ -38,7 +41,12 @@ export const DashboardHub: React.FC<DashboardHubProps> = ({ studyPlan, onNavigat
           <TodayPlan studyPlan={studyPlan} onStartBlock={handleStartBlock} />
 
           {/* Quick Actions */}
-          <QuickActions onNavigate={onNavigate} pendingReviews={progress.questionsAnswered - progress.questionsCorrect} />
+          <QuickActions
+            onNavigate={onNavigate}
+            pendingReviews={
+              progress.questionsAnswered - progress.questionsCorrect
+            }
+          />
         </div>
 
         {/* Right Column - Chat (1/3) */}

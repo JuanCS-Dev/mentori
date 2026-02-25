@@ -1,6 +1,6 @@
-import globals from 'globals';
-import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import globals from "globals";
+import eslint from "@eslint/js";
+import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -9,17 +9,26 @@ export default tseslint.config(
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.es2022
-      }
+        ...globals.es2022,
+      },
     },
     rules: {
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/explicit-function-return-type': 'off',
-      'no-console': ['warn', { allow: ['warn', 'error'] }]
-    }
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" },
+      ],
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+    },
   },
   {
-    ignores: ['node_modules/', 'dist/', 'coverage/', '*.config.js', '*.config.ts']
-  }
+    ignores: [
+      "node_modules/",
+      "dist/",
+      "coverage/",
+      "*.config.js",
+      "*.config.ts",
+    ],
+  },
 );

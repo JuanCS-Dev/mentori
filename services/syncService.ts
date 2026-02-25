@@ -17,16 +17,16 @@ export interface SyncAction {
   timestamp: number;
   retries: number;
   maxRetries: number;
-  status: 'pending' | 'syncing' | 'failed' | 'completed';
+  status: "pending" | "syncing" | "failed" | "completed";
   error?: string;
 }
 
 export type SyncActionType =
-  | 'question_answer'
-  | 'progress_update'
-  | 'streak_update'
-  | 'xp_update'
-  | 'badge_unlock';
+  | "question_answer"
+  | "progress_update"
+  | "streak_update"
+  | "xp_update"
+  | "badge_unlock";
 
 export interface SyncStats {
   pending: number;
@@ -38,8 +38,8 @@ export interface SyncStats {
 
 // ===== CONSTANTS =====
 
-const SYNC_STORAGE_KEY = 'mentori_sync_queue';
-const SYNC_STATS_KEY = 'mentori_sync_stats';
+const SYNC_STORAGE_KEY = "mentori_sync_queue";
+const SYNC_STATS_KEY = "mentori_sync_stats";
 const MAX_RETRIES = 3;
 const RETRY_DELAYS = [1000, 5000, 15000]; // Exponential backoff
 
@@ -63,7 +63,7 @@ export const SyncService = {
       timestamp: Date.now(),
       retries: 0,
       maxRetries: MAX_RETRIES,
-      status: 'pending'
+      status: "pending",
     };
 
     const queue = this.getQueue();
@@ -97,7 +97,7 @@ export const SyncService = {
     try {
       localStorage.setItem(SYNC_STORAGE_KEY, JSON.stringify(queue));
     } catch (e) {
-      console.error('[SyncService] Failed to save queue:', e);
+      console.error("[SyncService] Failed to save queue:", e);
     }
   },
 
@@ -110,7 +110,9 @@ export const SyncService = {
     }
 
     const queue = this.getQueue();
-    const pending = queue.filter(a => a.status === 'pending' || a.status === 'failed');
+    const pending = queue.filter(
+      (a) => a.status === "pending" || a.status === "failed",
+    );
 
     if (pending.length === 0) {
       return { success: 0, failed: 0 };
@@ -121,32 +123,35 @@ export const SyncService = {
 
     for (const action of pending) {
       try {
-        action.status = 'syncing';
+        action.status = "syncing";
         this.saveQueue(queue);
 
         await this.processAction(action);
 
-        action.status = 'completed';
+        action.status = "completed";
         success++;
       } catch (error) {
         action.retries++;
-        action.error = error instanceof Error ? error.message : 'Unknown error';
+        action.error = error instanceof Error ? error.message : "Unknown error";
 
         if (action.retries >= action.maxRetries) {
-          action.status = 'failed';
+          action.status = "failed";
           failed++;
         } else {
-          action.status = 'pending';
+          action.status = "pending";
           // Schedule retry with backoff
-          setTimeout(() => this.processQueue(), RETRY_DELAYS[action.retries - 1] || 15000);
+          setTimeout(
+            () => this.processQueue(),
+            RETRY_DELAYS[action.retries - 1] || 15000,
+          );
         }
       }
     }
 
     // Remove completed actions older than 1 hour
     const oneHourAgo = Date.now() - 60 * 60 * 1000;
-    const filtered = queue.filter(a =>
-      a.status !== 'completed' || a.timestamp > oneHourAgo
+    const filtered = queue.filter(
+      (a) => a.status !== "completed" || a.timestamp > oneHourAgo,
     );
     this.saveQueue(filtered);
 
@@ -163,13 +168,13 @@ export const SyncService = {
     // Simulate processing - in real app, this would call an API
     // For now, we just validate the action type
     switch (action.type) {
-      case 'question_answer':
-      case 'progress_update':
-      case 'streak_update':
-      case 'xp_update':
-      case 'badge_unlock':
+      case "question_answer":
+      case "progress_update":
+      case "streak_update":
+      case "xp_update":
+      case "badge_unlock":
         // These are stored locally, so "sync" is just validation
-        console.log(`[SyncService] Processed ${action.type}:`, action.id);
+        console.warn(`[SyncService] Processed ${action.type}:`, action.id);
         break;
       default:
         throw new Error(`Unknown action type: ${action.type}`);
@@ -182,17 +187,19 @@ export const SyncService = {
   getStats(): SyncStats {
     try {
       const stored = localStorage.getItem(SYNC_STATS_KEY);
-      const stats = stored ? JSON.parse(stored) : {
-        pending: 0,
-        failed: 0,
-        completed: 0,
-        lastSync: null
-      };
+      const stats = stored
+        ? JSON.parse(stored)
+        : {
+            pending: 0,
+            failed: 0,
+            completed: 0,
+            lastSync: null,
+          };
 
       // Update pending count from current queue
       const queue = this.getQueue();
-      stats.pending = queue.filter(a => a.status === 'pending').length;
-      stats.failed = queue.filter(a => a.status === 'failed').length;
+      stats.pending = queue.filter((a) => a.status === "pending").length;
+      stats.failed = queue.filter((a) => a.status === "failed").length;
       stats.isOnline = navigator.onLine;
 
       return stats;
@@ -202,7 +209,7 @@ export const SyncService = {
         failed: 0,
         completed: 0,
         lastSync: null,
-        isOnline: navigator.onLine
+        isOnline: navigator.onLine,
       };
     }
   },
@@ -218,7 +225,7 @@ export const SyncService = {
       stats.lastSync = Date.now();
       localStorage.setItem(SYNC_STATS_KEY, JSON.stringify(stats));
     } catch (e) {
-      console.error('[SyncService] Failed to update stats:', e);
+      console.error("[SyncService] Failed to update stats:", e);
     }
   },
 
@@ -227,7 +234,7 @@ export const SyncService = {
    */
   removeAction(actionId: string): void {
     const queue = this.getQueue();
-    const filtered = queue.filter(a => a.id !== actionId);
+    const filtered = queue.filter((a) => a.id !== actionId);
     this.saveQueue(filtered);
   },
 
@@ -243,11 +250,11 @@ export const SyncService = {
    */
   retryFailed(): Promise<{ success: number; failed: number }> {
     const queue = this.getQueue();
-    const failed = queue.filter(a => a.status === 'failed');
+    const failed = queue.filter((a) => a.status === "failed");
 
     // Reset status to pending
     for (const action of failed) {
-      action.status = 'pending';
+      action.status = "pending";
       action.retries = 0;
       action.error = undefined;
     }
@@ -261,16 +268,16 @@ export const SyncService = {
    */
   registerConnectivityListener(): () => void {
     const handleOnline = () => {
-      console.log('[SyncService] Online - processing queue...');
+      console.warn("[SyncService] Online - processing queue...");
       this.processQueue();
     };
 
-    window.addEventListener('online', handleOnline);
+    window.addEventListener("online", handleOnline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
+      window.removeEventListener("online", handleOnline);
     };
-  }
+  },
 };
 
 // ===== SERVICE WORKER REGISTRATION =====
@@ -280,27 +287,30 @@ export const ServiceWorkerManager = {
    * Registra o Service Worker
    */
   async register(): Promise<ServiceWorkerRegistration | null> {
-    if (!('serviceWorker' in navigator)) {
-      console.warn('[SW] Service Worker not supported');
+    if (!("serviceWorker" in navigator)) {
+      console.warn("[SW] Service Worker not supported");
       return null;
     }
 
     try {
-      const registration = await navigator.serviceWorker.register('/sw.js', {
-        scope: '/'
+      const registration = await navigator.serviceWorker.register("/sw.js", {
+        scope: "/",
       });
 
-      console.log('[SW] Registered:', registration.scope);
+      console.warn("[SW] Registered:", registration.scope);
 
       // Handle updates
-      registration.addEventListener('updatefound', () => {
+      registration.addEventListener("updatefound", () => {
         const newWorker = registration.installing;
         if (!newWorker) return;
 
-        newWorker.addEventListener('statechange', () => {
-          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+        newWorker.addEventListener("statechange", () => {
+          if (
+            newWorker.state === "installed" &&
+            navigator.serviceWorker.controller
+          ) {
             // New version available
-            console.log('[SW] New version available');
+            console.warn("[SW] New version available");
             this.notifyUpdate(registration);
           }
         });
@@ -308,7 +318,7 @@ export const ServiceWorkerManager = {
 
       return registration;
     } catch (error) {
-      console.error('[SW] Registration failed:', error);
+      console.error("[SW] Registration failed:", error);
       return null;
     }
   },
@@ -318,9 +328,11 @@ export const ServiceWorkerManager = {
    */
   notifyUpdate(registration: ServiceWorkerRegistration): void {
     // Dispatch custom event for UI to handle
-    window.dispatchEvent(new CustomEvent('sw-update', {
-      detail: { registration }
-    }));
+    window.dispatchEvent(
+      new CustomEvent("sw-update", {
+        detail: { registration },
+      }),
+    );
   },
 
   /**
@@ -329,7 +341,7 @@ export const ServiceWorkerManager = {
   async applyUpdate(): Promise<void> {
     const registration = await navigator.serviceWorker.getRegistration();
     if (registration?.waiting) {
-      registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+      registration.waiting.postMessage({ type: "SKIP_WAITING" });
       window.location.reload();
     }
   },
@@ -341,8 +353,8 @@ export const ServiceWorkerManager = {
     const registration = await navigator.serviceWorker.ready;
     if (registration.active) {
       registration.active.postMessage({
-        type: 'CACHE_QUESTIONS',
-        payload: urls
+        type: "CACHE_QUESTIONS",
+        payload: urls,
       });
     }
   },
@@ -353,9 +365,9 @@ export const ServiceWorkerManager = {
   async clearCaches(): Promise<void> {
     const registration = await navigator.serviceWorker.ready;
     if (registration.active) {
-      registration.active.postMessage({ type: 'CLEAR_CACHE' });
+      registration.active.postMessage({ type: "CLEAR_CACHE" });
     }
-  }
+  },
 };
 
 export default SyncService;

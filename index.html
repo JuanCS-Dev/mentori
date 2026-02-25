@@ -1,49 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Mentori - Aprovação em Concursos</title>
 
     <!-- PWA Meta Tags -->
-    <meta name="description" content="Plataforma inteligente de estudos para concursos públicos. Questões reais, spaced repetition, gamificação e predição de nota." />
+    <meta
+      name="description"
+      content="Plataforma inteligente de estudos para concursos públicos. Questões reais, spaced repetition, gamificação e predição de nota."
+    />
     <meta name="theme-color" content="#8B5CF6" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="apple-mobile-web-app-title" content="Mentori" />
 
     <!-- Manifest -->
     <link rel="manifest" href="/manifest.json" />
 
     <!-- Icons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16x16.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/icon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/icon-16x16.png"
+    />
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Styles moved to index.css -->
-    <script type="importmap">
-    {
-      "imports": {
-        "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
-        "react/": "https://esm.sh/react@^19.2.3/",
-        "react": "https://esm.sh/react@^19.2.3",
-        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-        "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
-      }
-    }
-    </script>
-  <link rel="stylesheet" href="/index.css">
-</head>
-  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-indigo-500 selection:text-white relative min-h-screen">
-    <!-- Background Blobs -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="blob blob-3"></div>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/index.css" />
+  </head>
+  <body
+    class="bg-[#09090B] text-[#FAFAFA] antialiased selection:bg-[#00F0FF] selection:text-black relative min-h-screen"
+  >
+    <!-- Background Gradient (Subtle) -->
+    <div
+      class="fixed inset-0 overflow-hidden pointer-events-none bg-[radial-gradient(circle_at_50%_50%,rgba(18,18,22,1)_0%,rgba(9,9,11,1)_100%)]"
+    >
+      <div
+        class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#00F0FF]/20 to-transparent"
+      ></div>
     </div>
     <div id="root" class="relative z-10 h-screen"></div>
-  <script type="module" src="/index.tsx"></script>
-</body>
+    <script type="module" src="/index.tsx"></script>
+  </body>
 </html>
